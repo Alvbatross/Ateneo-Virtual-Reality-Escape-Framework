@@ -1,6 +1,5 @@
-@tool
-class_name OIS
-extends Node
+class_name OISReceiverComponent
+extends OIS
 
 
 # Called when the node enters the scene tree for the first time.

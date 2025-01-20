@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvss2hm3ar0an"]
+[gd_scene load_steps=4 format=3 uid="uid://bvss2hm3ar0an"]
 
 [ext_resource type="PackedScene" uid="uid://njx823gyk04n" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_hand.tscn" id="1_rig4t"]
 [ext_resource type="PackedScene" uid="uid://raeeicvvindd" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_hand.tscn" id="2_38k50"]
+[ext_resource type="PackedScene" uid="uid://tg7ftoi3qiev" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.tscn" id="3_8yytt"]
 
 [node name="XRPlayer" type="Node3D"]
 
@@ -18,3 +19,7 @@ tracker = &"left_hand"
 tracker = &"right_hand"
 
 [node name="RightHand" parent="XROrigin3D/XRController3DRight" instance=ExtResource("2_38k50")]
+
+[node name="OISActorComponent" parent="." instance=ExtResource("3_8yytt")]
+
+[node name="OISActorComponent" parent="OISActorComponent" instance=ExtResource("3_8yytt")]
