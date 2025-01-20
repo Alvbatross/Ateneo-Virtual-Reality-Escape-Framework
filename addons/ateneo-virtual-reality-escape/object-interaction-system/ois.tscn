@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpisssrf3vckj"]
+
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois.gd" id="1_s17yx"]
+
+[node name="OIS" type="Node"]
+script = ExtResource("1_s17yx")

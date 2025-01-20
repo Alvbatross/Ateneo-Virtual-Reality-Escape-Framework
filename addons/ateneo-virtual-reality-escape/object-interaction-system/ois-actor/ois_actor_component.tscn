@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://tg7ftoi3qiev"]
+
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="1_gkxkb"]
+
+[node name="OISActorComponent" type="Node"]
+script = ExtResource("1_gkxkb")
