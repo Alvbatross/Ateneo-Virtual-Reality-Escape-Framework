@@ -1,14 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=11 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
 [ext_resource type="Script" path="res://src/xr_player.gd" id="3_xo4ep"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_mr1uh"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_single_controller_asm.gd" id="5_h73su"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="6_mrtlx"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois-actor-states/idle_state.gd" id="7_eiq2d"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois-actor-states/active_state.gd" id="8_2b4hx"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois-actor-states/active_colliding_state.gd" id="9_3ccgn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qmwtd"]
+radius = 0.1
 
 [node name="TestProject" type="Node3D"]
 script = ExtResource("1_ptu4b")
 
 [node name="XRPlayer" parent="." instance=ExtResource("2_s6le6")]
 script = ExtResource("3_xo4ep")
+
+[node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0650721, -0.003539, 0.0896457)
+script = ExtResource("4_mr1uh")
+
+[node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
+script = ExtResource("5_h73su")
+
+[node name="IdleState" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISSingleControllerASM"]
+script = ExtResource("7_eiq2d")
+
+[node name="ActiveState" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISSingleControllerASM"]
+script = ExtResource("8_2b4hx")
+
+[node name="ActiveCollidingState" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISSingleControllerASM"]
+script = ExtResource("9_3ccgn")
+
+[node name="OISColliderArea3D" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
+script = ExtResource("6_mrtlx")
+
+[node name="Area3D" type="Area3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0436399, 0)
+shape = SubResource("SphereShape3D_qmwtd")
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]

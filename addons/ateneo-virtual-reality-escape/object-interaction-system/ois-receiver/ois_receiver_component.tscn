@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfe4wbc73hjve"]
-
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_receiver_component.gd" id="1_10hrq"]
-
-[node name="OISReceiverComponent" type="Node"]
-script = ExtResource("1_10hrq")

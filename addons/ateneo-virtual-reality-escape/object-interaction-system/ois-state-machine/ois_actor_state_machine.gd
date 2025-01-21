@@ -1,6 +1,7 @@
 @tool
 class_name OISActorStateMachine
 extends OIS
+## This Node manages the States of an OIS Actor. Must be added as a child of an OISActorComponent
 
 signal transitioned(state_name)
 
@@ -8,13 +9,15 @@ signal transitioned(state_name)
 
 @onready var actor : OISActorComponent = get_parent()
 
-@onready var state: OISActorState = get_node(initial_state)
+var state: OISActorState
 
 var receiver
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	await owner.ready
+	#await owner.ready
+	
+	initialize_states()
 	
 	for child in get_children():
 		child._ois_actor_state_machine = self
@@ -47,12 +50,21 @@ func transition_to(target_state: String, msg: Dictionary = {}) -> void:
 	emit_signal("transitioned", state.name)
 
 
+func initialize_states() -> void:
+	state = get_node(initial_state)
+
+
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
-
-	# Check Actor Component if it has an OISActorStateMachine
+	
+	if not get_parent() is OISActorComponent:
+		warnings.append("This OISActorStateMachine needs an OISActorComponent as a Parent")
+	
+	if get_child_count() <= 0:
+		warnings.append("This OISActorStateMachine has no States, Please include an OISActorState")
+	
 	for child in get_children():
-		if !child.is_class("OISActorState"):
+		if not child is OISActorState:
 			warnings.append(child.name + " is NOT a valid OISActorState")
 
 	# Return warnings
