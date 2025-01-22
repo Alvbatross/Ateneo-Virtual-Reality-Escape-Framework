@@ -1,17 +1,14 @@
 @tool
-class_name OISActorStateMachine
+class_name OISReceiverStateMachine
 extends OIS
-## This Node manages the States of an OIS Actor. Must be added as a child of an OISActorComponent
 
 signal transitioned(state_name)
 
 @export var initial_state: NodePath
 
-@onready var actor : OISActorComponent = get_parent()
+@onready var receiver : OISReceiverComponent = get_parent()
 
-var state: OISActorState
-
-var receiver
+var state
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -56,22 +53,22 @@ func initialize_states() -> void:
 	state = get_node(initial_state)
 
 
-func get_actor() -> OISActorComponent:
-	return actor
+func get_receiver() -> OISReceiverComponent:
+	return receiver
 
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
 	
-	if not get_parent() is OISActorComponent:
-		warnings.append("This OISActorStateMachine needs an OISActorComponent as a Parent")
+	if not get_parent() is OISReceiverComponent:
+		warnings.append("This OISReceiverStateMachine needs an OISReceiverComponent as a Parent")
 	
 	if get_child_count() <= 0:
-		warnings.append("This OISActorStateMachine has no States, Please include an OISActorState")
+		warnings.append("This OISReceiverStateMachine has no States, Please include an OISReceiverState")
 	
 	for child in get_children():
 		if not child is OISActorState:
-			warnings.append(child.name + " is NOT a valid OISActorState")
+			warnings.append(child.name + " is NOT a valid OISReceiverState")
 
 	# Return warnings
 	return warnings

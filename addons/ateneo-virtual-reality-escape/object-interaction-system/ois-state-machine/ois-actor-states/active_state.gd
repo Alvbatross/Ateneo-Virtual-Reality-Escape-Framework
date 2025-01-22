@@ -3,7 +3,7 @@ extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	pass
+	_ois_actor_state_machine.get_actor()._actor_collider.body_entered.connect(_ois_actor_state_machine.transition_to, "ActiveCollidingState")
 
 
 func update(_delta: float) -> void:

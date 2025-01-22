@@ -2,7 +2,7 @@
 class_name OISActorState
 extends OIS
 
-var _ois_actor_state_machine: OISActorStateMachine = null
+var _ois_actor_state_machine: OISActorStateMachine
 
 func update(_delta: float) -> void:
 	pass
