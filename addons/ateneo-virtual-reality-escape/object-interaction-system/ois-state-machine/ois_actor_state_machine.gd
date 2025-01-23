@@ -15,14 +15,15 @@ var receiver
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#await owner.ready
+	await owner.ready
 	
 	initialize_states()
 	
 	for child in get_children():
-		await child.ready
+		await child._ready
 		child._ois_actor_state_machine = self
 	
+	print(state)
 	state.enter_state()
 
 
@@ -39,6 +40,7 @@ func _physics_process(delta: float) -> void:
 
 
 func transition_to(target_state: String, msg: Dictionary = {}) -> void:
+	print("Trying to change to " + target_state)
 	var old_state: OISActorState = state
 	var new_state: OISActorState
 	

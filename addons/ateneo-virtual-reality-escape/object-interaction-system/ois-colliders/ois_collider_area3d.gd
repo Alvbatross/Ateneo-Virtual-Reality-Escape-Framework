@@ -10,19 +10,28 @@ var collision_shape_3d := CollisionShape3D.new()
 func _ready() -> void:
 	super()
 	
-	#if not has_node("Area3D"):
-	area_3d.name = "Area3D"
-	collision_shape_3d.name = "CollisionShape3D"
-	add_child(area_3d)
-	area_3d.add_child(collision_shape_3d)
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() and not has_node("Area3D"):
+		area_3d.name = "Area3D"
+		collision_shape_3d.name = "CollisionShape3D"
+		add_child(area_3d)
+		area_3d.add_child(collision_shape_3d)
 		area_3d.owner = get_tree().edited_scene_root
 		collision_shape_3d.owner = get_tree().edited_scene_root
 	
-	area_3d.connect("body_entered", func call_body_entered(body): self.body_entered.emit(body))
-	area_3d.connect("body_entered", func call_body_exited(body): self.body_exited.emit(body))
+	if not Engine.is_editor_hint():
+		area_3d = get_node("Area3D")
+		print(area_3d.name)
+		area_3d.area_entered.connect(_emit_body_entered)
+		
+		area_3d.connect("area_entered", func call_body_exited(body): self.body_exited.emit(body))
 
+func print_yes(body):
+	print("Yes")
+	pass
 
+func _emit_body_entered(body) -> void:
+	print(body.name + " Entered")
+	body_entered.emit(body)
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()

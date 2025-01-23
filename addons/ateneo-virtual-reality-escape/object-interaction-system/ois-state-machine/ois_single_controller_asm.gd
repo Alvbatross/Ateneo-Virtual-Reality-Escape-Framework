@@ -2,17 +2,18 @@
 class_name OISSingleControllerASM
 extends OISActorStateMachine
 
-var idle_state : IdleState
-var active_state : ActiveState
+var idle_state : ControllerIdleState
+var active_state : ControllerActiveState
 var active_colliding_state : ActiveCollidingState
 
 
 func initialize_states() -> void:
-	idle_state = IdleState.new()
+	print("Initializing States for OIS Single Controller ASM")
+	idle_state = ControllerIdleState.new()
 	idle_state.name = "IdleState"
 	add_child(idle_state)
 	
-	active_state = ActiveState.new()
+	active_state = ControllerActiveState.new()
 	active_state.name = "ActiveState"
 	add_child(active_state)
 	
@@ -39,4 +40,4 @@ func initialize_states() -> void:
 			#add_child(active_colliding_state)
 			#active_colliding_state.owner = get_tree().edited_scene_root
 	
-	state = idle_state
+	state = active_state

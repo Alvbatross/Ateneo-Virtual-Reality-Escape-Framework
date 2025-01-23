@@ -10,7 +10,7 @@ func _enter_tree() -> void:
 	add_custom_type("OISActorStateMachine", "OIS", preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_actor_state_machine.gd"), preload("res://icon.svg"))
 	add_custom_type("OISSingleControllerASM", "OISActorStateMachine", preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_single_controller_asm.gd"), preload("res://icon.svg"))
 	add_custom_type("OISReceiverComponent", "OIS", preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_receiver_component.gd"), preload("res://icon.svg"))
-	add_custom_type("IdleState", "OISActorState", preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois-actor-states/idle_state.gd"), preload("res://icon.svg"))
+	add_custom_type("ControllerIdleState", "OISActorState", preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois-actor-states/controller_idle_state.gd"), preload("res://icon.svg"))
 	
 
 func _exit_tree() -> void:

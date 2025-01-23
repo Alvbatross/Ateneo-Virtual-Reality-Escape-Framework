@@ -11,6 +11,8 @@ func _ready() -> void:
 	_actor_state_machine = find_actor_state_machine(self)
 	_actor_collider = find_ois_collider(self)
 	
+	print(_actor_state_machine)
+	print(_actor_collider)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

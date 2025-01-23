@@ -1,4 +1,4 @@
-class_name IdleState
+class_name ControllerIdleState
 extends OISActorState
 
 

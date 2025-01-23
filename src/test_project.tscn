@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
 [ext_resource type="Script" path="res://src/xr_player.gd" id="3_xo4ep"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_ph25s"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="5_j821s"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="6_l0sle"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_single_controller_asm.gd" id="6_y8u80"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ta73b"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_7p0no"]
 radius = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_00ai4"]
@@ -27,12 +27,12 @@ script = ExtResource("4_ph25s")
 script = ExtResource("6_y8u80")
 
 [node name="OISColliderArea3D" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
-script = ExtResource("5_j821s")
+script = ExtResource("6_l0sle")
 
 [node name="Area3D" type="Area3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D/Area3D"]
-shape = SubResource("SphereShape3D_ta73b")
+shape = SubResource("SphereShape3D_7p0no")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.629879, -0.817711)
@@ -43,5 +43,6 @@ shape = SubResource("BoxShape3D_00ai4")
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
+[connection signal="body_entered" from="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D" to="." method="_on_ois_collider_area_3d_body_entered"]
 
 [editable path="XRPlayer"]
