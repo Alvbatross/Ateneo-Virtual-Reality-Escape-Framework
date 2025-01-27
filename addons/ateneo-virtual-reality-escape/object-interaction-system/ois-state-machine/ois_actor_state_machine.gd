@@ -31,13 +31,21 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		state.update(delta)
-		print(state.name)
+		#print(state.name)
 
 
 func _physics_process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		state.physics_update(delta)
 
+
+func handle_enter_collision(receiver) -> void:
+	if not Engine.is_editor_hint():
+		state._on_enter_collision(receiver)
+
+func handle_exit_collision(receiver) -> void:
+	if not Engine.is_editor_hint():
+		state._on_exit_collision(receiver)
 
 func transition_to(target_state: String, msg: Dictionary = {}) -> void:
 	print("Trying to change to " + target_state)

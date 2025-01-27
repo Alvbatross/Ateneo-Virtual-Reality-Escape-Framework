@@ -20,18 +20,21 @@ func _ready() -> void:
 	
 	if not Engine.is_editor_hint():
 		area_3d = get_node("Area3D")
-		print(area_3d.name)
-		area_3d.area_entered.connect(_emit_body_entered)
 		
-		area_3d.connect("area_entered", func call_body_exited(body): self.body_exited.emit(body))
+		area_3d.area_entered.connect(_emit_body_entered)
+		area_3d.area_exited.connect(_emit_body_exited)
 
-func print_yes(body):
-	print("Yes")
-	pass
 
 func _emit_body_entered(body) -> void:
 	print(body.name + " Entered")
 	body_entered.emit(body)
+
+
+func _emit_body_exited(body) -> void:
+	print(body.name + " Exited")
+	body_exited.emit(body)
+
+
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()

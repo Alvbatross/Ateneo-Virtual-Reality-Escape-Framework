@@ -3,29 +3,40 @@ class_name OISActorComponent
 extends OIS
 ## A Component used to create an OIS Actor. An OIS Actor allow for unique interactions with OIS Receivers.
 
-var _actor_state_machine : OISActorStateMachine
-var _actor_collider 
+@export var receiver_group : String
+
+var actor_state_machine : OISActorStateMachine
+var actor_collider : OISCollider
+
+var ois_receiver : OISReceiverComponent
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_actor_state_machine = find_actor_state_machine(self)
-	_actor_collider = find_ois_collider(self)
+	actor_state_machine = find_actor_state_machine(self)
+	actor_collider = find_ois_collider(self)
 	
-	print(_actor_state_machine)
-	print(_actor_collider)
+	print(actor_state_machine)
+	print(actor_collider)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 
+func get_receiver() -> OISReceiverComponent:
+	return ois_receiver
+
 
 func _on_ois_receiver_collision_entered(receiver) -> void:
-	pass
+	ois_receiver = receiver.get_parent()
+	actor_state_machine.handle_enter_collision(receiver)
+	
+	print(ois_receiver)
 
 
 func _on_ois_receiver_collision_exited(receiver) -> void:
-	pass
+	actor_state_machine.handle_exit_collision(receiver)
+	ois_receiver = null
 
 
 func _get_configuration_warnings() -> PackedStringArray:

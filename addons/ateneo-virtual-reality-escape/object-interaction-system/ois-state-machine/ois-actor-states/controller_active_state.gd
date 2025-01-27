@@ -3,20 +3,21 @@ extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	_ois_actor_state_machine.get_actor()._actor_collider.body_entered.connect(change_to_active_colliding)
-	print(_ois_actor_state_machine.get_actor())
-	print(_ois_actor_state_machine.get_actor()._actor_collider)
-
-func change_to_active_colliding(_body): 
-	_ois_actor_state_machine.transition_to("ActiveCollidingState", {})
-
-func update(_delta: float) -> void:
-	pass
+	print("Entered Active State")
 
 
-func physics_update(_delta: float) -> void:
-	pass
+func _on_enter_collision(receiver: Variant) -> void:
+	if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor().receiver_group):
+		_ois_actor_state_machine.transition_to("ActiveCollidingState", {})
 
-
-func exit_state() -> void:
-	pass
+#
+#func update(_delta: float) -> void:
+	#pass
+#
+#
+#func physics_update(_delta: float) -> void:
+	#pass
+#
+#
+#func exit_state() -> void:
+	#pass
