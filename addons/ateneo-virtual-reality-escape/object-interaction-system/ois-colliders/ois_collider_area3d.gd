@@ -26,12 +26,12 @@ func _ready() -> void:
 
 
 func _emit_body_entered(body) -> void:
-	print(body.name + " Entered")
+	print(body.name + " entered")
 	body_entered.emit(body)
 
 
 func _emit_body_exited(body) -> void:
-	print(body.name + " Exited")
+	print(body.name + " exited")
 	body_exited.emit(body)
 
 

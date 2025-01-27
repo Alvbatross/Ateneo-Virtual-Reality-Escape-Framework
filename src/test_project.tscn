@@ -43,8 +43,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.690535)
 script = ExtResource("7_uqbxj")
 group = "hand"
 requirement = 1.0
-snap_actor = null
-trigger_action = null
 
 [node name="Area3D" type="Area3D" parent="TestReceiver/OISWipeReceiver"]
 

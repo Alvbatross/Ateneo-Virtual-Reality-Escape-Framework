@@ -41,7 +41,7 @@ func initialize_action_vars():
 	pass
 
 func start_action_check(actor : OISActorComponent) -> void:
-	interacting_object = actor
+	interacting_object = actor.get_parent()
 
 func action_ongoing(delta: float) -> void:
 	action_in_progress.emit(requirement, total_progress)
@@ -50,7 +50,7 @@ func action_ongoing(delta: float) -> void:
 
 func check_if_completed():
 	if (requirement > 0 && total_progress >= requirement || requirement < 0 && total_progress <= requirement):
-		print("completed")
+		print("Action completed check.")
 		action_completed.emit(requirement, total_progress)
 		return true
 
@@ -60,7 +60,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
 	
 	if get_node("Area3D/CollisionShape3D").shape == null:
-		warnings.append("This Node's CollisionShape3D requires a Shape")
+		warnings.append("This node's CollisionShape3D requires a Shape")
 
 	# Return warnings
 	return warnings
