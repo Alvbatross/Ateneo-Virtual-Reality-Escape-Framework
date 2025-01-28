@@ -42,6 +42,9 @@ func initialize_action_vars():
 
 func start_action_check(actor : OISActorComponent) -> void:
 	interacting_object = actor.get_parent()
+	rate = actor.get_actor_rate()
+	initialize_action_vars()
+
 
 func action_ongoing(delta: float) -> void:
 	action_in_progress.emit(requirement, total_progress)

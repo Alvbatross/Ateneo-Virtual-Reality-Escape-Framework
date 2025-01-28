@@ -3,7 +3,9 @@ class_name OISActorComponent
 extends OIS
 ## A Component used to create an OIS Actor. An OIS Actor allow for unique interactions with OIS Receivers.
 
+@export_category("Actor Settings")
 @export var receiver_group : String
+@export var actor_rate : float = 1.0
 
 var actor_state_machine : OISActorStateMachine
 var actor_collider : OISCollider
@@ -28,14 +30,21 @@ func _physics_process(delta: float) -> void:
 	pass
 
 
+func set_receiver(receiver: OISReceiverComponent) -> void:
+	ois_receiver = receiver
+
+
 func get_receiver() -> OISReceiverComponent:
 	return ois_receiver
+
+
+func get_actor_rate() -> float:
+	return actor_rate
 
 
 func _on_ois_receiver_collision_entered(receiver) -> void:
 	# Used receiver's parent to be able to make use of position-based interactions as the
 	# actor component does not move on its own.
-	ois_receiver = receiver.get_parent()
 	actor_state_machine.handle_enter_collision(receiver)
 	
 	print("Collision entered: " + str(ois_receiver))
