@@ -2,10 +2,12 @@
 class_name OISWipeReceiver
 extends OISReceiverComponent
 
+
+@export var buffer : float = 0.02
 var interacting_inital_pos : Vector3
 #var delta_dist_prev = 0
 #var total_delta_dist = 0
-var buffer = 0.02
+
 #var old_buffer = 0.005
 #var past_progress = 0
 

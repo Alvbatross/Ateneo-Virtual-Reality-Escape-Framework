@@ -1,10 +1,9 @@
-class_name ControllerActiveState
+class_name ToolActiveState
 extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
 	print("Entered Active State")
-	_ois_actor_state_machine.get_actor().actor_component_enabled(true)
 
 
 func _on_enter_collision(receiver: Variant) -> void:
@@ -13,13 +12,3 @@ func _on_enter_collision(receiver: Variant) -> void:
 		_ois_actor_state_machine.transition_to("ActiveCollidingState", {})
 
 #
-#func update(_delta: float) -> void:
-	#pass
-#
-#
-#func physics_update(_delta: float) -> void:
-	#pass
-#
-#
-#func exit_state() -> void:
-	#pass

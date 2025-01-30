@@ -1,10 +1,9 @@
-class_name ControllerIdleState
+class_name ToolIdleState
 extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	print("Entered Idle State")
-	_ois_actor_state_machine.get_actor().actor_component_enabled(false)
+	pass
 
 
 func update(_delta: float) -> void:

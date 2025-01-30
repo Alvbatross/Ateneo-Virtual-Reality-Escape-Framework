@@ -7,6 +7,7 @@ extends OIS
 @export var receiver_group : String
 @export var actor_rate : float = 1.0
 
+var actor : Variant = get_parent()
 var actor_state_machine : OISActorStateMachine
 var actor_collider : OISCollider
 
@@ -28,6 +29,10 @@ func _physics_process(delta: float) -> void:
 	#print("\n====================\n")
 	#print("Actor "+str(self.get_parent())+ " position:" + str(self.get_parent().position))
 	pass
+
+
+func get_actor() -> Variant:
+	return actor
 
 
 func set_receiver(receiver: OISReceiverComponent) -> void:
@@ -53,6 +58,10 @@ func _on_ois_receiver_collision_entered(receiver) -> void:
 func _on_ois_receiver_collision_exited(receiver) -> void:
 	actor_state_machine.handle_exit_collision(receiver)
 	ois_receiver = null
+
+
+func actor_component_enabled(b: bool) -> void:
+	actor_collider.collider_enabled(b)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

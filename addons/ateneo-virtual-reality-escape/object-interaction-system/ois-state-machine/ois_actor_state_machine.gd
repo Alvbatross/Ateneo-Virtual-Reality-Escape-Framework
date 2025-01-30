@@ -17,7 +17,7 @@ var receiver
 func _ready() -> void:
 	await owner.ready
 	
-	initialize_states()
+	initialize()
 	
 	for child in get_children():
 		await child._ready
@@ -62,7 +62,7 @@ func transition_to(target_state: String, msg: Dictionary = {}) -> void:
 	emit_signal("transitioned", state.name)
 
 
-func initialize_states() -> void:
+func initialize() -> void:
 	state = get_node(initial_state)
 
 

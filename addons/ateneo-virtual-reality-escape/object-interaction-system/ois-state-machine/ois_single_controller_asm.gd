@@ -7,7 +7,7 @@ var active_state : ControllerActiveState
 var active_colliding_state : ActiveCollidingState
 
 
-func initialize_states() -> void:
+func initialize() -> void:
 	print("Initializing States for OIS Single Controller ASM")
 	idle_state = ControllerIdleState.new()
 	idle_state.name = "IdleState"

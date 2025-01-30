@@ -25,6 +25,12 @@ func _ready() -> void:
 		area_3d.area_exited.connect(_emit_body_exited)
 
 
+func collider_enabled(b: bool) -> void:
+	area_3d.monitoring = b
+	area_3d.monitorable = b
+	collision_shape_3d.disabled = !b
+
+
 func _emit_body_entered(body) -> void:
 	print(body.name + " entered")
 	body_entered.emit(body)
