@@ -14,7 +14,7 @@ size = Vector3(0.2, 0.05, 0.2)
 [sub_resource type="SphereShape3D" id="SphereShape3D_fpnqv"]
 radius = 0.1
 
-[node name="XRToolsPickable" type="RigidBody3D"]
+[node name="OISRag" type="RigidBody3D"]
 script = ExtResource("1_mmel6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

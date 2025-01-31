@@ -3,7 +3,16 @@ extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	pass
+	_ois_actor_state_machine.get_actor_component().get_actor().grabbed.connect(_on_actor_grabbed)
+
+
+func exit_state() -> void:
+	_ois_actor_state_machine.get_actor_component().get_actor().grabbed.disconnect(_on_actor_grabbed)
+
+
+func _on_actor_grabbed(pickable: Variant, by: Variant) -> void:
+	_ois_actor_state_machine.transition_to("ActiveState")
+
 
 
 func update(_delta: float) -> void:
@@ -11,8 +20,4 @@ func update(_delta: float) -> void:
 
 
 func physics_update(_delta: float) -> void:
-	pass
-
-
-func exit_state() -> void:
 	pass

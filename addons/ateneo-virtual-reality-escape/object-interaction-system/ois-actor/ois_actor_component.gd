@@ -7,7 +7,8 @@ extends OIS
 @export var receiver_group : String
 @export var actor_rate : float = 1.0
 
-var actor : Variant = get_parent()
+@onready var actor : Variant = get_parent()
+
 var actor_state_machine : OISActorStateMachine
 var actor_collider : OISCollider
 
@@ -32,6 +33,7 @@ func _physics_process(delta: float) -> void:
 
 
 func get_actor() -> Variant:
+	print(actor)
 	return actor
 
 

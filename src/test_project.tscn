@@ -59,10 +59,10 @@ requirement = 1.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestReceiver/OISWipeReceiver/Area3D"]
 shape = SubResource("BoxShape3D_uv7vs")
 
-[node name="XRToolsPickable" parent="." instance=ExtResource("10_ero8i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.633311, -0.736028)
-collision_layer = 5308417
-collision_mask = 5308417
+[node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.253183, -0.388457)
+collision_layer = 327681
+collision_mask = 327681
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

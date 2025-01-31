@@ -66,7 +66,7 @@ func initialize() -> void:
 	state = get_node(initial_state)
 
 
-func get_actor() -> OISActorComponent:
+func get_actor_component() -> OISActorComponent:
 	return actor
 
 
