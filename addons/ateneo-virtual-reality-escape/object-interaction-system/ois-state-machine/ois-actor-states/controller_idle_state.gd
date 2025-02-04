@@ -14,11 +14,3 @@ func exit_state() -> void:
 
 func _on_controller_dropped() -> void:
 	_ois_actor_state_machine.transition_to("ActiveState")
-
-
-#func update(_delta: float) -> void:
-	#pass
-#
-#
-#func physics_update(_delta: float) -> void:
-	#pass

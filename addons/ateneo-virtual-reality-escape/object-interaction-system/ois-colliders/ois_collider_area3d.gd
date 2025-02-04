@@ -31,15 +31,13 @@ func collider_enabled(b: bool) -> void:
 	collision_shape_3d.disabled = !b
 
 
+
 func _emit_body_entered(body) -> void:
-	print(body.name + " entered")
 	body_entered.emit(body)
 
 
 func _emit_body_exited(body) -> void:
-	print(body.name + " exited")
 	body_exited.emit(body)
-
 
 
 func _get_configuration_warnings() -> PackedStringArray:

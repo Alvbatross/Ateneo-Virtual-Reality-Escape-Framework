@@ -3,6 +3,8 @@ extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
+	print("Entered Idle State")
+	#_ois_actor_state_machine.get_actor_component().actor_component_enabled(false)
 	_ois_actor_state_machine.get_actor_component().get_actor().grabbed.connect(_on_actor_grabbed)
 
 

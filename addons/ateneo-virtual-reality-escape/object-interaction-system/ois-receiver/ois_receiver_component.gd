@@ -3,9 +3,13 @@ class_name OISReceiverComponent
 extends OIS
 
 
+## Emitted the moment an OIS action is performed on a Receiver
 signal action_started(requirement, total_progress)
+## Emitted every frame during an OIS action
 signal action_in_progress(requirement, total_progress)
+## Emitted the moment an OIS action ends. Doesn't necessarily mean when an OIS action is completed
 signal action_ended(requirement, total_progress)
+## Emitted the moment the receiver's action requirement is met.
 signal action_completed(requirement, total_progress)
 
 @export var group : String = ""
@@ -15,6 +19,8 @@ signal action_completed(requirement, total_progress)
 @export var snap_actor : bool = false
 
 @export var trigger_action : bool = false
+
+var completed : bool = false
 
 var interacting_object
 var total_progress : float = 0
@@ -40,10 +46,16 @@ func _ready() -> void:
 func initialize_action_vars():
 	pass
 
+
 func start_action_check(actor : OISActorComponent) -> void:
+	action_started.emit(requirement, total_progress)
 	interacting_object = actor.get_parent()
 	rate = actor.get_actor_rate()
 	initialize_action_vars()
+
+
+func end_action() -> void:
+	action_ended.emit(requirement, total_progress)
 
 
 func action_ongoing(delta: float) -> void:
@@ -52,11 +64,11 @@ func action_ongoing(delta: float) -> void:
 
 
 func check_if_completed():
-	if (requirement > 0 && total_progress >= requirement || requirement < 0 && total_progress <= requirement):
-		print("Action completed check.")
-		action_completed.emit(requirement, total_progress)
-		return true
-
+	if not completed:
+		if (requirement > 0 and total_progress >= requirement or requirement < 0 and total_progress <= requirement):
+			print("Action completed check.")
+			action_completed.emit(requirement, total_progress)
+			completed = true
 
 
 func _get_configuration_warnings() -> PackedStringArray:

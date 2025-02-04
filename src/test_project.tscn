@@ -47,10 +47,12 @@ shape = SubResource("SphereShape3D_7p0no")
 [node name="FunctionPickup" parent="XRPlayer/XROrigin3D/XRController3DRight" index="3" instance=ExtResource("8_a6l3j")]
 
 [node name="TestReceiver" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30828, 0)
 
 [node name="OISWipeReceiver" type="Node3D" parent="TestReceiver"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.690535)
 script = ExtResource("7_uqbxj")
+buffer = 0.001
 group = "rag"
 requirement = 1.0
 
@@ -60,7 +62,7 @@ requirement = 1.0
 shape = SubResource("BoxShape3D_uv7vs")
 
 [node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.253183, -0.388457)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561463, -0.388457)
 collision_layer = 327681
 collision_mask = 327681
 
