@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=16 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_wipe_receiver.gd" id="7_uqbxj"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="8_a6l3j"]
 [ext_resource type="PackedScene" uid="uid://bcpdak0t07c8r" path="res://src/ois-objects/ois_rag.tscn" id="10_ero8i"]
+[ext_resource type="PackedScene" uid="uid://b4mr5nojepu4p" path="res://src/ois-objects/ois_screw.tscn" id="11_sbghm"]
+[ext_resource type="PackedScene" uid="uid://djlmwmbu8ya0x" path="res://src/ois-objects/ois_screw_driver.tscn" id="12_8po37"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7p0no"]
 radius = 0.1
@@ -70,6 +72,12 @@ collision_mask = 327681
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_hhivm")
+
+[node name="OISScrew" parent="." instance=ExtResource("11_sbghm")]
+transform = Transform3D(1, 0, 0, 0, 0.495641, -0.868528, 0, 0.868528, 0.495641, 0, 0.707029, -0.963193)
+
+[node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
+transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 0.259349, 0.594793, -0.709347)
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
