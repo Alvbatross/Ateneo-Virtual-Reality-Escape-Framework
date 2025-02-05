@@ -4,6 +4,10 @@ extends OIS
 signal body_entered(body)
 signal body_exited(body)
 
+const DEFAULT_LAYER := 0b0010_0000_0000_0000_0000_0000_0000_0000
+
+@export_flags_3d_physics var ois_collision_layer : int = DEFAULT_LAYER
+
 @onready var actor : OISActorComponent = get_parent()
 
 # Called when the node enters the scene tree for the first time.

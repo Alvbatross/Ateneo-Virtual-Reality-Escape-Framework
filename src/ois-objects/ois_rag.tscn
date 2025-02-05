@@ -5,14 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="3_yrdlr"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="4_clwjf"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="5_81oon"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="6_fbbtl"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_raycast3d.gd" id="7_gv232"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="7_til0b"]
+[ext_resource type="BoxMesh" uid="uid://dho0uqpnmuhn6" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/misc-resources/collider_raycast_mesh.tres" id="8_yik8b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ggipd"]
 size = Vector3(0.2, 0.05, 0.2)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_fpnqv"]
-radius = 0.1
 
 [node name="OISRag" type="RigidBody3D"]
 script = ExtResource("1_mmel6")
@@ -35,14 +33,19 @@ visible = true
 script = ExtResource("5_81oon")
 receiver_group = "rag"
 
-[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent"]
-script = ExtResource("6_fbbtl")
-
-[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0607597, 0)
-shape = SubResource("SphereShape3D_fpnqv")
-
 [node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent"]
 script = ExtResource("7_til0b")
+
+[node name="OISColliderRaycast3D" type="Node3D" parent="OISActorComponent"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+script = ExtResource("7_gv232")
+raycast_length = 0.2
+
+[node name="Raycast3D" type="RayCast3D" parent="OISActorComponent/OISColliderRaycast3D"]
+target_position = Vector3(0, 0, -0.2)
+collide_with_areas = true
+
+[node name="Laser" type="MeshInstance3D" parent="OISActorComponent/OISColliderRaycast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+visible = false
+mesh = ExtResource("8_yik8b")

@@ -49,7 +49,7 @@ func handle_exit_collision(receiver) -> void:
 		state._on_exit_collision(receiver)
 
 func transition_to(target_state: String, msg: Dictionary = {}) -> void:
-	print(get_actor_component().get_actor().name + " Trying to change to " + target_state)
+	#print(get_actor_component().get_actor().name + " Trying to change to " + target_state)
 	var old_state: OISActorState = state
 	var new_state: OISActorState
 	

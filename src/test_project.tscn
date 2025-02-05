@@ -14,8 +14,8 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_7p0no"]
 radius = 0.1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uv7vs"]
-size = Vector3(0.1, 0.5, 0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_e4fwv"]
+size = Vector3(0.1, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
@@ -50,16 +50,16 @@ shape = SubResource("SphereShape3D_7p0no")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30828, 0)
 
 [node name="OISWipeReceiver" type="Node3D" parent="TestReceiver"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.690535)
 script = ExtResource("7_uqbxj")
-buffer = 0.001
 group = "rag"
-requirement = 1.0
 
 [node name="Area3D" type="Area3D" parent="TestReceiver/OISWipeReceiver"]
+collision_layer = 536870912
+collision_mask = 536870912
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestReceiver/OISWipeReceiver/Area3D"]
-shape = SubResource("BoxShape3D_uv7vs")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27947, -0.942282)
+shape = SubResource("BoxShape3D_e4fwv")
 
 [node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561463, -0.388457)

@@ -13,6 +13,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint() and not has_node("Area3D"):
 		area_3d.name = "Area3D"
 		collision_shape_3d.name = "CollisionShape3D"
+		area_3d.collision_layer = ois_collision_layer
+		area_3d.collision_mask = ois_collision_layer
 		add_child(area_3d)
 		area_3d.add_child(collision_shape_3d)
 		area_3d.owner = get_tree().edited_scene_root

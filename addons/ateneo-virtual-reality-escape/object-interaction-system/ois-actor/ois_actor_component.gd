@@ -33,7 +33,6 @@ func _physics_process(delta: float) -> void:
 
 
 func get_actor() -> Variant:
-	print(actor)
 	return actor
 
 
