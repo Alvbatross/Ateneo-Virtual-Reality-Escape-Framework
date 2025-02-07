@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=19 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="7_snb4w"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_wipe_receiver.gd" id="7_uqbxj"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="8_a6l3j"]
+[ext_resource type="Script" path="res://src/test_receiver.gd" id="9_qjxp0"]
 [ext_resource type="PackedScene" uid="uid://bcpdak0t07c8r" path="res://src/ois-objects/ois_rag.tscn" id="10_ero8i"]
+[ext_resource type="PackedScene" uid="uid://chqn1m2fy1uxr" path="res://src/progress-bar/progress_bar_test.tscn" id="11_8d2v2"]
 [ext_resource type="PackedScene" uid="uid://b4mr5nojepu4p" path="res://src/ois-objects/ois_screw.tscn" id="11_sbghm"]
 [ext_resource type="PackedScene" uid="uid://djlmwmbu8ya0x" path="res://src/ois-objects/ois_screw_driver.tscn" id="12_8po37"]
 
@@ -18,6 +20,9 @@ radius = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e4fwv"]
 size = Vector3(0.1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_68ma1"]
+size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
@@ -50,10 +55,13 @@ shape = SubResource("SphereShape3D_7p0no")
 
 [node name="TestReceiver" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30828, 0)
+script = ExtResource("9_qjxp0")
 
 [node name="OISWipeReceiver" type="Node3D" parent="TestReceiver"]
 script = ExtResource("7_uqbxj")
+buffer = 0.0
 group = "rag"
+requirement = 1.0
 
 [node name="Area3D" type="Area3D" parent="TestReceiver/OISWipeReceiver"]
 collision_layer = 536870912
@@ -63,15 +71,27 @@ collision_mask = 536870912
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27947, -0.942282)
 shape = SubResource("BoxShape3D_e4fwv")
 
+[node name="Progress View" parent="TestReceiver" instance=ExtResource("11_8d2v2")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.472873, -0.83897)
+
+[node name="Area3D2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0534108, 0.559616, -0.498358)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.124436, -0.191569)
+shape = SubResource("BoxShape3D_68ma1")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0581723, 0.561463, -0.388457)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.124436, -0.191569)
+shape = SubResource("BoxShape3D_68ma1")
+
 [node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561463, -0.388457)
 collision_layer = 327681
 collision_mask = 327681
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_hhivm")
 
 [node name="OISScrew" parent="." instance=ExtResource("11_sbghm")]
 transform = Transform3D(1, 0, 0, 0, 0.495641, -0.868528, 0, 0.868528, 0.495641, 0, 0.707029, -0.963193)
@@ -79,7 +99,14 @@ transform = Transform3D(1, 0, 0, 0, 0.495641, -0.868528, 0, 0.868528, 0.495641, 
 [node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
 transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 0.259349, 0.594793, -0.709347)
 
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_hhivm")
+
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
+[connection signal="action_in_progress" from="TestReceiver/OISWipeReceiver" to="TestReceiver" method="_on_ois_wipe_receiver_action_in_progress"]
 
 [editable path="XRPlayer"]
+[editable path="OISRag"]

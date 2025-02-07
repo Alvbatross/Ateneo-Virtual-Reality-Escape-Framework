@@ -51,6 +51,9 @@ func _ready() -> void:
 		area_3d.add_to_group(group)
 
 
+
+
+
 func initialize_action_vars():
 	pass
 
@@ -84,6 +87,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	
 	if get_node("Area3D/CollisionShape3D").shape == null:
 		warnings.append("This node's CollisionShape3D requires a Shape")
-
+	
+	if snap_actor:
+		warnings.append("If Snap Actor is on, this node requires a Snap Position")
 	# Return warnings
 	return warnings

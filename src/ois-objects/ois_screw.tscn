@@ -10,8 +10,8 @@ size = Vector3(0.01, 0.01, 0.01)
 [sub_resource type="BoxShape3D" id="BoxShape3D_cqa5s"]
 size = Vector3(0.02, 0.1, 0.02)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kmbpk"]
-size = Vector3(0.02, 0.02, 0.02)
+[sub_resource type="SphereShape3D" id="SphereShape3D_55sq6"]
+radius = 0.3
 
 [node name="OISScrew" type="StaticBody3D"]
 
@@ -36,7 +36,7 @@ script = ExtResource("2_y7xuy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OISTwistReceiver/XRToolsSnapZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0382655, 0)
-shape = SubResource("BoxShape3D_kmbpk")
+shape = SubResource("SphereShape3D_55sq6")
 
 [node name="Screw2" parent="." instance=ExtResource("2_qyxr8")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)

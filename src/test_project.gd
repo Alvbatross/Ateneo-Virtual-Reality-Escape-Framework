@@ -12,7 +12,7 @@ func _ready() -> void:
 		
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		
-		Engine.physics_ticks_per_second = 100
+		Engine.physics_ticks_per_second = 60
 
 
 func _on_ois_collider_area_3d_body_entered(body: Variant) -> void:
