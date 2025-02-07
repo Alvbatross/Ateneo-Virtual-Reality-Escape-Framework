@@ -2,6 +2,7 @@
 class_name OIS
 extends Node3D
 
+const COLLISION_LAYER := 0b0010_0000_0000_0000_0000_0000_0000_0000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

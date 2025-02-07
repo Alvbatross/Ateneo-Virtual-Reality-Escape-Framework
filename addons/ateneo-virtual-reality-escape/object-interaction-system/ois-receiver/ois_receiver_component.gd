@@ -12,8 +12,6 @@ signal action_ended(requirement, total_progress)
 ## Emitted the moment the receiver's action requirement is met.
 signal action_completed(requirement, total_progress)
 
-const DEFAULT_LAYER := 0b0010_0000_0000_0000_0000_0000_0000_0000
-
 @export var group : String = ""
 
 @export var requirement : float
@@ -22,7 +20,7 @@ const DEFAULT_LAYER := 0b0010_0000_0000_0000_0000_0000_0000_0000
 
 @export var trigger_action : bool = false
 
-@export_flags_3d_physics var ois_collision_layer : int = DEFAULT_LAYER
+@export_flags_3d_physics var ois_collision_layer : int = COLLISION_LAYER
 
 var completed : bool = false
 
