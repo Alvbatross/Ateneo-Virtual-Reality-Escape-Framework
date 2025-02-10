@@ -27,7 +27,10 @@ func _on_exit_collision(receiver: Variant) -> void:
 func physics_update(delta: float) -> void:
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()
 	if is_instance_valid(receiver):
-		receiver.action_ongoing(delta)
+		if receiver.trigger_action:
+			pass
+		else:
+			receiver.action_ongoing(delta)
 
 
 func exit_state() -> void:

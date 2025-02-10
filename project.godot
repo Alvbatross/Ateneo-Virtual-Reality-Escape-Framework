@@ -28,6 +28,13 @@ enabled=PackedStringArray("res://addons/ateneo-virtual-reality-escape/plugin.cfg
 
 hand=""
 
+[input]
+
+trigger={
+"deadzone": 0.5,
+"events": []
+}
+
 [physics]
 
 common/physics_ticks_per_second=100

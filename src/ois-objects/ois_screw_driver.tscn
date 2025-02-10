@@ -31,7 +31,7 @@ visible = true
 
 [node name="OISActorComponent" type="Node3D" parent="." index="4"]
 script = ExtResource("5_fju8u")
-receiver_group = "screwdriver"
+receiver_group = "screw"
 
 [node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent" index="0"]
 script = ExtResource("6_7n5tt")

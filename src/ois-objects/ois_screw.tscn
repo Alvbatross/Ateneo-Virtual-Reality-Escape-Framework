@@ -1,17 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4mr5nojepu4p"]
+[gd_scene load_steps=5 format=3 uid="uid://b4mr5nojepu4p"]
 
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_twist_receiver.gd" id="1_pmjqi"]
 [ext_resource type="PackedScene" uid="uid://b5oxuvr5ocod" path="res://src/assets/Screw.glb" id="2_qyxr8"]
-[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/snap_zone.gd" id="2_y7xuy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1p3dg"]
 size = Vector3(0.01, 0.01, 0.01)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cqa5s"]
 size = Vector3(0.02, 0.1, 0.02)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_55sq6"]
-radius = 0.3
 
 [node name="OISScrew" type="StaticBody3D"]
 
@@ -30,13 +26,6 @@ collision_mask = 536870912
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OISTwistReceiver/Area3D"]
 shape = SubResource("BoxShape3D_cqa5s")
-
-[node name="XRToolsSnapZone" type="Area3D" parent="OISTwistReceiver"]
-script = ExtResource("2_y7xuy")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OISTwistReceiver/XRToolsSnapZone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0382655, 0)
-shape = SubResource("SphereShape3D_55sq6")
 
 [node name="Screw2" parent="." instance=ExtResource("2_qyxr8")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
