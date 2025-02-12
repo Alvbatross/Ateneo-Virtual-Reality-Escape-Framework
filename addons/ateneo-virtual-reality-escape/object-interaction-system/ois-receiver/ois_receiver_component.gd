@@ -30,6 +30,7 @@ var rate : float = 0
 
 var area_3d := Area3D.new()
 var collision_shape_3d := CollisionShape3D.new()
+var marker_3d : Marker3D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -47,9 +48,11 @@ func _ready() -> void:
 		area_3d = get_node("Area3D")
 		add_to_group(group)
 		area_3d.add_to_group(group)
-
-
-
+		if snap_actor:
+			for child in get_children():
+				if child is Marker3D:
+					marker_3d = child
+					break
 
 
 func initialize_action_vars():
@@ -86,7 +89,16 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if get_node("Area3D/CollisionShape3D").shape == null:
 		warnings.append("This node's CollisionShape3D requires a Shape")
 	
-	if snap_actor:
-		warnings.append("If Snap Actor is on, this node requires a Snap Position")
+	if snap_actor and not has_snap_marker():
+		warnings.append("If Snap Actor is on, this node requires a Marker3D as a Snapping Position")
+	
 	# Return warnings
 	return warnings
+
+
+func has_snap_marker() -> bool:
+	for child in get_children():
+		if child is Marker3D:
+			return true
+	
+	return false

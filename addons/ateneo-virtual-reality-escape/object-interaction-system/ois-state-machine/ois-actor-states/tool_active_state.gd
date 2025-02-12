@@ -3,7 +3,7 @@ extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	print("Entered Active State")
+	print(_ois_actor_state_machine.get_actor_component().get_actor().name + " Entered Active State")
 	_ois_actor_state_machine.get_actor_component().actor_component_enabled(true)
 	_ois_actor_state_machine.get_actor_component().get_actor().released.connect(_on_actor_released)
 
@@ -21,6 +21,7 @@ func _on_enter_collision(receiver: Variant) -> void:
 
 
 func _on_actor_released(pickable: Variant, by: Variant) -> void:
+	_ois_actor_state_machine.controller = null
 	_ois_actor_state_machine.transition_to("IdleState")
 
 func physics_update(_delta: float) -> void:

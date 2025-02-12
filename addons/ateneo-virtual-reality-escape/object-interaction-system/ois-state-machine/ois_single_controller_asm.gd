@@ -21,4 +21,6 @@ func initialize() -> void:
 	active_colliding_state.name = "ActiveCollidingState"
 	add_child(active_colliding_state)
 	
+	controller = get_actor_component().get_actor()
+	
 	state = active_state

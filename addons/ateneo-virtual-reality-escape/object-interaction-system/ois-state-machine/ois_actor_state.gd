@@ -6,6 +6,8 @@ var _ois_actor_state_machine: OISActorStateMachine
 
 var ois_receiver : OISReceiverComponent
 
+var trigger_on : bool = false
+
 func update(_delta: float) -> void:
 	pass
 

@@ -1,22 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4mr5nojepu4p"]
+[gd_scene load_steps=7 format=3 uid="uid://b4mr5nojepu4p"]
 
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_twist_receiver.gd" id="1_pmjqi"]
+[ext_resource type="Script" path="res://src/ois-objects/ois_screw.gd" id="1_vwgrx"]
 [ext_resource type="PackedScene" uid="uid://b5oxuvr5ocod" path="res://src/assets/Screw.glb" id="2_qyxr8"]
+[ext_resource type="PackedScene" uid="uid://chqn1m2fy1uxr" path="res://src/progress-bar/progress_bar_test.tscn" id="3_euu3r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1p3dg"]
 size = Vector3(0.01, 0.01, 0.01)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_cqa5s"]
-size = Vector3(0.02, 0.1, 0.02)
+[sub_resource type="BoxShape3D" id="BoxShape3D_t0og0"]
+size = Vector3(0.05, 0.1, 0.05)
 
 [node name="OISScrew" type="StaticBody3D"]
+script = ExtResource("1_vwgrx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1p3dg")
 
+[node name="Screw2" parent="." instance=ExtResource("2_qyxr8")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
 [node name="OISTwistReceiver" type="Node3D" parent="."]
 script = ExtResource("1_pmjqi")
 group = "screw"
+requirement = 1.0
 snap_actor = true
 trigger_action = true
 
@@ -25,7 +32,12 @@ collision_layer = 536870912
 collision_mask = 536870912
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OISTwistReceiver/Area3D"]
-shape = SubResource("BoxShape3D_cqa5s")
+shape = SubResource("BoxShape3D_t0og0")
 
-[node name="Screw2" parent="." instance=ExtResource("2_qyxr8")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+[node name="Marker3D" type="Marker3D" parent="OISTwistReceiver"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0434667, 0)
+
+[node name="Progress View" parent="." instance=ExtResource("3_euu3r")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.00143611, -0.212481)
+
+[connection signal="action_in_progress" from="OISTwistReceiver" to="." method="_on_ois_twist_receiver_action_in_progress"]

@@ -48,6 +48,11 @@ func get_actor_rate() -> float:
 	return actor_rate
 
 
+func snap_actor_to_receiver() -> void:
+	if is_instance_valid(ois_receiver):
+		get_actor().global_position = ois_receiver.marker_3d.global_position + (get_actor().global_position - global_position)
+
+
 func _on_ois_receiver_collision_entered(receiver) -> void:
 	# Used receiver's parent to be able to make use of position-based interactions as the
 	# actor component does not move on its own.
@@ -93,6 +98,7 @@ func find_ois_collider(node: Node) -> OISCollider:
 			return child
 	
 	return null
+
 
 static func _find_child(node : Node, type : String) -> Node:
 	# Iterate through all children

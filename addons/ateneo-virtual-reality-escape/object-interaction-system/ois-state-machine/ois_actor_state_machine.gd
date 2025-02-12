@@ -13,6 +13,8 @@ var state: OISActorState
 
 var receiver
 
+var controller : XRController3D
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await owner.ready
