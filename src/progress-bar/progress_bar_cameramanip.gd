@@ -28,10 +28,10 @@ func _ready():
 	progress_circle_component.value = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var cam_pos = camera.global_position
 	look_at(cam_pos, Vector3.UP)
 	rotate_object_local(Vector3.UP, PI)

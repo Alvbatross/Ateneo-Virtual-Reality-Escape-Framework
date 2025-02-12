@@ -55,7 +55,7 @@ func _ready() -> void:
 					break
 
 
-func initialize_action_vars():
+func initialize_action_vars() -> void:
 	pass
 
 
@@ -75,7 +75,7 @@ func action_ongoing(delta: float) -> void:
 	check_if_completed()
 
 
-func check_if_completed():
+func check_if_completed() -> void:
 	if not completed:
 		if (requirement > 0 and total_progress >= requirement or requirement < 0 and total_progress <= requirement):
 			print("Action completed check.")
