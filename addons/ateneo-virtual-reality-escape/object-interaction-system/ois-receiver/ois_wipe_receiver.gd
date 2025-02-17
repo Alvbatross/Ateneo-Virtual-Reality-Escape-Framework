@@ -4,7 +4,7 @@ extends OISReceiverComponent
 
 
 @export var buffer : float = 0.02
-var interacting_inital_pos : Vector3
+var interacting_initial_pos : Vector3
 #var delta_dist_prev = 0
 #var total_delta_dist = 0
 
@@ -13,7 +13,7 @@ var interacting_inital_pos : Vector3
 
 
 func initialize_action_vars():
-	interacting_inital_pos = interacting_object.position
+	interacting_initial_pos = interacting_object.position
 	#past_progress = total_progress
 	
 	#delta_dist_prev = 0
@@ -23,12 +23,12 @@ func initialize_action_vars():
 func action_ongoing(delta: float) -> void:
 	var interacting_current_pos = interacting_object.position
 	
-	var delta_dist = interacting_inital_pos.distance_to(interacting_current_pos)
+	var delta_dist = interacting_initial_pos.distance_to(interacting_current_pos)
 	
 	if (delta_dist > buffer):
 		total_progress += rate * delta
 	
-	interacting_inital_pos = interacting_current_pos
+	interacting_initial_pos = interacting_current_pos
 	
 	print("=======================")
 	print("Total progress: "+str(total_progress))

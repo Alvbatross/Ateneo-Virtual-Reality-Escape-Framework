@@ -62,6 +62,7 @@ script = ExtResource("7_uqbxj")
 buffer = 0.0
 group = "rag"
 requirement = 1.0
+ois_collision_layer = 0
 
 [node name="Area3D" type="Area3D" parent="TestReceiver/OISWipeReceiver"]
 collision_layer = 536870912
@@ -93,8 +94,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561463, -0.388457)
 collision_layer = 327681
 collision_mask = 327681
 
+[node name="OISActorComponent" parent="OISRag" index="4"]
+trigger_action = false
+
 [node name="OISScrew" parent="." instance=ExtResource("11_sbghm")]
-transform = Transform3D(1, 0, 0, 0, 0.495641, -0.868528, 0, 0.868528, 0.495641, 0, 0.707029, -0.963193)
+transform = Transform3D(0.338262, -0.81733, -0.466424, 0, 0.495641, -0.868528, 0.941052, 0.29379, 0.167656, 0.684659, 0.707029, -0.214372)
 
 [node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
 transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 0.259349, 0.594793, -0.709347)
@@ -110,3 +114,4 @@ shape = SubResource("BoxShape3D_hhivm")
 
 [editable path="XRPlayer"]
 [editable path="OISRag"]
+[editable path="OISScrew"]

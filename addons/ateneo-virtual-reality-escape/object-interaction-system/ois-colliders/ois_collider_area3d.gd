@@ -28,8 +28,8 @@ func _ready() -> void:
 
 
 func collider_enabled(b: bool) -> void:
-	area_3d.monitoring = b
-	area_3d.monitorable = b
+	area_3d.set_deferred("monitoring", b) 
+	area_3d.set_deferred("monitorable", b)
 	collision_shape_3d.disabled = !b
 
 

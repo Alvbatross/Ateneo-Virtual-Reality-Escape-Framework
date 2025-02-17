@@ -25,7 +25,7 @@ script = ExtResource("1_pmjqi")
 group = "screw"
 requirement = 1.0
 snap_actor = true
-trigger_action = true
+ois_collision_layer = 0
 
 [node name="Area3D" type="Area3D" parent="OISTwistReceiver"]
 collision_layer = 536870912

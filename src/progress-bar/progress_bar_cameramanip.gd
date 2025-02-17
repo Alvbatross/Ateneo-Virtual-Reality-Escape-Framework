@@ -35,11 +35,12 @@ func _physics_process(_delta):
 	var cam_pos = camera.global_position
 	look_at(cam_pos, Vector3.UP)
 	rotate_object_local(Vector3.UP, PI)
-	
-	
+
+
 func change_progress_value(value):
 	progress_circle_component.value = value
-	
+
+
 func progress_complete_anim():
 	animation_player.play("progress_complete")
 

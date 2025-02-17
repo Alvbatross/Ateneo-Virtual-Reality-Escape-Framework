@@ -18,8 +18,6 @@ signal action_completed(requirement, total_progress)
 
 @export var snap_actor : bool = false
 
-@export var trigger_action : bool = false
-
 @export_flags_3d_physics var ois_collision_layer : int = COLLISION_LAYER
 
 var completed : bool = false

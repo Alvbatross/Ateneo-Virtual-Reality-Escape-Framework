@@ -6,12 +6,12 @@ extends OIS
 @export_category("Actor Settings")
 @export var receiver_group : String
 @export var actor_rate : float = 1.0
+@export var trigger_action : bool = false
 
 @onready var actor : Variant = get_parent()
 
 var actor_state_machine : OISActorStateMachine
 var actor_collider : OISCollider
-
 var ois_receiver : OISReceiverComponent
 
 # Called when the node enters the scene tree for the first time.
@@ -97,21 +97,4 @@ func find_ois_collider(node: Node) -> OISCollider:
 		if child is OISCollider:
 			return child
 	
-	return null
-
-
-static func _find_child(node : Node, type : String) -> Node:
-	# Iterate through all children
-	for child in node.get_children():
-		# If the child is a match then return it
-		if child.is_class(type):
-			return child
-	
-		# Recurse into child
-		var found := _find_child(child, type)
-		if found:
-			return found
-	
-	print("No state machines found.")
-	# No child found matching type
 	return null
