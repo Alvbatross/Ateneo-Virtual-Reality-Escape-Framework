@@ -12,10 +12,11 @@ signal action_ended(requirement, total_progress)
 ## Emitted the moment the receiver's action requirement is met.
 signal action_completed(requirement, total_progress)
 
+## The receiver group of the object. Should be the same as the receiver_group in the Actor
 @export var group : String = ""
-
+## The requirement for the Action
 @export var requirement : float
-
+## Boolean to determine whether or not the actor will snap to the receiver's position
 @export var snap_actor : bool = false
 
 @export_flags_3d_physics var ois_collision_layer : int = COLLISION_LAYER

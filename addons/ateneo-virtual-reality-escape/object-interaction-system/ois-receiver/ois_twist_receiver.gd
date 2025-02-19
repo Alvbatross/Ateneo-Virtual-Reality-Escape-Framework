@@ -2,9 +2,10 @@
 class_name OISTwistReceiver
 extends OISReceiverComponent
 
+## Determines the direction of the twist action
 @export_enum("Clockwise", "Counter-Clockwise") var twist_direction : int
+## Check if the action should only go in one direction
 @export var single_direction : bool = false
-@export var buffer : float = 0.001
 var interacting_initial_angle : float
 var past_progress : float = 0
 var total_angle : float = 0
@@ -41,7 +42,7 @@ func action_ongoing(delta: float) -> void:
 	total_progress += current_progress * (rate / 90)
 	
 	print("=======================")
-	print("Total angle: " + str(total_angle))
+	print("Total angle: " + str(total_angle)) # test value, delete in future
 	print("Total progress: "+str(total_progress))
 	print("=======================\n")
 	

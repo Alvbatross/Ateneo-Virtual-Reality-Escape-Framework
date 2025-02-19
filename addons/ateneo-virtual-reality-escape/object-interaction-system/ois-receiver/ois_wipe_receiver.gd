@@ -2,23 +2,13 @@
 class_name OISWipeReceiver
 extends OISReceiverComponent
 
-
+## Buffer set for minimal wipe distance in 1 frame. The lower the buffer the more sensitive each wipe movement is. 
 @export var buffer : float = 0.02
 var interacting_initial_pos : Vector3
-#var delta_dist_prev = 0
-#var total_delta_dist = 0
-
-#var old_buffer = 0.005
-#var past_progress = 0
 
 
 func initialize_action_vars():
 	interacting_initial_pos = interacting_object.position
-	#past_progress = total_progress
-	
-	#delta_dist_prev = 0
-	#total_delta_dist = 0
-
 
 func action_ongoing(delta: float) -> void:
 	var interacting_current_pos = interacting_object.position
@@ -35,30 +25,3 @@ func action_ongoing(delta: float) -> void:
 	print("=======================\n")
 	
 	super(delta)
-	
-	# THIS IS JOAN'S STUFF JUST IN CASE WE WANT IT BACK
-	# =====================================================
-	#var interacting_current_pos = interacting_object.position
-	#
-	#var delta_dist = interacting_inital_pos.distance_to(interacting_current_pos)
-	#
-	#var current_progress = total_delta_dist + delta_dist
-	#
-	#print ("Initial Position " + str(interacting_inital_pos))
-	#
-	#print("\n=========== "+ str(self.get_parent().name) + " interaction ===========")
-	#print(str(interacting_object) + " position: "+str(interacting_object.position))
-	#print("Delta distance: "+str(delta_dist))
-		#
-	#if(delta_dist < (delta_dist_prev - buffer)):
-		#print("Delta distance is less than previous value minus buffer.")
-		#total_delta_dist += delta_dist
-		#interacting_inital_pos = interacting_object.position
-	#
-	#delta_dist_prev = delta_dist
-	#
-	#total_progress = past_progress + (current_progress * rate)
-	#print("Total progress: "+str(total_progress))
-	#print("=======================\n")
-	
-	

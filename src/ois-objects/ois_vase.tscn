@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmslb4qow1lj5"]
+
+[ext_resource type="PackedScene" uid="uid://bxohumuttwrc0" path="res://src/assets/Vase.glb" id="1_5gk45"]
+[ext_resource type="PackedScene" uid="uid://brg15fjxmhsrs" path="res://src/assets/VaseShattered.glb" id="1_lexd7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a33cn"]
+size = Vector3(0.2, 0.5, 0.2)
+
+[node name="ois_vase" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0373903, 0)
+shape = SubResource("BoxShape3D_a33cn")
+
+[node name="Vase2" parent="." instance=ExtResource("1_5gk45")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.220805, 0)
+
+[node name="VaseShattered" parent="." instance=ExtResource("1_lexd7")]

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwjxoc5lve3gb"]
+
+[ext_resource type="PackedScene" uid="uid://brg15fjxmhsrs" path="res://src/assets/VaseShattered.glb" id="1_jdecs"]
+
+[node name="VaseShattered" instance=ExtResource("1_jdecs")]

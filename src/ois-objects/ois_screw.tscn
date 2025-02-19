@@ -22,9 +22,6 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="OISTwistReceiver" type="Node3D" parent="."]
 script = ExtResource("1_pmjqi")
-twist_direction = null
-single_direction = null
-buffer = null
 group = "screw"
 requirement = 1.0
 snap_actor = true
