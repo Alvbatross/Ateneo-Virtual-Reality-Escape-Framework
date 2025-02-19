@@ -1,6 +1,7 @@
 @tool
 class_name OIS
 extends Node3D
+## Base node for all OIS objects. Script can be used to configure all OIS related nodes.
 
 const COLLISION_LAYER := 0b0010_0000_0000_0000_0000_0000_0000_0000
 

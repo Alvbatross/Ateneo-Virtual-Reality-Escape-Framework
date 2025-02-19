@@ -34,7 +34,6 @@ visible = true
 [node name="OISActorComponent" type="Node3D" parent="."]
 script = ExtResource("5_81oon")
 receiver_group = "rag"
-trigger_action = null
 
 [node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent"]
 script = ExtResource("7_til0b")

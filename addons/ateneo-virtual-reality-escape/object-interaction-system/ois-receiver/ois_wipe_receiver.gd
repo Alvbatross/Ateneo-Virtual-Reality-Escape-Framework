@@ -25,15 +25,16 @@ func action_ongoing(delta: float) -> void:
 	
 	var delta_dist = interacting_initial_pos.distance_to(interacting_current_pos)
 	
+	interacting_initial_pos = interacting_current_pos
+	
 	if (delta_dist > buffer):
 		total_progress += rate * delta
-	
-	interacting_initial_pos = interacting_current_pos
 	
 	print("=======================")
 	print("Total progress: "+str(total_progress))
 	print("=======================\n")
 	
+	super(delta)
 	
 	# THIS IS JOAN'S STUFF JUST IN CASE WE WANT IT BACK
 	# =====================================================
@@ -60,4 +61,4 @@ func action_ongoing(delta: float) -> void:
 	#print("Total progress: "+str(total_progress))
 	#print("=======================\n")
 	
-	super(delta)
+	

@@ -100,8 +100,12 @@ trigger_action = false
 [node name="OISScrew" parent="." instance=ExtResource("11_sbghm")]
 transform = Transform3D(0.338262, -0.81733, -0.466424, 0, 0.495641, -0.868528, 0.941052, 0.29379, 0.167656, 0.684659, 0.707029, -0.214372)
 
+[node name="OISTwistReceiver" parent="OISScrew" index="2"]
+single_direction = true
+buffer = null
+
 [node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
-transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 0.259349, 0.594793, -0.709347)
+transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 0.703777, 0.594793, -0.429252)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 

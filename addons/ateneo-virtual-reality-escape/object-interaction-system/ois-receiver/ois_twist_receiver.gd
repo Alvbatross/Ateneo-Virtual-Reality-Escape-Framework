@@ -2,33 +2,46 @@
 class_name OISTwistReceiver
 extends OISReceiverComponent
 
-var interacting_initial_angle
-var delta_angle_buffer
-var past_progress = 0
+@export_enum("Clockwise", "Counter-Clockwise") var twist_direction : int
+@export var single_direction : bool = false
+@export var buffer : float = 0.001
+var interacting_initial_angle : float
+var past_progress : float = 0
 var total_angle : float = 0
 
 
 func initialize_action_vars():
 	interacting_initial_angle = interacting_object.basis.get_euler().z
 	past_progress = total_progress
-	delta_angle_buffer = 0
 
 
 func action_ongoing(delta: float) -> void:
 	var interacting_current_angle = interacting_object.basis.get_euler().z
-
-	var delta_angle = interacting_current_angle-interacting_initial_angle
 	
-	interacting_initial_angle = interacting_current_angle
+	var delta_angle = interacting_current_angle-interacting_initial_angle
 	
 	# get shortest angle between two angles
 	if (delta_angle > PI || delta_angle < -PI):
 		delta_angle = sign(delta_angle)*(abs(delta_angle)-(2*PI))
-		
-	var current_progress = delta_angle_buffer + delta_angle * (180/PI)
-
+	
+	# Doesn't detect twisting in the opposite direction if single_direction is true
+	if single_direction:
+		if (twist_direction == CLOCKWISE and not delta_angle > 0) or (twist_direction == COUNTERCLOCKWISE and not delta_angle < 0):
+			return
+	
+	interacting_initial_angle = interacting_current_angle
+	
+	var current_progress = rad_to_deg(delta_angle) 
+	
+	if twist_direction == COUNTERCLOCKWISE:
+		current_progress *= -1
+	
+	total_angle += rad_to_deg(delta_angle) # test value, delete in future
+	
 	total_progress += current_progress * (rate / 90)
+	
 	print("=======================")
+	print("Total angle: " + str(total_angle))
 	print("Total progress: "+str(total_progress))
 	print("=======================\n")
 	
