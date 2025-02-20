@@ -15,6 +15,8 @@ var receiver
 
 var controller : XRController3D
 
+var initialization_done : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await owner.ready
@@ -31,6 +33,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		if not initialization_done:
+			initialize()
 	if not Engine.is_editor_hint():
 		state.update(delta)
 		#print(state.name)

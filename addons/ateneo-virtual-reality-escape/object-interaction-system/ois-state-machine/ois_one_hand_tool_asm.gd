@@ -22,3 +22,5 @@ func initialize() -> void:
 	add_child(active_colliding_state)
 	
 	state = idle_state
+	
+	initialization_done = true

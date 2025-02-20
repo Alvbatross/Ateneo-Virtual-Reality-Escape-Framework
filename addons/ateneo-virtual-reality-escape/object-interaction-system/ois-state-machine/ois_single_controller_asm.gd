@@ -24,3 +24,5 @@ func initialize() -> void:
 	controller = get_actor_component().get_actor()
 	
 	state = active_state
+	
+	initialization_done = true

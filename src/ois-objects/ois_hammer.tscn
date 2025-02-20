@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://b8u301esq36hf"]
+
+[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_mluor"]
+[ext_resource type="PackedScene" uid="uid://cwykdkcixy84h" path="res://src/assets/Hammer.glb" id="2_c568i"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="3_msaxg"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="4_4cq7w"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="5_b1qr5"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="6_yukwi"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="7_071ew"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8y5sq"]
+size = Vector3(0.05, 0.350098, 0.177466)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_386sx"]
+radius = 0.1
+
+[node name="ois_hammer" type="RigidBody3D"]
+script = ExtResource("1_mluor")
+
+[node name="Hammer2" parent="." instance=ExtResource("2_c568i")]
+transform = Transform3D(-0.075, 0, 1.13247e-08, 0, 0.075, 0, -1.13247e-08, 0, -0.075, 0, 0, 0)
+
+[node name="GrabPointHandLeft" parent="." instance=ExtResource("3_msaxg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 0, -0.094)
+visible = true
+
+[node name="GrabPointHandRight" parent="." instance=ExtResource("4_4cq7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0152802, 0, -0.0935845)
+visible = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0183105, -0.00306396)
+shape = SubResource("BoxShape3D_8y5sq")
+
+[node name="OISActorComponent" type="Node3D" parent="."]
+script = ExtResource("5_b1qr5")
+
+[node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent"]
+script = ExtResource("6_yukwi")
+
+[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent"]
+script = ExtResource("7_071ew")
+
+[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.168293, -0.162138)
+shape = SubResource("SphereShape3D_386sx")

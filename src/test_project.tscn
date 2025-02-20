@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=21 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -14,7 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://chqn1m2fy1uxr" path="res://src/progress-bar/progress_bar_test.tscn" id="11_8d2v2"]
 [ext_resource type="PackedScene" uid="uid://b4mr5nojepu4p" path="res://src/ois-objects/ois_screw.tscn" id="11_sbghm"]
 [ext_resource type="PackedScene" uid="uid://djlmwmbu8ya0x" path="res://src/ois-objects/ois_screw_driver.tscn" id="12_8po37"]
-[ext_resource type="PackedScene" uid="uid://bmslb4qow1lj5" path="res://src/ois-objects/ois_vase.tscn" id="15_xnp4h"]
+[ext_resource type="PackedScene" uid="uid://bvu0jcid5a4eu" path="res://src/assets/VaseShattered.glb" id="15_122dv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
+radius = 0.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7p0no"]
 radius = 0.1
@@ -33,6 +36,28 @@ script = ExtResource("1_ptu4b")
 
 [node name="XRPlayer" parent="." instance=ExtResource("2_s6le6")]
 script = ExtResource("3_xo4ep")
+
+[node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.99225, 0.12426, 0, -0.12426, 0.99225, 0.0545714, -0.0501776, 0.0746771)
+script = ExtResource("4_ph25s")
+
+[node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("6_y8u80")
+
+[node name="OISColliderArea3D" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent"]
+script = ExtResource("6_l0sle")
+
+[node name="Area3D" type="Area3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent/OISColliderArea3D"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent/OISColliderArea3D/Area3D"]
+shape = SubResource("SphereShape3D_rhrux")
+
+[node name="FunctionPointer" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="2" instance=ExtResource("7_snb4w")]
+
+[node name="FunctionPickup" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="3" instance=ExtResource("8_a6l3j")]
 
 [node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412071, -0.0475127, 0.0761249)
@@ -108,8 +133,8 @@ transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_hhivm")
 
-[node name="ois_vase" parent="." instance=ExtResource("15_xnp4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.532777, 0.36758, 0)
+[node name="VaseShattered" parent="." instance=ExtResource("15_122dv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.248338, 0.0869336, 0)
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
