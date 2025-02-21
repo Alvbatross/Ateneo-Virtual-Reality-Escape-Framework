@@ -15,7 +15,13 @@ size = Vector3(0.05, 0.350098, 0.177466)
 radius = 0.1
 
 [node name="ois_hammer" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 196615
 script = ExtResource("1_mluor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0183105, -0.00306396)
+shape = SubResource("BoxShape3D_8y5sq")
 
 [node name="Hammer2" parent="." instance=ExtResource("2_c568i")]
 transform = Transform3D(-0.075, 0, 1.13247e-08, 0, 0.075, 0, -1.13247e-08, 0, -0.075, 0, 0, 0)
@@ -28,12 +34,9 @@ visible = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0152802, 0, -0.0935845)
 visible = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0183105, -0.00306396)
-shape = SubResource("BoxShape3D_8y5sq")
-
 [node name="OISActorComponent" type="Node3D" parent="."]
 script = ExtResource("5_b1qr5")
+receiver_group = "hammer"
 
 [node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent"]
 script = ExtResource("6_yukwi")
