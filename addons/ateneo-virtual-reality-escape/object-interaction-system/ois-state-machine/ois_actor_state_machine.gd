@@ -27,7 +27,6 @@ func _ready() -> void:
 		await child._ready
 		child._ois_actor_state_machine = self
 	
-	print(state)
 	state.enter_state()
 
 
@@ -38,7 +37,6 @@ func _process(delta: float) -> void:
 			initialize()
 	if not Engine.is_editor_hint():
 		state.update(delta)
-		#print(state.name)
 
 
 func _physics_process(delta: float) -> void:
@@ -56,7 +54,6 @@ func handle_exit_collision(receiver) -> void:
 		state._on_exit_collision(receiver)
 
 func transition_to(target_state: String, msg: Dictionary = {}) -> void:
-	#print(get_actor_component().get_actor().name + " Trying to change to " + target_state)
 	var old_state: OISActorState = state
 	var new_state: OISActorState
 	

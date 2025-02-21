@@ -8,7 +8,6 @@ var active_colliding_state : ActiveCollidingState
 
 
 func initialize() -> void:
-	print("Initializing OIS One Hand Tool ASM")
 	idle_state = ToolIdleState.new()
 	idle_state.name = "IdleState"
 	add_child(idle_state)

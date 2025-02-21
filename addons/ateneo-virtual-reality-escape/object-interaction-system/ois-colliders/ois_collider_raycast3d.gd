@@ -12,6 +12,7 @@ var raycast_laser := MeshInstance3D.new()
 
 var collision_object : Variant = null
 
+
 func _ready() -> void:
 	super()
 	
@@ -33,8 +34,9 @@ func _ready() -> void:
 		raycast_3d.collide_with_areas = true
 		raycast_3d.collide_with_bodies = true
 	
-	if raycast_3d != null:
-		set_raycast_size(raycast_length, laser_thickness)
+	
+	#if raycast_3d != null and raycast_laser != null:
+		#set_raycast_size(raycast_length, laser_thickness)
 	
 	show_raycast(false)
 
@@ -52,7 +54,6 @@ func show_raycast(b : bool) -> void:
 
 
 func collider_enabled(b: bool) -> void:
-	print("Enabling Raycast " + str(b))
 	raycast_3d.enabled = b
 	show_raycast(b)
 	raycast_3d.collision_mask = ois_collision_layer

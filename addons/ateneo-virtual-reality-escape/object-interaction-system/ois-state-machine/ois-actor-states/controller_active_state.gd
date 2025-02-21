@@ -3,7 +3,6 @@ extends OISActorState
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	print("Entered Active State")
 	_ois_actor_state_machine.get_actor_component().actor_component_enabled(true)
 	_ois_actor_state_machine.get_actor_component().get_actor().get_node("FunctionPickup").has_picked_up.connect(_on_controller_pick_up)
 

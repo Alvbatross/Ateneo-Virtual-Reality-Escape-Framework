@@ -8,7 +8,6 @@ var active_colliding_state : ActiveCollidingState
 
 
 func initialize() -> void:
-	print("Initializing States for OIS Single Controller ASM")
 	idle_state = ControllerIdleState.new()
 	idle_state.name = "IdleState"
 	add_child(idle_state)

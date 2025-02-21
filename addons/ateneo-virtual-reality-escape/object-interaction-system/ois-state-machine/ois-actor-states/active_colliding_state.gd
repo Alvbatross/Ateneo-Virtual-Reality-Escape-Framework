@@ -7,7 +7,6 @@ var trigger_release = func(x): if (x == "trigger_click"): _on_trigger_release()
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
-	print(_ois_actor_state_machine.get_actor_component().get_actor().name + " Entered Active Colliding State")
 	var actor = _ois_actor_state_machine.get_actor_component().get_actor()
 	if actor is XRToolsPickable:
 		_ois_actor_state_machine.get_actor_component().get_actor().released.connect(_on_actor_released)

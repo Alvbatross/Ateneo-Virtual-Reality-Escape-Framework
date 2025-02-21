@@ -18,17 +18,12 @@ var ois_receiver : OISReceiverComponent
 func _ready() -> void:
 	actor_state_machine = find_actor_state_machine(self)
 	actor_collider = find_ois_collider(self)
-	
-	print("Initialized ASM: " + str(actor_state_machine))
-	print("Initialized actor collider: "+ str(actor_collider))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	#print("\n====================\n")
-	#print("Actor "+str(self.get_parent())+ " position:" + str(self.get_parent().position))
 	pass
 
 
@@ -58,7 +53,6 @@ func _on_ois_receiver_collision_entered(receiver) -> void:
 	# actor component does not move on its own.
 	actor_state_machine.handle_enter_collision(receiver)
 	
-	print("Collision entered: " + str(ois_receiver))
 
 
 func _on_ois_receiver_collision_exited(receiver) -> void:

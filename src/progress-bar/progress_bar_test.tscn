@@ -8,14 +8,14 @@
 resource_local_to_scene = true
 size = Vector2(200, 200)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2ytwj"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_54151"]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itntw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crrwg"]
 transparency = 1
 cull_mode = 2
 shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_2ytwj")
+albedo_texture = SubResource("ViewportTexture_54151")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p435t"]
@@ -35,12 +35,13 @@ unshaded = true
 
 [node name="Viewport" parent="Viewport2Din3D" index="0"]
 size = Vector2i(500, 500)
+render_target_update_mode = 4
 
 [node name="Progress Circle2" parent="Viewport2Din3D/Viewport" index="0" instance=ExtResource("3_g7sxe")]
 
 [node name="Screen" parent="Viewport2Din3D" index="1"]
 mesh = SubResource("QuadMesh_oigqy")
-surface_material_override/0 = SubResource("StandardMaterial3D_itntw")
+surface_material_override/0 = SubResource("StandardMaterial3D_crrwg")
 
 [node name="StaticBody3D" parent="Viewport2Din3D" index="2"]
 screen_size = Vector2(200, 200)
