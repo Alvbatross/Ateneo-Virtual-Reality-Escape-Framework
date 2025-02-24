@@ -72,7 +72,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("OIS Actor does not have an OISActorStateMachine")
 	
 	if not find_ois_collider(self):
-		warnings.append("OIS Actor does not have an OISCollider")
+		if not find_actor_state_machine(self) is OISTwoControllerASM:
+			warnings.append("OIS Actor does not have an OISCollider or State Machine isn't OISTwoControllerASM")
 
 	# Return warnings
 	return warnings
