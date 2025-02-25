@@ -22,6 +22,9 @@ var ois_collider_area3d := preload("res://addons/ateneo-virtual-reality-escape/o
 var ois_collider_raycast3d := preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_raycast3d.gd")
 
 
+## Inventory System Related
+var inventory_system_slot := preload("res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot.gd")
+
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
 	add_custom_type("Event", "Node", event, preload("res://icon.svg"))
@@ -43,6 +46,8 @@ func _enter_tree() -> void:
 	add_custom_type("OISCollider", "OIS", ois_collider, preload("res://icon.svg"))
 	add_custom_type("OISColliderArea3D", "OISCollider", ois_collider_area3d, preload("res://icon.svg"))
 	add_custom_type("OISColliderRaycast3D", "OISCollider", ois_collider_raycast3d, preload("res://icon.svg"))
+	
+	add_custom_type("InventorySlot", "Inventory", inventory_system_slot, preload("res://icon.svg"))
 
 
 
@@ -67,4 +72,6 @@ func _exit_tree() -> void:
 	remove_custom_type("OISActorComponent")
 	remove_custom_type("OIS")
 	remove_custom_type("Event")
+	
+	remove_custom_type("InventorySlot")
 	
