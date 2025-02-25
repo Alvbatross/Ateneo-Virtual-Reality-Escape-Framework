@@ -32,7 +32,6 @@ func _ready() -> void:
 	snap_zone.set_collision_layer_value(3,true)
 	snap_zone.set_collision_mask_value(3,true)
 	snap_zone.set_collision_mask_value(17,true)
-	snap_zone.set_collision_mask_value(30,true)
 	
 	var new_test_mesh = SphereMesh.new()
 	new_test_mesh.radius = snap_zone_radius
@@ -42,7 +41,7 @@ func _ready() -> void:
 	mesh_shape_test.mesh = new_test_mesh
 	mesh_shape_test.set_surface_override_material(0,slot_material_override)
 	
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() and not has_node("Area3D"):
 		snap_zone.name = "Area3D"
 		collision_shape_3d.name = "CollisionShape3D"
 		mesh_shape_test.name = "MeshInstance3D"

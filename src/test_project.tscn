@@ -38,17 +38,17 @@ size = Vector3(0.3, 0.3, 0.3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_qbewk"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_4nfic"]
 radius = 0.1
 
-[sub_resource type="SphereMesh" id="SphereMesh_en65a"]
+[sub_resource type="SphereMesh" id="SphereMesh_x26p6"]
 radius = 0.1
 height = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_j4ibe"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_4l5se"]
 radius = 0.1
 
-[sub_resource type="SphereMesh" id="SphereMesh_ksf7u"]
+[sub_resource type="SphereMesh" id="SphereMesh_5ab5s"]
 radius = 0.1
 height = 0.2
 
@@ -173,6 +173,7 @@ transform = Transform3D(0.381506, -0.924366, 0, 0.924366, 0.381506, 0, 0, 0, 1, 
 
 [node name="InventorySlot" type="Node3D" parent="." node_paths=PackedStringArray("snap_zone", "collision_shape_3d", "mesh_shape_test", "audio_stream_player_3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.476073, 0.800046, 0.419968)
+visible = false
 script = ExtResource("17_0pxwd")
 snap_zone_radius = 0.1
 snap_zone = NodePath("Area3D")
@@ -182,20 +183,21 @@ audio_stream_player_3d = NodePath("Area3D/AudioStreamPlayer3D")
 
 [node name="Area3D" type="Area3D" parent="InventorySlot"]
 collision_layer = 4
-collision_mask = 536936452
+collision_mask = 65540
 script = ExtResource("18_6najq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InventorySlot/Area3D"]
-shape = SubResource("SphereShape3D_qbewk")
+shape = SubResource("SphereShape3D_4nfic")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="InventorySlot/Area3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot"]
-mesh = SubResource("SphereMesh_en65a")
+mesh = SubResource("SphereMesh_x26p6")
 surface_material_override/0 = ExtResource("19_lsoui")
 
 [node name="InventorySlot2" type="Node3D" parent="." node_paths=PackedStringArray("snap_zone", "collision_shape_3d", "mesh_shape_test", "audio_stream_player_3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.476073, 0.800046, 0.0540201)
+visible = false
 script = ExtResource("17_0pxwd")
 snap_zone_radius = 0.1
 snap_zone = NodePath("Area3D")
@@ -205,16 +207,16 @@ audio_stream_player_3d = NodePath("Area3D/AudioStreamPlayer3D")
 
 [node name="Area3D" type="Area3D" parent="InventorySlot2"]
 collision_layer = 4
-collision_mask = 536936452
+collision_mask = 65540
 script = ExtResource("18_6najq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InventorySlot2/Area3D"]
-shape = SubResource("SphereShape3D_j4ibe")
+shape = SubResource("SphereShape3D_4l5se")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="InventorySlot2/Area3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot2"]
-mesh = SubResource("SphereMesh_ksf7u")
+mesh = SubResource("SphereMesh_5ab5s")
 surface_material_override/0 = ExtResource("19_lsoui")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
@@ -227,3 +229,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75016, 0)
 [editable path="XRPlayer"]
 [editable path="OISRag"]
 [editable path="OISScrew"]
+[editable path="ois_hammer"]
