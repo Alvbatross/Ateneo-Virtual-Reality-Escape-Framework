@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8u301esq36hf"]
+[gd_scene load_steps=10 format=3 uid="uid://df8ckf7krjyl3"]
 
-[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_mluor"]
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_w5b5i"]
 [ext_resource type="PackedScene" uid="uid://cwykdkcixy84h" path="res://src/assets/Hammer.glb" id="2_c568i"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="3_msaxg"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="4_4cq7w"]
@@ -8,46 +8,43 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="6_yukwi"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="7_071ew"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8y5sq"]
-size = Vector3(0.05, 0.350098, 0.177466)
+[sub_resource type="BoxShape3D" id="BoxShape3D_8le38"]
+size = Vector3(0.05, 0.348364, 0.2)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_386sx"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_c78q0"]
 radius = 0.1
 
-[node name="OISHammer" type="RigidBody3D"]
-collision_layer = 4
-collision_mask = 196615
-script = ExtResource("1_mluor")
+[node name="OISHammer" instance=ExtResource("1_w5b5i")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0183105, -0.00306396)
-shape = SubResource("BoxShape3D_8y5sq")
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0241821, 0)
+shape = SubResource("BoxShape3D_8le38")
 
-[node name="Hammer2" parent="." instance=ExtResource("2_c568i")]
-transform = Transform3D(-0.075, 0, 1.13247e-08, 0, 0.075, 0, -1.13247e-08, 0, -0.075, 0, 0, 0)
+[node name="Hammer2" parent="." index="1" instance=ExtResource("2_c568i")]
+transform = Transform3D(-0.08, 0, -6.99382e-09, 0, 0.08, 0, 6.99382e-09, 0, -0.08, 0, 0, 0)
 
-[node name="GrabPointHandLeft" parent="." instance=ExtResource("3_msaxg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 0, -0.094)
+[node name="GrabPointHandLeft" parent="." index="2" instance=ExtResource("3_msaxg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0989878)
 visible = true
 
-[node name="GrabPointHandRight" parent="." instance=ExtResource("4_4cq7w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0152802, 0, -0.0935845)
+[node name="GrabPointHandRight" parent="." index="3" instance=ExtResource("4_4cq7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0989878)
 visible = true
 
-[node name="OISActorComponent" type="Node3D" parent="."]
+[node name="OISActorComponent" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.176091, -0.0993486)
 script = ExtResource("5_b1qr5")
-receiver_group = "hammer"
 
-[node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent"]
+[node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent" index="0"]
 script = ExtResource("6_yukwi")
 
-[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent"]
+[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0910899)
 script = ExtResource("7_071ew")
 
-[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D"]
+[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D" index="0"]
 collision_layer = 536870912
 collision_mask = 536870912
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.168293, -0.162138)
-shape = SubResource("SphereShape3D_386sx")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("SphereShape3D_c78q0")

@@ -20,6 +20,7 @@ func _ready() -> void:
 		raycast_3d.name = "Raycast3D"
 		raycast_3d.collide_with_areas = true
 		raycast_3d.collide_with_bodies = true
+		raycast_3d.collision_mask = ois_collision_layer
 		raycast_laser.name = "Laser"
 		raycast_laser.mesh = raycast_mesh
 		add_child(raycast_3d)

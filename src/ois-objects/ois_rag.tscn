@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcpdak0t07c8r"]
+[gd_scene load_steps=10 format=3 uid="uid://clr8xwi6ickp4"]
 
-[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_mmel6"]
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_eyh0q"]
 [ext_resource type="PackedScene" uid="uid://cde5joj64yp04" path="res://src/assets/Rag.glb" id="3_wox10"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="3_yrdlr"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="4_clwjf"]
@@ -8,45 +8,43 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="7_til0b"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="7_y5sra"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ggipd"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_kh8d4"]
 size = Vector3(0.2, 0.05, 0.2)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ebnd1"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_ayxn8"]
 radius = 0.1
 
-[node name="OISRag" type="RigidBody3D"]
-collision_layer = 4
-collision_mask = 196615
-script = ExtResource("1_mmel6")
+[node name="OISRag" instance=ExtResource("1_eyh0q")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_ggipd")
+[node name="Rag" parent="." index="0" instance=ExtResource("3_wox10")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 
-[node name="Rag" parent="." instance=ExtResource("3_wox10")]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, -0.0237128, 0)
+[node name="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0257555, 0)
+shape = SubResource("BoxShape3D_kh8d4")
 
-[node name="GrabPointHandLeft" parent="." instance=ExtResource("3_yrdlr")]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.0446606, 0, -0.0870946)
+[node name="GrabPointHandRight" parent="." index="2" instance=ExtResource("4_clwjf")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.05, 0.0218552, -0.0971319)
 visible = true
 
-[node name="GrabPointHandRight" parent="." instance=ExtResource("4_clwjf")]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.045, 0, -0.087)
+[node name="GrabPointHandLeft" parent="." index="3" instance=ExtResource("3_yrdlr")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.05, 0.0218552, -0.0971319)
 visible = true
 
-[node name="OISActorComponent" type="Node3D" parent="."]
+[node name="OISActorComponent" type="Node3D" parent="." index="4"]
 script = ExtResource("5_81oon")
 receiver_group = "rag"
 
-[node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent"]
+[node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent" index="0"]
 script = ExtResource("7_til0b")
 
-[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent"]
+[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0673635, 0)
 script = ExtResource("7_y5sra")
 
-[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D"]
+[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D" index="0"]
 collision_layer = 536870912
 collision_mask = 536870912
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0764493, 0)
-shape = SubResource("SphereShape3D_ebnd1")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("SphereShape3D_ayxn8")

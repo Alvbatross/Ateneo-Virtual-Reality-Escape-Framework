@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=26 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -10,16 +10,15 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_wipe_receiver.gd" id="7_uqbxj"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="8_a6l3j"]
 [ext_resource type="Script" path="res://src/test_receiver.gd" id="9_qjxp0"]
-[ext_resource type="PackedScene" uid="uid://bcpdak0t07c8r" path="res://src/ois-objects/ois_rag.tscn" id="10_ero8i"]
+[ext_resource type="PackedScene" uid="uid://clr8xwi6ickp4" path="res://src/ois-objects/ois_rag.tscn" id="10_ero8i"]
 [ext_resource type="PackedScene" uid="uid://chqn1m2fy1uxr" path="res://src/progress-bar/progress_bar_test.tscn" id="11_8d2v2"]
 [ext_resource type="PackedScene" uid="uid://b4mr5nojepu4p" path="res://src/ois-objects/ois_screw.tscn" id="11_sbghm"]
 [ext_resource type="PackedScene" uid="uid://djlmwmbu8ya0x" path="res://src/ois-objects/ois_screw_driver.tscn" id="12_8po37"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_strike_receiver.gd" id="12_uyad0"]
-[ext_resource type="PackedScene" uid="uid://b8u301esq36hf" path="res://src/ois-objects/ois_hammer.tscn" id="16_7tfes"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot.gd" id="17_0pxwd"]
-[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/snap_zone.gd" id="18_6najq"]
-[ext_resource type="Material" uid="uid://dy43ogh4jhnpk" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot_shader_a.tres" id="19_lsoui"]
-[ext_resource type="PackedScene" uid="uid://5q064syg3wm6" path="res://src/assets/Nutribun.tscn" id="20_pk727"]
+[ext_resource type="PackedScene" uid="uid://df8ckf7krjyl3" path="res://src/ois-objects/ois_hammer.tscn" id="16_7tfes"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot.gd" id="17_204jl"]
+[ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="18_xanin"]
+[ext_resource type="Material" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot_shader_a.tres" id="19_v4is8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
 radius = 0.1
@@ -33,25 +32,12 @@ size = Vector3(0.1, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_320of"]
 size = Vector3(1, 0.5, 0.5)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_68ma1"]
-size = Vector3(0.3, 0.3, 0.3)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_5wjvq"]
-radius = 0.1
-
-[sub_resource type="SphereMesh" id="SphereMesh_rct31"]
-radius = 0.1
-height = 0.2
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_tjb3l"]
-radius = 0.1
-
-[sub_resource type="SphereMesh" id="SphereMesh_75oa3"]
-radius = 0.1
-height = 0.2
+[sub_resource type="SphereMesh" id="SphereMesh_b60wp"]
+radius = 0.2
+height = 0.4
 
 [node name="TestProject" type="Node3D"]
 script = ExtResource("1_ptu4b")
@@ -136,97 +122,41 @@ collision_mask = 536870912
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.841792, 0.32341, 0)
 shape = SubResource("BoxShape3D_320of")
 
-[node name="Area3D2" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0534108, 0.559616, -0.498358)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.124436, -0.191569)
-shape = SubResource("BoxShape3D_68ma1")
-
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0581723, 0.561463, -0.388457)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.124436, -0.191569)
-shape = SubResource("BoxShape3D_68ma1")
-
-[node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561463, -0.388457)
-
 [node name="OISScrew" parent="." instance=ExtResource("11_sbghm")]
 transform = Transform3D(0.338262, -0.81733, -0.466424, 0, 0.495641, -0.868528, 0.941052, 0.29379, 0.167656, 0.684659, 0.707029, -0.214372)
 
 [node name="OISTwistReceiver" parent="OISScrew" index="2"]
 single_direction = true
 
-[node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
-transform = Transform3D(0.544083, -0.839032, 0, 0.839032, 0.544083, 0, 0, 0, 1, 0.703777, 0.594793, -0.429252)
-
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_hhivm")
 
-[node name="ois_hammer" parent="." instance=ExtResource("16_7tfes")]
-transform = Transform3D(0.381506, -0.924366, 0, 0.924366, 0.381506, 0, 0, 0, 1, -0.357021, 0.772518, 0)
+[node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.370821, 0.411474, 0)
 
-[node name="InventorySlot" type="Node3D" parent="." node_paths=PackedStringArray("snap_zone", "collision_shape_3d", "mesh_shape_test", "audio_stream_player_3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.476073, 0.800046, 0.419968)
-script = ExtResource("17_0pxwd")
-snap_zone_radius = 0.1
-snap_zone = NodePath("Area3D")
-collision_shape_3d = NodePath("Area3D/CollisionShape3D")
-mesh_shape_test = NodePath("MeshInstance3D")
-audio_stream_player_3d = NodePath("Area3D/AudioStreamPlayer3D")
+[node name="OISHammer" parent="." instance=ExtResource("16_7tfes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.278549, 0.433975, 0)
 
-[node name="Area3D" type="Area3D" parent="InventorySlot"]
-collision_layer = 4
-collision_mask = 65540
-script = ExtResource("18_6najq")
+[node name="InventorySlot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.352408, 0.690044, 0.302171)
+script = ExtResource("17_204jl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InventorySlot/Area3D"]
-shape = SubResource("SphereShape3D_5wjvq")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="InventorySlot/Area3D"]
+[node name="SnapZone" parent="InventorySlot" instance=ExtResource("18_xanin")]
+grab_distance = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot"]
-mesh = SubResource("SphereMesh_rct31")
-surface_material_override/0 = ExtResource("19_lsoui")
+mesh = SubResource("SphereMesh_b60wp")
+surface_material_override/0 = ExtResource("19_v4is8")
 
-[node name="InventorySlot2" type="Node3D" parent="." node_paths=PackedStringArray("snap_zone", "collision_shape_3d", "mesh_shape_test", "audio_stream_player_3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.476073, 0.800046, 0.0540201)
-script = ExtResource("17_0pxwd")
-snap_zone_radius = 0.1
-snap_zone = NodePath("Area3D")
-collision_shape_3d = NodePath("Area3D/CollisionShape3D")
-mesh_shape_test = NodePath("MeshInstance3D")
-audio_stream_player_3d = NodePath("Area3D/AudioStreamPlayer3D")
-
-[node name="Area3D" type="Area3D" parent="InventorySlot2"]
-collision_layer = 4
-collision_mask = 65540
-script = ExtResource("18_6najq")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InventorySlot2/Area3D"]
-shape = SubResource("SphereShape3D_tjb3l")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="InventorySlot2/Area3D"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot2"]
-mesh = SubResource("SphereMesh_75oa3")
-surface_material_override/0 = ExtResource("19_lsoui")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75016, 0)
-
-[node name="Nutribun" parent="." instance=ExtResource("20_pk727")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.249613, 0.468203, -0.307621)
+[node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
+transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
 [connection signal="action_in_progress" from="TestReceiver/OISWipeReceiver" to="TestReceiver" method="_on_ois_wipe_receiver_action_in_progress"]
 
 [editable path="XRPlayer"]
-[editable path="OISRag"]
 [editable path="OISScrew"]
-[editable path="ois_hammer"]
+[editable path="OISScrewDriver"]

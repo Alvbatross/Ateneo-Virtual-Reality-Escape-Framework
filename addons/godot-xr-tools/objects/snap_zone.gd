@@ -304,6 +304,7 @@ func _update_snap_mode() -> void:
 
 # Called when a target in our grab area is dropped
 func _on_target_dropped(target: Node3D) -> void:
+	print(target.name + " Was Dropped Into Inventory")
 	# Skip if not enabled
 	if not enabled:
 		return

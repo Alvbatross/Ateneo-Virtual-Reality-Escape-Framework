@@ -22,9 +22,12 @@ func _ready() -> void:
 	
 	if not Engine.is_editor_hint():
 		area_3d = get_node("Area3D")
+		collision_shape_3d = get_node("Area3D/CollisionShape3D")
 		
 		area_3d.area_entered.connect(_emit_body_entered)
 		area_3d.area_exited.connect(_emit_body_exited)
+		
+		
 
 
 func collider_enabled(b: bool) -> void:

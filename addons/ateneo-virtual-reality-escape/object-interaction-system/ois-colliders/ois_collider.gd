@@ -13,3 +13,7 @@ func _ready() -> void:
 	if actor is OISActorComponent:
 		body_entered.connect(actor._on_ois_receiver_collision_entered)
 		body_exited.connect(actor._on_ois_receiver_collision_exited)
+
+
+func collider_enabled(b: bool) -> void:
+	pass
