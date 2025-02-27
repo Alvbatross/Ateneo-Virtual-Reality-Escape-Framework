@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://df8ckf7krjyl3" path="res://src/ois-objects/ois_hammer.tscn" id="16_7tfes"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot.gd" id="17_204jl"]
 [ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="18_xanin"]
-[ext_resource type="Material" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot_shader_a.tres" id="19_v4is8"]
+[ext_resource type="Material" uid="uid://dy43ogh4jhnpk" path="res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres" id="19_v4is8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
 radius = 0.1
@@ -35,7 +35,7 @@ size = Vector3(1, 0.5, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
 
-[sub_resource type="SphereMesh" id="SphereMesh_b60wp"]
+[sub_resource type="SphereMesh" id="SphereMesh_t8ody"]
 radius = 0.2
 height = 0.4
 
@@ -139,19 +139,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.370821, 0.411474, 0)
 [node name="OISHammer" parent="." instance=ExtResource("16_7tfes")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.278549, 0.433975, 0)
 
+[node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
+transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
+
 [node name="InventorySlot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.352408, 0.690044, 0.302171)
 script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
 
 [node name="SnapZone" parent="InventorySlot" instance=ExtResource("18_xanin")]
 grab_distance = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot"]
-mesh = SubResource("SphereMesh_b60wp")
+mesh = SubResource("SphereMesh_t8ody")
 surface_material_override/0 = ExtResource("19_v4is8")
-
-[node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
-transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
