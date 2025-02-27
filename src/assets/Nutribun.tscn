@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://5q064syg3wm6"]
+[gd_scene load_steps=6 format=3 uid="uid://bpgkrwkbbrau6"]
 
 [ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_vq8dm"]
 [ext_resource type="PackedScene" uid="uid://casl26sty2gd6" path="res://src/assets/nutribun.glb" id="2_pqvlx"]

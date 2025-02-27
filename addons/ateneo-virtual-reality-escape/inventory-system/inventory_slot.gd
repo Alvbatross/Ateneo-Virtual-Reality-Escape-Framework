@@ -51,13 +51,13 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		if is_instance_valid(snap_zone):
-			snap_zone.grab_distance = snap_zone_radius
-		if is_instance_valid(snap_zone_mesh):
-			mesh_shape.radius = snap_zone_radius
-			mesh_shape.height = snap_zone_radius * 2
-			snap_zone_mesh.mesh = mesh_shape
+	if Engine.is_editor_hint() and has_node("SnapZone") and has_node("MeshInstance3D"):
+		snap_zone = get_node("SnapZone")
+		snap_zone_mesh = get_node("MeshInstance3D")
+		snap_zone.grab_distance = snap_zone_radius
+		mesh_shape.radius = snap_zone_radius
+		mesh_shape.height = snap_zone_radius * 2
+		snap_zone_mesh.mesh = mesh_shape
 		
 
 func _set_current_slot_object(what) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=27 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot.gd" id="17_204jl"]
 [ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="18_xanin"]
 [ext_resource type="Material" uid="uid://dy43ogh4jhnpk" path="res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres" id="19_v4is8"]
+[ext_resource type="PackedScene" uid="uid://dms7o4a7kk3tx" path="res://src/ois-objects/ois_bowstaff.tscn" id="20_76m4q"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
 radius = 0.1
@@ -35,7 +36,7 @@ size = Vector3(1, 0.5, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
 
-[sub_resource type="SphereMesh" id="SphereMesh_t8ody"]
+[sub_resource type="SphereMesh" id="SphereMesh_0sykw"]
 radius = 0.2
 height = 0.4
 
@@ -143,15 +144,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.278549, 0.433975, 0)
 transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
 
 [node name="InventorySlot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.297153, 0.501489, 0.359668)
 script = ExtResource("17_204jl")
-snap_zone_radius = 0.1
 
 [node name="SnapZone" parent="InventorySlot" instance=ExtResource("18_xanin")]
 grab_distance = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot"]
-mesh = SubResource("SphereMesh_t8ody")
+mesh = SubResource("SphereMesh_0sykw")
 surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="OISBowstaff" parent="." instance=ExtResource("20_76m4q")]
+transform = Transform3D(1, 0, 0, 0, 0.084043, 0.996462, 0, -0.996462, 0.084043, -0.734974, 0.478283, 0)
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]

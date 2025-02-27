@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://dms7o4a7kk3tx"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_snkl1"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_8mgv7"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_gnf5y"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_je2ke"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="5_8dm64"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_two_hand_tool_asm.gd" id="6_gmomm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vmy2j"]
+size = Vector3(0.05, 2, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_27ogk"]
+top_radius = 0.025
+bottom_radius = 0.025
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tsn06"]
+radius = 0.03
+
+[node name="OISBowstaff" instance=ExtResource("1_snkl1")]
+second_hand_grab = 2
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_vmy2j")
+
+[node name="GrabPointHandLeft" parent="." index="1" instance=ExtResource("2_8mgv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.155101, -0.0983232)
+visible = true
+
+[node name="GrabPointHandRight" parent="." index="2" instance=ExtResource("3_gnf5y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.155101, -0.0983232)
+visible = true
+
+[node name="GrabPointHandLeft2" parent="." index="3" instance=ExtResource("2_8mgv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0613446, -0.0983232)
+visible = true
+
+[node name="GrabPointHandRight2" parent="." index="4" instance=ExtResource("3_gnf5y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0613446, -0.0983232)
+visible = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="5"]
+mesh = SubResource("CylinderMesh_27ogk")
+
+[node name="OISActorComponent" type="Node3D" parent="." index="6"]
+script = ExtResource("4_je2ke")
+
+[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent" index="0"]
+script = ExtResource("5_8dm64")
+
+[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("CylinderShape3D_tsn06")
+
+[node name="OISTwoHandToolASM" type="Node3D" parent="OISActorComponent" index="1"]
+script = ExtResource("6_gmomm")
