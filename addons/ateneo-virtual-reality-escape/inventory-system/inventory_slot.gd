@@ -3,13 +3,14 @@ class_name InventorySlot
 extends Node3D
 
 signal current_object_in_slot
+@export var update_slot_settings : bool = false
 
 @export var slot_enabled : bool = true
 @export var snap_zone_radius : float = 0.2
 @export var default_object : NodePath
 @export var group_required : String
-@export var slot_material_override = preload("res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres")
 
+@export var slot_material_override = preload("res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres")
 
 var snap_zone_mesh := MeshInstance3D.new()
 var mesh_shape := SphereMesh.new()
@@ -35,11 +36,14 @@ func _ready() -> void:
 		add_child(snap_zone_mesh)
 		snap_zone_mesh.owner = get_tree().edited_scene_root
 
-	
 	if not Engine.is_editor_hint():
 		snap_zone = get_node("SnapZone")
 		snap_zone_mesh = get_node("MeshInstance3D")
-		# For debugging
+		
+		if !is_instance_valid(snap_zone):
+			self.queue_free()
+		
+		#For debugging
 		snap_zone.body_entered.connect(_body_entered_area)
 		snap_zone.body_exited.connect(_body_exited_area)
 		
@@ -48,24 +52,35 @@ func _ready() -> void:
 		
 		snap_zone.initial_object = default_object
 		snap_zone.snap_require = group_required
+		
+	#if self.get_parent() is InventorySystem:
+		#if self.owner != null:
+			#print("===== Slot "+self.name+" is parented to an Inventory System")
+	#else:
+		#if self.owner != null:
+			#print("===== Slot "+self.name+" is NOT parented to an Inventory System")
 
 
-func _process(delta: float) -> void:
-	if Engine.is_editor_hint() and has_node("SnapZone") and has_node("MeshInstance3D"):
+func _physics_process(delta: float) -> void:
+	if update_slot_settings and Engine.is_editor_hint() and has_node("SnapZone") and has_node("MeshInstance3D"):
 		snap_zone = get_node("SnapZone")
 		snap_zone_mesh = get_node("MeshInstance3D")
 		snap_zone.grab_distance = snap_zone_radius
 		mesh_shape.radius = snap_zone_radius
 		mesh_shape.height = snap_zone_radius * 2
 		snap_zone_mesh.mesh = mesh_shape
+		update_slot_settings = false
 		
 
 func _set_current_slot_object(what) -> void:
 	current_object = what
+	current_object_in_slot.emit(current_object)
 	print("===== Slot "+self.name+" has picked up object "+what.name+".")
+	print("Picked up object path: "+current_object.get_scene_file_path())
 	
 func _drop_current_slot_object() -> void:
 	current_object = null
+	current_object_in_slot.emit(current_object)
 	print("===== Slot "+self.name+" has dropped an object.")
 
 func _body_entered_area(body) -> void:
@@ -73,11 +88,11 @@ func _body_entered_area(body) -> void:
 	
 func _body_exited_area(body) -> void:
 	print("===== Body "+body.name+" has exited "+self.name+".")
+
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
-
 	# Return warnings
 	return warnings
 	
