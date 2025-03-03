@@ -17,8 +17,8 @@ func _on_enter_collision(receiver: Variant) -> void:
 	if not _ois_actor_state_machine.require_two_handed:
 		if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor_component().receiver_group):
 			pass
-			#_ois_actor_state_machine.get_actor_component().set_receiver(receiver.get_parent())
-			#_ois_actor_state_machine.transition_to("ActiveCollidingState", {})
+			_ois_actor_state_machine.get_actor_component().set_receiver(receiver.get_parent())
+			_ois_actor_state_machine.transition_to("OneHandActiveCollidingState", {})
 		else:
 			print("Incompatible Actor and Receiver")
 	else:

@@ -7,19 +7,22 @@ var trigger_release = func(x): if (x == "trigger_click"): _on_trigger_release()
 
 
 func enter_state(_msg: Dictionary = {}) -> void:
+	print("I AM ACTIVE WITH BOTH HANDS")
 	var actor = _ois_actor_state_machine.get_actor_component().get_actor()
 	if actor is XRToolsPickable:
 		_ois_actor_state_machine.get_actor_component().get_actor().released.connect(_on_actor_released)
-	_ois_actor_state_machine.controller.button_pressed.connect(trigger_press)
-	_ois_actor_state_machine.controller.button_released.connect(trigger_release)
-	_ois_actor_state_machine.get_actor_component().get_receiver().start_action_check(_ois_actor_state_machine.get_actor_component())
+	for control in _ois_actor_state_machine.active_controllers:
+		control.button_pressed.connect(trigger_press)
+		control.button_released.connect(trigger_release)
+	_ois_actor_state_machine.get_actor_component().get_receiver().start_action_check(_ois_actor_state_machine.get_actor_component(), 1.0)
 
 
 func _on_actor_released(pickable: Variant, by: Variant) -> void:
 	trigger_on = false
 	_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
 	_ois_actor_state_machine.get_actor_component().set_receiver(null)
-	_ois_actor_state_machine.transition_to("IdleState")
+	_ois_actor_state_machine.active_controllers.erase(by.get_controller())
+	_ois_actor_state_machine.transition_to("OneHandActiveState")
 
 
 func _on_exit_collision(receiver: Variant) -> void:
@@ -54,5 +57,6 @@ func _on_trigger_release() -> void:
 
 func exit_state() -> void:
 	_ois_actor_state_machine.get_actor_component().get_actor().released.disconnect(_on_actor_released)
-	_ois_actor_state_machine.controller.button_pressed.disconnect(trigger_press)
-	_ois_actor_state_machine.controller.button_released.disconnect(trigger_release)
+	for control in _ois_actor_state_machine.active_controllers:
+		control.button_pressed.disconnect(trigger_press)
+		control.button_released.disconnect(trigger_release)

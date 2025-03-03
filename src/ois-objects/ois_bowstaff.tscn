@@ -44,6 +44,7 @@ mesh = SubResource("CylinderMesh_27ogk")
 
 [node name="OISActorComponent" type="Node3D" parent="." index="6"]
 script = ExtResource("4_je2ke")
+receiver_group = "hammer"
 
 [node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent" index="0"]
 script = ExtResource("5_8dm64")

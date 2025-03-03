@@ -12,7 +12,7 @@ func enter_state(_msg: Dictionary = {}) -> void:
 		_ois_actor_state_machine.get_actor_component().get_actor().released.connect(_on_actor_released)
 	_ois_actor_state_machine.controller.button_pressed.connect(trigger_press)
 	_ois_actor_state_machine.controller.button_released.connect(trigger_release)
-	_ois_actor_state_machine.get_actor_component().get_receiver().start_action_check(_ois_actor_state_machine.get_actor_component())
+	_ois_actor_state_machine.get_actor_component().get_receiver().start_action_check(_ois_actor_state_machine.get_actor_component(), 1.0)
 
 
 func _on_actor_released(pickable: Variant, by: Variant) -> void:

@@ -8,7 +8,8 @@ extends OISActorStateMachine
 var idle_state : ToolIdleState
 var one_hand_active_state : ToolOneHandActiveState
 var two_hand_active_state : ToolTwoHandActiveState
-var active_colliding_state : ActiveCollidingState
+var one_hand_active_colliding_state : OneHandActiveCollidingState
+var two_hand_active_colliding_state : TwoHandActiveCollidingState
 
 var active_controllers : Array = []
 
@@ -24,10 +25,15 @@ func initialize() -> void:
 	two_hand_active_state = ToolTwoHandActiveState.new()
 	two_hand_active_state.name = "TwoHandActiveState"
 	add_child(two_hand_active_state)
-	#active_colliding_state = ActiveCollidingState.new()
-	#active_colliding_state.name = "ActiveCollidingState"
-	#add_child(active_colliding_state)
-	#
+	
+	one_hand_active_colliding_state = OneHandActiveCollidingState.new()
+	one_hand_active_colliding_state.name = "OneHandActiveCollidingState"
+	add_child(one_hand_active_colliding_state)
+	
+	two_hand_active_colliding_state = TwoHandActiveCollidingState.new()
+	two_hand_active_colliding_state.name = "TwoHandActiveCollidingState"
+	add_child(two_hand_active_colliding_state)
+	
 	state = idle_state
 	
 	initialization_done = true

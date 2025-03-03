@@ -58,10 +58,10 @@ func initialize_action_vars() -> void:
 	pass
 
 
-func start_action_check(actor : OISActorComponent) -> void:
+func start_action_check(actor : OISActorComponent, rate_mult: float) -> void:
 	action_started.emit(requirement, total_progress)
 	interacting_object = actor.get_parent()
-	rate = actor.get_actor_rate()
+	rate = actor.get_actor_rate() * rate_mult
 	initialize_action_vars()
 
 
