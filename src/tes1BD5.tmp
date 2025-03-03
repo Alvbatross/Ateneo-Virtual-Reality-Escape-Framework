@@ -1,0 +1,307 @@
+[gd_scene load_steps=35 format=3 uid="uid://dfhvg7w4ufcj5"]
+
+[ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
+[ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
+[ext_resource type="Script" path="res://src/xr_player.gd" id="3_xo4ep"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_ph25s"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="6_l0sle"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_single_controller_asm.gd" id="6_y8u80"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="7_snb4w"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_wipe_receiver.gd" id="7_uqbxj"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="8_a6l3j"]
+[ext_resource type="Script" path="res://src/test_receiver.gd" id="9_qjxp0"]
+[ext_resource type="PackedScene" uid="uid://clr8xwi6ickp4" path="res://src/ois-objects/ois_rag.tscn" id="10_ero8i"]
+[ext_resource type="PackedScene" uid="uid://chqn1m2fy1uxr" path="res://src/progress-bar/progress_bar_test.tscn" id="11_8d2v2"]
+[ext_resource type="PackedScene" uid="uid://b4mr5nojepu4p" path="res://src/ois-objects/ois_screw.tscn" id="11_sbghm"]
+[ext_resource type="PackedScene" uid="uid://djlmwmbu8ya0x" path="res://src/ois-objects/ois_screw_driver.tscn" id="12_8po37"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_strike_receiver.gd" id="12_uyad0"]
+[ext_resource type="PackedScene" uid="uid://df8ckf7krjyl3" path="res://src/ois-objects/ois_hammer.tscn" id="16_7tfes"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_slot.gd" id="17_204jl"]
+[ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="18_xanin"]
+[ext_resource type="Material" uid="uid://dy43ogh4jhnpk" path="res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres" id="19_v4is8"]
+[ext_resource type="PackedScene" uid="uid://dms7o4a7kk3tx" path="res://src/ois-objects/ois_bowstaff.tscn" id="20_76m4q"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_system.gd" id="21_4yaih"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
+radius = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7p0no"]
+radius = 0.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e4fwv"]
+size = Vector3(0.1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_320of"]
+size = Vector3(1, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3dpj"]
+transparency = 1
+albedo_color = Color(0.748906, 0.539061, 0.975943, 0.235294)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ncgbk"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_ug2yn"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_7qy0n"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_fhv7a"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_ru13x"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_lavgl"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_3ue5m"]
+radius = 0.1
+height = 0.2
+
+[node name="TestProject" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0127897, -0.00488102, -0.00892162)
+script = ExtResource("1_ptu4b")
+
+[node name="XRPlayer" parent="." instance=ExtResource("2_s6le6")]
+script = ExtResource("3_xo4ep")
+
+[node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.99225, 0.12426, 0, -0.12426, 0.99225, 0.0545714, -0.0501776, 0.0746771)
+script = ExtResource("4_ph25s")
+
+[node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent"]
+script = ExtResource("6_y8u80")
+
+[node name="OISColliderArea3D" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent"]
+script = ExtResource("6_l0sle")
+
+[node name="Area3D" type="Area3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent/OISColliderArea3D"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent/OISColliderArea3D/Area3D"]
+shape = SubResource("SphereShape3D_rhrux")
+
+[node name="FunctionPointer" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="2" instance=ExtResource("7_snb4w")]
+
+[node name="FunctionPickup" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="3" instance=ExtResource("8_a6l3j")]
+
+[node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412071, -0.0475127, 0.0761249)
+script = ExtResource("4_ph25s")
+receiver_group = "hand"
+
+[node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
+script = ExtResource("6_y8u80")
+
+[node name="OISColliderArea3D" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
+script = ExtResource("6_l0sle")
+
+[node name="Area3D" type="Area3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D/Area3D"]
+shape = SubResource("SphereShape3D_7p0no")
+
+[node name="FunctionPointer" parent="XRPlayer/XROrigin3D/XRController3DRight" index="2" instance=ExtResource("7_snb4w")]
+
+[node name="FunctionPickup" parent="XRPlayer/XROrigin3D/XRController3DRight" index="3" instance=ExtResource("8_a6l3j")]
+
+[node name="TestReceiver" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30828, 0)
+script = ExtResource("9_qjxp0")
+
+[node name="OISWipeReceiver" type="Node3D" parent="TestReceiver"]
+script = ExtResource("7_uqbxj")
+group = "rag"
+requirement = 1.0
+ois_collision_layer = 0
+
+[node name="Area3D" type="Area3D" parent="TestReceiver/OISWipeReceiver"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestReceiver/OISWipeReceiver/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27947, -0.942282)
+shape = SubResource("BoxShape3D_e4fwv")
+
+[node name="Progress View" parent="TestReceiver" instance=ExtResource("11_8d2v2")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.472873, -0.83897)
+
+[node name="TestReceiver2" type="Node3D" parent="."]
+
+[node name="OISStrikeReceiver" type="Node3D" parent="TestReceiver2"]
+script = ExtResource("12_uyad0")
+group = "hammer"
+requirement = 1.0
+
+[node name="Area3D" type="Area3D" parent="TestReceiver2/OISStrikeReceiver"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestReceiver2/OISStrikeReceiver/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.841792, 0.766005, 0)
+shape = SubResource("BoxShape3D_320of")
+
+[node name="OISScrew" parent="." instance=ExtResource("11_sbghm")]
+transform = Transform3D(0.338262, -0.81733, -0.466424, 0, 0.495641, -0.868528, 0.941052, 0.29379, 0.167656, 0.684659, 0.707029, -0.214372)
+
+[node name="OISTwistReceiver" parent="OISScrew" index="2"]
+single_direction = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_hhivm")
+
+[node name="OISScrewDriver" parent="." instance=ExtResource("12_8po37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.370821, 0.411474, 0)
+
+[node name="OISHammer" parent="." instance=ExtResource("16_7tfes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.628505, 0.433975, 0)
+
+[node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
+transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
+
+[node name="OISRag2" parent="." instance=ExtResource("10_ero8i")]
+transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.478837, 0.924998)
+
+[node name="OISBowstaff" parent="." instance=ExtResource("20_76m4q")]
+transform = Transform3D(1, 0, 0, 0, 0.084043, 0.996462, 0, -0.996462, 0.084043, -0.734974, 0.478283, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 1.837
+omni_range = 660.969
+
+[node name="InventorySlot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.600607, 5.96046e-08, -0.00013715)
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+slot_material_override = SubResource("StandardMaterial3D_w3dpj")
+
+[node name="SnapZone" parent="InventorySlot" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySlot"]
+mesh = SubResource("SphereMesh_ncgbk")
+surface_material_override/0 = SubResource("StandardMaterial3D_w3dpj")
+
+[node name="InventorySystem" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250422, 0.537354, 0.575341)
+script = ExtResource("21_4yaih")
+row_count = 2
+column_count = 3
+row_spacing = 0.25
+column_spacing = 0.25
+inventory_dictionary = {
+0: [[Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":ExtResource("17_204jl"),"update_slot_settings":false,"slot_enabled":true,"snap_zone_radius":0.1,"default_object":NodePath(""),"group_required":"","slot_material_override":ExtResource("19_v4is8"),"snap_zone_mesh":Object(MeshInstance3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_scale":0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_ug2yn"),"skin":null,"skeleton":NodePath(".."),"surface_material_override/0":ExtResource("19_v4is8"),"script":null)
+,"mesh_shape":SubResource("SphereMesh_ug2yn"),"snap_zone_scene":ExtResource("18_xanin"),"tween":null,"snap_zone":Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":4,"collision_mask":65540,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://addons/godot-xr-tools/objects/snap_zone.gd"),"enabled":true,"stash_sound":null,"grab_distance":0.1,"snap_mode":0,"snap_require":"","snap_exclude":"","grab_require":"","grab_exclude":"","initial_object":NodePath(""),"closest_object":null,"picked_up_object":null,"picked_up_ranged":true,"_object_in_grab_area":[])
+,"current_object":null,"is_parented":false)
+, null], [Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":ExtResource("17_204jl"),"update_slot_settings":false,"slot_enabled":true,"snap_zone_radius":0.1,"default_object":NodePath(""),"group_required":"","slot_material_override":ExtResource("19_v4is8"),"snap_zone_mesh":Object(MeshInstance3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_scale":0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_7qy0n"),"skin":null,"skeleton":NodePath(".."),"surface_material_override/0":ExtResource("19_v4is8"),"script":null)
+,"mesh_shape":SubResource("SphereMesh_7qy0n"),"snap_zone_scene":ExtResource("18_xanin"),"tween":null,"snap_zone":Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":4,"collision_mask":65540,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://addons/godot-xr-tools/objects/snap_zone.gd"),"enabled":true,"stash_sound":null,"grab_distance":0.1,"snap_mode":0,"snap_require":"","snap_exclude":"","grab_require":"","grab_exclude":"","initial_object":NodePath(""),"closest_object":null,"picked_up_object":null,"picked_up_ranged":true,"_object_in_grab_area":[])
+,"current_object":null,"is_parented":false)
+, null], [Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":ExtResource("17_204jl"),"update_slot_settings":false,"slot_enabled":true,"snap_zone_radius":0.1,"default_object":NodePath(""),"group_required":"","slot_material_override":ExtResource("19_v4is8"),"snap_zone_mesh":Object(MeshInstance3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_scale":0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_fhv7a"),"skin":null,"skeleton":NodePath(".."),"surface_material_override/0":ExtResource("19_v4is8"),"script":null)
+,"mesh_shape":SubResource("SphereMesh_fhv7a"),"snap_zone_scene":ExtResource("18_xanin"),"tween":null,"snap_zone":Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":4,"collision_mask":65540,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://addons/godot-xr-tools/objects/snap_zone.gd"),"enabled":true,"stash_sound":null,"grab_distance":0.1,"snap_mode":0,"snap_require":"","snap_exclude":"","grab_require":"","grab_exclude":"","initial_object":NodePath(""),"closest_object":null,"picked_up_object":null,"picked_up_ranged":true,"_object_in_grab_area":[])
+,"current_object":null,"is_parented":false)
+, null]],
+1: [[Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":ExtResource("17_204jl"),"update_slot_settings":false,"slot_enabled":true,"snap_zone_radius":0.1,"default_object":NodePath(""),"group_required":"","slot_material_override":ExtResource("19_v4is8"),"snap_zone_mesh":Object(MeshInstance3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_scale":0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_ru13x"),"skin":null,"skeleton":NodePath(".."),"surface_material_override/0":ExtResource("19_v4is8"),"script":null)
+,"mesh_shape":SubResource("SphereMesh_ru13x"),"snap_zone_scene":ExtResource("18_xanin"),"tween":null,"snap_zone":Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":4,"collision_mask":65540,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://addons/godot-xr-tools/objects/snap_zone.gd"),"enabled":true,"stash_sound":null,"grab_distance":0.1,"snap_mode":0,"snap_require":"","snap_exclude":"","grab_require":"","grab_exclude":"","initial_object":NodePath(""),"closest_object":null,"picked_up_object":null,"picked_up_ranged":true,"_object_in_grab_area":[])
+,"current_object":null,"is_parented":false)
+, null], [Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.25, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":ExtResource("17_204jl"),"update_slot_settings":false,"slot_enabled":true,"snap_zone_radius":0.1,"default_object":NodePath(""),"group_required":"","slot_material_override":ExtResource("19_v4is8"),"snap_zone_mesh":Object(MeshInstance3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_scale":0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_lavgl"),"skin":null,"skeleton":NodePath(".."),"surface_material_override/0":ExtResource("19_v4is8"),"script":null)
+,"mesh_shape":SubResource("SphereMesh_lavgl"),"snap_zone_scene":ExtResource("18_xanin"),"tween":null,"snap_zone":Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":4,"collision_mask":65540,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://addons/godot-xr-tools/objects/snap_zone.gd"),"enabled":true,"stash_sound":null,"grab_distance":0.1,"snap_mode":0,"snap_require":"","snap_exclude":"","grab_require":"","grab_exclude":"","initial_object":NodePath(""),"closest_object":null,"picked_up_object":null,"picked_up_ranged":true,"_object_in_grab_area":[])
+,"current_object":null,"is_parented":false)
+, null], [Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.25, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":ExtResource("17_204jl"),"update_slot_settings":false,"slot_enabled":true,"snap_zone_radius":0.1,"default_object":NodePath(""),"group_required":"","slot_material_override":ExtResource("19_v4is8"),"snap_zone_mesh":Object(MeshInstance3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_scale":0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_3ue5m"),"skin":null,"skeleton":NodePath(".."),"surface_material_override/0":ExtResource("19_v4is8"),"script":null)
+,"mesh_shape":SubResource("SphereMesh_3ue5m"),"snap_zone_scene":ExtResource("18_xanin"),"tween":null,"snap_zone":Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":4,"collision_mask":65540,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://addons/godot-xr-tools/objects/snap_zone.gd"),"enabled":true,"stash_sound":null,"grab_distance":0.1,"snap_mode":0,"snap_require":"","snap_exclude":"","grab_require":"","grab_exclude":"","initial_object":NodePath(""),"closest_object":null,"picked_up_object":null,"picked_up_ranged":true,"_object_in_grab_area":[])
+,"current_object":null,"is_parented":false)
+, null]]
+}
+
+[node name="Slot_0_0" type="Node3D" parent="InventorySystem"]
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+
+[node name="SnapZone" parent="InventorySystem/Slot_0_0" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_0_0"]
+mesh = SubResource("SphereMesh_ug2yn")
+surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="Slot_0_1" type="Node3D" parent="InventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0)
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+
+[node name="SnapZone" parent="InventorySystem/Slot_0_1" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_0_1"]
+mesh = SubResource("SphereMesh_7qy0n")
+surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="Slot_0_2" type="Node3D" parent="InventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+
+[node name="SnapZone" parent="InventorySystem/Slot_0_2" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_0_2"]
+mesh = SubResource("SphereMesh_fhv7a")
+surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="Slot_1_0" type="Node3D" parent="InventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+
+[node name="SnapZone" parent="InventorySystem/Slot_1_0" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_1_0"]
+mesh = SubResource("SphereMesh_ru13x")
+surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="Slot_1_1" type="Node3D" parent="InventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.25, 0)
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+
+[node name="SnapZone" parent="InventorySystem/Slot_1_1" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_1_1"]
+mesh = SubResource("SphereMesh_lavgl")
+surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="Slot_1_2" type="Node3D" parent="InventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.25, 0)
+script = ExtResource("17_204jl")
+snap_zone_radius = 0.1
+
+[node name="SnapZone" parent="InventorySystem/Slot_1_2" instance=ExtResource("18_xanin")]
+grab_distance = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_1_2"]
+mesh = SubResource("SphereMesh_3ue5m")
+surface_material_override/0 = ExtResource("19_v4is8")
+
+[connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
+[connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
+[connection signal="action_in_progress" from="TestReceiver/OISWipeReceiver" to="TestReceiver" method="_on_ois_wipe_receiver_action_in_progress"]
+
+[editable path="XRPlayer"]
+[editable path="OISScrew"]
+[editable path="OISScrewDriver"]
+[editable path="OISHammer"]

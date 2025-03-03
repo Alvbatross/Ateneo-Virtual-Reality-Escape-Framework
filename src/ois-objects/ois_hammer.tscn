@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://df8ckf7krjyl3"]
+[gd_scene load_steps=11 format=3 uid="uid://df8ckf7krjyl3"]
 
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_w5b5i"]
 [ext_resource type="PackedScene" uid="uid://cwykdkcixy84h" path="res://src/assets/Hammer.glb" id="2_c568i"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="5_b1qr5"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="6_yukwi"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="7_071ew"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_item.gd" id="8_jgfs0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8le38"]
 size = Vector3(0.05, 0.348364, 0.2)
@@ -15,6 +16,7 @@ size = Vector3(0.05, 0.348364, 0.2)
 radius = 0.1
 
 [node name="OISHammer" instance=ExtResource("1_w5b5i")]
+contact_monitor = true
 
 [node name="CollisionShape3D" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0241821, 0)
@@ -48,3 +50,11 @@ collision_mask = 536870912
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D" index="0"]
 shape = SubResource("SphereShape3D_c78q0")
+
+[node name="InventoryItem" type="Node3D" parent="." index="5" node_paths=PackedStringArray("defined_mesh", "defined_collision_shape")]
+script = ExtResource("8_jgfs0")
+defined_mesh = NodePath("../Hammer2")
+defined_collision_shape = NodePath("../CollisionShape3D")
+preferred_scale = 0.35
+object_transform_adjustment = Vector3(0, -0.022, 0)
+object_rotation_adjustment = Vector3(30, 90, 0)

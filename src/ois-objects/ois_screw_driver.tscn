@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://djlmwmbu8ya0x"]
+[gd_scene load_steps=11 format=3 uid="uid://djlmwmbu8ya0x"]
 
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_qn7jw"]
 [ext_resource type="PackedScene" uid="uid://c33vwgtj34j8j" path="res://src/assets/ScrewDriver.glb" id="2_5dmqm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="6_7n5tt"]
 [ext_resource type="BoxMesh" uid="uid://dho0uqpnmuhn6" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/misc-resources/collider_raycast_mesh.tres" id="7_8dsmh"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_raycast3d.gd" id="7_jkfq1"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_item.gd" id="9_pnh2e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6r0l6"]
 size = Vector3(0.05, 0.221387, 0.05)
@@ -50,3 +51,10 @@ collide_with_areas = true
 [node name="Laser" type="MeshInstance3D" parent="OISActorComponent/OISColliderRaycast3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 mesh = ExtResource("7_8dsmh")
+
+[node name="InventoryItem" type="Node3D" parent="." index="5" node_paths=PackedStringArray("defined_mesh", "defined_collision_shape")]
+script = ExtResource("9_pnh2e")
+defined_mesh = NodePath("../ScrewDriver")
+defined_collision_shape = NodePath("../CollisionShape3D")
+object_transform_adjustment = Vector3(0.02, -0.05, 0)
+object_rotation_adjustment = Vector3(0, 0, 30)
