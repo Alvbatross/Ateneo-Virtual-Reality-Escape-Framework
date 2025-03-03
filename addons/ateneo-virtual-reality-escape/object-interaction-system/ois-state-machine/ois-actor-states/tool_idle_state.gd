@@ -7,7 +7,7 @@ func enter_state(_msg: Dictionary = {}) -> void:
 	_ois_actor_state_machine.controller = null
 	_ois_actor_state_machine.get_actor_component().actor_component_enabled(false)
 	_ois_actor_state_machine.get_actor_component().get_actor().grabbed.connect(_on_actor_grabbed)
-
+	_ois_actor_state_machine.get_actor_component().set_receiver(null)
 
 func exit_state() -> void:
 	_ois_actor_state_machine.get_actor_component().get_actor().grabbed.disconnect(_on_actor_grabbed)

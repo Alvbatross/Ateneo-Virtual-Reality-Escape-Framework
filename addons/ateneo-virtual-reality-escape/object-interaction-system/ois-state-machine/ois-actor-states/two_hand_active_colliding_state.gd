@@ -30,8 +30,12 @@ func _on_exit_collision(receiver: Variant) -> void:
 		if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor_component().receiver_group):
 			_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
 			_ois_actor_state_machine.get_actor_component().set_receiver(null)
-			_ois_actor_state_machine.transition_to("ActiveState", {})
+			_ois_actor_state_machine.transition_to("TwoHandActiveState", {})
 
+
+func update(delta: float) -> void:
+	print(_ois_actor_state_machine.get_actor_component().get_receiver())
+	
 
 func physics_update(delta: float) -> void:
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()
@@ -60,3 +64,4 @@ func exit_state() -> void:
 	for control in _ois_actor_state_machine.active_controllers:
 		control.button_pressed.disconnect(trigger_press)
 		control.button_released.disconnect(trigger_release)
+	

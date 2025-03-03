@@ -5,7 +5,7 @@ extends OISActorState
 func enter_state(_msg: Dictionary = {}) -> void:
 	_ois_actor_state_machine.get_actor_component().actor_component_enabled(true)
 	_ois_actor_state_machine.get_actor_component().get_actor().get_node("FunctionPickup").has_picked_up.connect(_on_controller_pick_up)
-
+	_ois_actor_state_machine.get_actor_component().set_receiver(null)
 
 func exit_state() -> void:
 	_ois_actor_state_machine.get_actor_component().get_actor().get_node("FunctionPickup").has_picked_up.disconnect(_on_controller_pick_up)

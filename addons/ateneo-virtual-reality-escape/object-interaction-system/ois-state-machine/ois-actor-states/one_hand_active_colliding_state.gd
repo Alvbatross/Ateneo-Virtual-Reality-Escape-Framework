@@ -34,6 +34,10 @@ func _on_exit_collision(receiver: Variant) -> void:
 			_ois_actor_state_machine.transition_to("OneHandActiveState", {})
 
 
+func update(delta: float) -> void:
+	print(_ois_actor_state_machine.get_actor_component().get_receiver())
+
+
 func physics_update(delta: float) -> void:
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()
 	if is_instance_valid(receiver):
@@ -62,6 +66,7 @@ func exit_state() -> void:
 	for control in _ois_actor_state_machine.active_controllers:
 		control.button_pressed.disconnect(trigger_press)
 		control.button_released.disconnect(trigger_release)
+	
 
 
 func _on_actor_grabbed(pickable: Variant, by: Variant) -> void:

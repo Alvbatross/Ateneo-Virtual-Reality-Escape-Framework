@@ -57,7 +57,7 @@ func _on_ois_receiver_collision_entered(receiver) -> void:
 
 func _on_ois_receiver_collision_exited(receiver) -> void:
 	actor_state_machine.handle_exit_collision(receiver)
-	ois_receiver = null
+	#ois_receiver = null
 
 
 func actor_component_enabled(b: bool) -> void:

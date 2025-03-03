@@ -5,7 +5,7 @@ extends OISActorState
 func enter_state(_msg: Dictionary = {}) -> void:
 	_ois_actor_state_machine.get_actor_component().actor_component_enabled(true)
 	_ois_actor_state_machine.get_actor_component().get_actor().released.connect(_on_actor_released)
-
+	_ois_actor_state_machine.get_actor_component().set_receiver(null)
 
 func exit_state() -> void:
 	_ois_actor_state_machine.get_actor_component().get_actor().released.disconnect(_on_actor_released)
