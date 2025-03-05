@@ -7,37 +7,44 @@ extends OISActorStateMachine
 @export var right_hand_state_machine : NodePath
 @export_category("Two Controller Settings")
 ## If on, action will only be done if both controllers are active
-@export var require_both_controllers : bool = false
+@export var require_two_handed : bool = false
 
 var left_hand_asm : OISSingleControllerASM
 var right_hand_asm : OISSingleControllerASM
 
-var idle_state : ControllerIdleState
-var active_state : ControllerActiveState
-var one_active_colliding 
-var two_active_colliding
+var idle_state : TwoControllerIdleState
+var active_state : TwoControllerActiveState
+var one_hand_active_colliding_state : OneHandActiveCollidingState
+var two_hand_active_colliding_state : TwoHandActiveCollidingState
+
+var active_controllers : Array = []
 
 
 func initialize() -> void:
 	left_hand_asm = get_node_or_null(left_hand_state_machine)
 	right_hand_asm = get_node_or_null(right_hand_state_machine)
 	
-	#idle_state = ControllerIdleState.new()
-	#idle_state.name = "IdleState"
-	#add_child(idle_state)
-	#
-	#active_state = ControllerActiveState.new()
-	#active_state.name = "ActiveState"
-	#add_child(active_state)
-	#
-	#active_colliding_state = ActiveCollidingState.new()
-	#active_colliding_state.name = "ActiveCollidingState"
-	#add_child(active_colliding_state)
-	#
-	#controller = get_actor_component().get_actor()
-	#
-	#state = active_state
-	#
+	idle_state = TwoControllerIdleState.new()
+	idle_state.name = "IdleState"
+	add_child(idle_state)
+	
+	active_state = TwoControllerActiveState.new()
+	active_state.name = "ActiveState"
+	add_child(active_state)
+	
+	one_hand_active_colliding_state = OneHandActiveCollidingState.new()
+	one_hand_active_colliding_state.name = "OneHandActiveCollidingState"
+	add_child(one_hand_active_colliding_state)
+	
+	two_hand_active_colliding_state = TwoHandActiveCollidingState.new()
+	two_hand_active_colliding_state.name = "TwoHandActiveCollidingState"
+	add_child(two_hand_active_colliding_state)
+	
+	active_controllers.append(left_hand_asm.controller)
+	active_controllers.append(right_hand_asm.controller)
+	
+	state = active_state
+	
 	initialization_done = true
 
 

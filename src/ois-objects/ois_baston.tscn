@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://u3gyg1us25m7"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_g8llg"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="2_8d4ed"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_xif3m"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="3_6xd34"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_x7i1k"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="4_neuvy"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_attach_receiver.gd" id="7_ne2nh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0igxw"]
+size = Vector3(0.03, 1, 0.03)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_54eeu"]
+top_radius = 0.015
+bottom_radius = 0.015
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f2lcy"]
+height = 1.0
+radius = 0.02
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_e4y7v"]
+radius = 0.2
+
+[node name="OISBaston" instance=ExtResource("1_g8llg")]
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.346287, 0)
+shape = SubResource("BoxShape3D_0igxw")
+
+[node name="GrabPointHandLeft" parent="." index="1" instance=ExtResource("2_xif3m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 0, -0.086)
+visible = true
+
+[node name="GrabPointHandRight" parent="." index="2" instance=ExtResource("3_x7i1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015, 0, -0.086)
+visible = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.346287, 0)
+mesh = SubResource("CylinderMesh_54eeu")
+
+[node name="OISActorComponent" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.346287, 0)
+script = ExtResource("2_8d4ed")
+receiver_group = "baston"
+
+[node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent" index="0"]
+script = ExtResource("3_6xd34")
+
+[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent" index="1"]
+script = ExtResource("4_neuvy")
+
+[node name="Area3D" type="Area3D" parent="OISActorComponent/OISColliderArea3D" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("CylinderShape3D_f2lcy")
+
+[node name="OISAttachReceiver" type="Node3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.154807, 0)
+script = ExtResource("7_ne2nh")
+group = "baston"
+
+[node name="Area3D" type="Area3D" parent="OISAttachReceiver" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISAttachReceiver/Area3D" index="0"]
+shape = SubResource("SphereShape3D_e4y7v")

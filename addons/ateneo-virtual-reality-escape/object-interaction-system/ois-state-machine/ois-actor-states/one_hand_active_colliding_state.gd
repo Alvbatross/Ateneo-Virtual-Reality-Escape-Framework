@@ -30,8 +30,9 @@ func _on_exit_collision(receiver: Variant) -> void:
 	if is_instance_valid(receiver):
 		if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor_component().receiver_group):
 			_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
-			_ois_actor_state_machine.get_actor_component().set_receiver(null)
-			_ois_actor_state_machine.transition_to("OneHandActiveState", {})
+			var actor = _ois_actor_state_machine.get_actor_component().get_actor()
+			if actor is XRToolsPickable:
+				_ois_actor_state_machine.transition_to("OneHandActiveState", {})
 
 
 func update(delta: float) -> void:
@@ -50,6 +51,7 @@ func physics_update(delta: float) -> void:
 			if receiver.snap_actor:
 					_ois_actor_state_machine.get_actor_component().snap_actor_to_receiver()
 			receiver.action_ongoing(delta)
+	
 
 
 func _on_trigger_press() -> void:

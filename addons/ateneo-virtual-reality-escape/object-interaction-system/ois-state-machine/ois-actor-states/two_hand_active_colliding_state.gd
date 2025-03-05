@@ -5,6 +5,8 @@ extends OISActorState
 var trigger_press = func(x): if (x == "trigger_click"): _on_trigger_press()
 var trigger_release = func(x): if (x == "trigger_click"): _on_trigger_release()
 
+var active_triggers : int = 0
+var both_triggers_on : bool = false
 
 func enter_state(_msg: Dictionary = {}) -> void:
 	print("I AM ACTIVE WITH BOTH HANDS")
@@ -29,8 +31,9 @@ func _on_exit_collision(receiver: Variant) -> void:
 	if is_instance_valid(receiver):
 		if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor_component().receiver_group):
 			_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
-			_ois_actor_state_machine.get_actor_component().set_receiver(null)
-			_ois_actor_state_machine.transition_to("TwoHandActiveState", {})
+			var actor = _ois_actor_state_machine.get_actor_component().get_actor()
+			if actor is XRToolsPickable:
+				_ois_actor_state_machine.transition_to("OneHandActiveState", {})
 
 
 func update(delta: float) -> void:
@@ -49,14 +52,20 @@ func physics_update(delta: float) -> void:
 			if receiver.snap_actor:
 					_ois_actor_state_machine.get_actor_component().snap_actor_to_receiver()
 			receiver.action_ongoing(delta)
+	
+
 
 
 func _on_trigger_press() -> void:
-	trigger_on = true
+	active_triggers += 1
+	if active_triggers == 2:
+		both_triggers_on = true
 
 
 func _on_trigger_release() -> void:
-	trigger_on = false
+	active_triggers -= 1
+	if active_triggers < 2:
+		both_triggers_on = false
 
 
 func exit_state() -> void:

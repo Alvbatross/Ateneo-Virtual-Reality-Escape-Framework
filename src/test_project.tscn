@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=36 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -21,6 +21,7 @@
 [ext_resource type="Material" uid="uid://dy43ogh4jhnpk" path="res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres" id="19_v4is8"]
 [ext_resource type="PackedScene" uid="uid://dms7o4a7kk3tx" path="res://src/ois-objects/ois_bowstaff.tscn" id="20_76m4q"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_system.gd" id="21_4yaih"]
+[ext_resource type="PackedScene" uid="uid://bq5vkafh6ugil" path="res://src/ois-objects/ois_flashlight_radio.tscn" id="23_ibnp3"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
 radius = 0.1
@@ -299,6 +300,9 @@ grab_distance = 0.075
 [node name="MeshInstance3D" type="MeshInstance3D" parent="InventorySystem/Slot_1_2"]
 mesh = SubResource("SphereMesh_7jwho")
 surface_material_override/0 = ExtResource("19_v4is8")
+
+[node name="OISFlashlightRadio" parent="." instance=ExtResource("23_ibnp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.353268, 0.212872, -0.641418)
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]

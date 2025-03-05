@@ -1,0 +1,97 @@
+[gd_scene load_steps=16 format=3 uid="uid://bq5vkafh6ugil"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_rcoxa"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_lioh3"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_418d6"]
+[ext_resource type="PackedScene" uid="uid://cotuxobe0pvmk" path="res://src/assets/flashlight_with_crank_body.glb" id="4_ni2r8"]
+[ext_resource type="PackedScene" uid="uid://cddvf2lujisxi" path="res://src/assets/flashlight_with_crank_crankpart.glb" id="5_05883"]
+[ext_resource type="Script" path="res://src/ois-objects/crank.gd" id="5_r2to1"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_crank_receiver.gd" id="6_ru1nx"]
+[ext_resource type="PackedScene" uid="uid://bddj5m7ull6g0" path="res://addons/godot-xr-tools/interactables/interactable_handle.tscn" id="7_onihh"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="8_dwkks"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="9_fpjcg"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="10_twjmf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4w2s4"]
+size = Vector3(0.05, 0.0883545, 0.183)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ypv2i"]
+height = 0.0822323
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mm6xy"]
+radius = 0.05
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vauj6"]
+radius = 0.1
+
+[node name="OISFlashlightRadio" instance=ExtResource("1_rcoxa")]
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0191772, 0.0229492)
+shape = SubResource("BoxShape3D_4w2s4")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0185307, -0.0383462)
+spot_range = 3.5817
+spot_angle = 16.3945
+
+[node name="GrabPointHandLeft" parent="." index="2" instance=ExtResource("2_lioh3")]
+transform = Transform3D(1, 0, 0, 0, 0.701395, 0.712773, 0, -0.712773, 0.701395, 0, -0.0278694, -0.0516991)
+visible = true
+
+[node name="GrabPointHandRight" parent="." index="3" instance=ExtResource("3_418d6")]
+transform = Transform3D(-1, -8.74228e-08, -1.77631e-15, 5.98217e-08, -0.68428, -0.729219, 6.37504e-08, -0.729219, 0.68428, 0, 0.0734613, -0.0505992)
+visible = true
+
+[node name="flashlight_with_crank_body" parent="." index="4" instance=ExtResource("4_ni2r8")]
+transform = Transform3D(-0.2, 0, 3.01992e-08, 0, 0.2, 0, -3.01992e-08, 0, -0.2, -0.0102881, 0, 0)
+
+[node name="CrankRotationPoint" type="Marker3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0218581, 0.0224094)
+script = ExtResource("5_r2to1")
+axis = Vector3(1, 0, 0)
+
+[node name="flashlight_with_crank_crankpart" parent="CrankRotationPoint" index="0" instance=ExtResource("5_05883")]
+transform = Transform3D(-0.2, -3.0571e-15, -1.74846e-08, 0, 0.2, -3.49691e-08, 1.74846e-08, -3.49691e-08, -0.2, -0.0102881, -0.0184989, -0.0191396)
+
+[node name="OISCrankReceiver" type="Node3D" parent="." index="6"]
+script = ExtResource("6_ru1nx")
+group = "flashlight_crank"
+requirement = 1.0
+snap_actor = true
+
+[node name="Area3D" type="Area3D" parent="OISCrankReceiver" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISCrankReceiver/Area3D" index="0"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.0195365, 0.0173489, 0.0228192)
+shape = SubResource("CylinderShape3D_ypv2i")
+
+[node name="Crank" type="Node3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0374636, 0.113607, 0.115631)
+
+[node name="InteractableHandle" parent="Crank" index="0" instance=ExtResource("7_onihh")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Crank/InteractableHandle" index="0"]
+shape = SubResource("SphereShape3D_mm6xy")
+
+[node name="OISActorComponent" type="Node3D" parent="Crank/InteractableHandle" index="1"]
+script = ExtResource("8_dwkks")
+receiver_group = "flashlight_crank"
+
+[node name="OISOneHandToolASM" type="Node3D" parent="Crank/InteractableHandle/OISActorComponent" index="0"]
+script = ExtResource("9_fpjcg")
+
+[node name="OISColliderArea3D" type="Node3D" parent="Crank/InteractableHandle/OISActorComponent" index="1"]
+script = ExtResource("10_twjmf")
+
+[node name="Area3D" type="Area3D" parent="Crank/InteractableHandle/OISActorComponent/OISColliderArea3D" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Crank/InteractableHandle/OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("SphereShape3D_vauj6")
+
+[connection signal="action_in_progress" from="OISCrankReceiver" to="CrankRotationPoint" method="_on_ois_crank_receiver_action_in_progress"]

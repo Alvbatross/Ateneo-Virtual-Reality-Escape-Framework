@@ -55,5 +55,3 @@ script = ExtResource("8_rkqe2")
 defined_mesh = NodePath("../Rag")
 defined_collision_shape = NodePath("../CollisionShape3D")
 preferred_scale = 0.4
-object_transform_adjustment = null
-object_rotation_adjustment = null

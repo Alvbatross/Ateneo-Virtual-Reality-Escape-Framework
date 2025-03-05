@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://ci6jr3uib67uu"
+path.s3tc="res://.godot/imported/flashlight_with_crank_body_flashlight_body_roughness.png-931dd3810d21e7fb04f6f92036affdaa.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "017d6780e03f17c64a3185713497cdab"
+}
+
+[deps]
+
+source_file="res://src/assets/flashlight_with_crank_body_flashlight_body_roughness.png"
+dest_files=["res://.godot/imported/flashlight_with_crank_body_flashlight_body_roughness.png-931dd3810d21e7fb04f6f92036affdaa.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
