@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=37 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -37,6 +37,8 @@ size = Vector3(1, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hhivm"]
 size = Vector3(10, 0.5, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1cquc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3dpj"]
 transparency = 1
@@ -81,7 +83,6 @@ script = ExtResource("3_xo4ep")
 transform = Transform3D(1, 0, 0, 0, 0.99225, 0.12426, 0, -0.12426, 0.99225, 0.0545714, -0.0501776, 0.0746771)
 script = ExtResource("4_ph25s")
 receiver_group = "hand"
-newVariable = null
 
 [node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent"]
 script = ExtResource("6_y8u80")
@@ -104,7 +105,6 @@ shape = SubResource("SphereShape3D_rhrux")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412071, -0.0475127, 0.0761249)
 script = ExtResource("4_ph25s")
 receiver_group = "hand"
-newVariable = null
 
 [node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
 script = ExtResource("6_y8u80")
@@ -172,17 +172,11 @@ shape = SubResource("BoxShape3D_hhivm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.370821, 0.411474, 0)
 contact_monitor = true
 
-[node name="OISActorComponent" parent="OISScrewDriver" index="4"]
-newVariable = null
-
 [node name="OISHammer" parent="." instance=ExtResource("16_7tfes")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.628505, 0.433975, 0)
 
 [node name="GrabPointHandRight" parent="OISHammer" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.099)
-
-[node name="OISActorComponent" parent="OISHammer" index="4"]
-newVariable = null
 
 [node name="InventoryItem" parent="OISHammer" index="5"]
 object_transform_adjustment = Vector3(0, 0, 0)
@@ -197,14 +191,35 @@ transform = Transform3D(1, 0, 0, 0, 0.084043, 0.996462, 0, -0.996462, 0.084043, 
 [node name="OISFlashlightRadio" parent="." instance=ExtResource("23_ibnp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.353268, 0.212872, -0.641418)
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, -0.912067, 0, -1.46691)
+mesh = SubResource("BoxMesh_1cquc")
+skeleton = NodePath("../OmniLight3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, -0.520164, 0, -2.18173)
+mesh = SubResource("BoxMesh_1cquc")
+skeleton = NodePath("../OmniLight3D")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, -0.124094, 0, -2.95626)
+mesh = SubResource("BoxMesh_1cquc")
+skeleton = NodePath("../OmniLight3D")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0.399402, 0, -3.69127)
+mesh = SubResource("BoxMesh_1cquc")
+skeleton = NodePath("../OmniLight3D")
+
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_energy = 1.837
+light_energy = 0.5
 omni_range = 660.969
 
 [node name="InventorySlot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14323, 0.720333, 0.813452)
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, -0.14323, 0.720333, 0.813452)
 script = ExtResource("17_204jl")
 snap_zone_radius = 0.1
+funny_effect = true
 slot_material_override = SubResource("StandardMaterial3D_w3dpj")
 
 [node name="SnapZone" parent="InventorySlot" instance=ExtResource("18_xanin")]

@@ -66,6 +66,8 @@ func _ready() -> void:
 		
 		snap_zone.initial_object = default_object
 		snap_zone.snap_require = group_required
+		#if funny_effect:
+			#self.rotation_degrees.x += 90
 
 func _physics_process(delta: float) -> void:
 	if update_slot_settings and Engine.is_editor_hint() and has_node("SnapZone") and has_node("MeshInstance3D"):
@@ -77,6 +79,11 @@ func _physics_process(delta: float) -> void:
 		snap_zone_mesh.mesh = mesh_shape
 		snap_zone_mesh.set_surface_override_material(0,slot_material_override)
 		update_slot_settings = false
+	
+	if funny_effect and not Engine.is_editor_hint():
+		if self.rotation_degrees.y > 360:
+			self.rotation_degrees.y = 0
+		self.rotation_degrees.y += 1
 		
 func _set_current_slot_object(what) -> void:
 	current_object = what
