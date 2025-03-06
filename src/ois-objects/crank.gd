@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 
-func _on_ois_crank_receiver_action_in_progress(requirement: Variant, total_progress: Variant) -> void:
+func _on_ois_crank_receiver_action_in_progress(_requirement: Variant, total_progress: Variant) -> void:
 	self.transform.basis = init_transform
 	print(total_progress)
 	self.set_rotation_degrees(axis * total_progress * -360)
@@ -23,10 +23,10 @@ func _on_ois_crank_receiver_action_in_progress(requirement: Variant, total_progr
 	
 
 
-func _on_ois_crank_receiver_action_ended(requirement: Variant, total_progress: Variant) -> void:
+func _on_ois_crank_receiver_action_ended(_requirement: Variant, _total_progress: Variant) -> void:
 	self.transform.basis = init_transform
 	hand_init_transform = hand.transform.basis
 
 
-func _on_ois_crank_receiver_action_completed(requirement: Variant, total_progress: Variant) -> void:
+func _on_ois_crank_receiver_action_completed(_requirement: Variant, _total_progress: Variant) -> void:
 	audio.play()
