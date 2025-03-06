@@ -92,7 +92,6 @@ target = NodePath("../../../CrankRotationPoint/Hand/GrabPointHandRight")
 [node name="OISActorComponent" type="Node3D" parent="Crank/InteractableHandle" index="2"]
 script = ExtResource("8_dwkks")
 receiver_group = "flashlight_crank"
-trigger_action = true
 
 [node name="OISOneHandToolASM" type="Node3D" parent="Crank/InteractableHandle/OISActorComponent" index="0"]
 script = ExtResource("9_fpjcg")

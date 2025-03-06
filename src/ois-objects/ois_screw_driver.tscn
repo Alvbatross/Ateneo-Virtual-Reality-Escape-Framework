@@ -33,7 +33,7 @@ visible = true
 [node name="OISActorComponent" type="Node3D" parent="." index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.223768, 0)
 script = ExtResource("5_fju8u")
-receiver_group = "screw"
+receiver_group = "screwdriver"
 trigger_action = true
 
 [node name="OISOneHandToolASM" type="Node3D" parent="OISActorComponent" index="0"]

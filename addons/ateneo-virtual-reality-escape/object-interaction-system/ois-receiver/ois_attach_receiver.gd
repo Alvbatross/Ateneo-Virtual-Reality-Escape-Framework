@@ -7,9 +7,12 @@ extends OISReceiverComponent
 @export var buffer : float = 0.02
 var interacting_initial_pos : Vector3
 
+var attached : bool = false
+
 
 func initialize_action_vars():
 	interacting_initial_pos = interacting_object.position
+
 
 func action_ongoing(delta: float) -> void:
 	var interacting_current_pos = interacting_object.position

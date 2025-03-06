@@ -80,6 +80,8 @@ script = ExtResource("3_xo4ep")
 [node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.99225, 0.12426, 0, -0.12426, 0.99225, 0.0545714, -0.0501776, 0.0746771)
 script = ExtResource("4_ph25s")
+receiver_group = "hand"
+newVariable = null
 
 [node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft/OISActorComponent"]
 script = ExtResource("6_y8u80")
@@ -102,6 +104,7 @@ shape = SubResource("SphereShape3D_rhrux")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412071, -0.0475127, 0.0761249)
 script = ExtResource("4_ph25s")
 receiver_group = "hand"
+newVariable = null
 
 [node name="OISSingleControllerASM" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DRight/OISActorComponent"]
 script = ExtResource("6_y8u80")
@@ -159,7 +162,6 @@ transform = Transform3D(0.338262, -0.81733, -0.466424, 0, 0.495641, -0.868528, 0
 
 [node name="OISTwistReceiver" parent="OISScrew" index="2"]
 single_direction = true
-reset_progress = false
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -170,11 +172,17 @@ shape = SubResource("BoxShape3D_hhivm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.370821, 0.411474, 0)
 contact_monitor = true
 
+[node name="OISActorComponent" parent="OISScrewDriver" index="4"]
+newVariable = null
+
 [node name="OISHammer" parent="." instance=ExtResource("16_7tfes")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.628505, 0.433975, 0)
 
 [node name="GrabPointHandRight" parent="OISHammer" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.099)
+
+[node name="OISActorComponent" parent="OISHammer" index="4"]
+newVariable = null
 
 [node name="InventoryItem" parent="OISHammer" index="5"]
 object_transform_adjustment = Vector3(0, 0, 0)
