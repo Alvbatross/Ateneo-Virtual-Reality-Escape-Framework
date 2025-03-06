@@ -19,6 +19,8 @@ signal action_completed(requirement, total_progress)
 ## Boolean to determine whether or not the actor will snap to the receiver's position
 @export var snap_actor : bool = false
 
+@export var reset_progress : bool = false
+
 @export_flags_3d_physics var ois_collision_layer : int = COLLISION_LAYER
 
 var completed : bool = false
@@ -67,6 +69,8 @@ func start_action_check(actor : OISActorComponent, rate_mult: float) -> void:
 
 func end_action() -> void:
 	action_ended.emit(requirement, total_progress)
+	if reset_progress:
+		total_progress = 0
 
 
 func action_ongoing(delta: float) -> void:

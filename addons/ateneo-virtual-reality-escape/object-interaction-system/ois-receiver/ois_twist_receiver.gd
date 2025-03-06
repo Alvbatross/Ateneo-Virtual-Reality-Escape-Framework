@@ -19,7 +19,7 @@ func initialize_action_vars():
 func action_ongoing(delta: float) -> void:
 	var interacting_current_angle = interacting_object.basis.get_euler().z
 	
-	var delta_angle = interacting_current_angle-interacting_initial_angle
+	var delta_angle = interacting_current_angle - interacting_initial_angle
 	
 	# get shortest angle between two angles
 	if (delta_angle > PI || delta_angle < -PI):

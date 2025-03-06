@@ -3,37 +3,49 @@ class_name OISCrankReceiver
 extends OISReceiverComponent
 
 
-var initial_direction
-var past_progress = 0
+var initial_position
 
-var init_direction2
-var action_comp_origin2
-var init_handle_pos2
-var curr_handle_pos2
-var delta_angle_buffer2 = 0
-var total_progress2 = 0
-var past_progress2 = 0
+## Determines the direction of the twist action
+@export_enum("Clockwise", "Counter-Clockwise") var twist_direction : int
+## Check if the action should only go in one direction
+@export var single_direction : bool = false
 
 @export var axis_of_rotation : Vector3 = Vector3(1, 0, 0)
 
+@onready var center : Vector3 = position
+
+var total_angle : float = 0
+
 func initialize_action_vars() -> void:
-	initial_direction = interacting_object.position-position
-	past_progress = total_progress
-	
-	delta_angle_buffer2 = 0
-	action_comp_origin2 = position
-	init_handle_pos2 = interacting_object.position
-	init_direction2 = init_handle_pos2-action_comp_origin2
-	init_direction2.x = 0
-	past_progress2 = total_progress2
-	set_process(true)
+	initial_position = interacting_object.position - self.position
 
 
 func action_ongoing(delta: float) -> void:
-	var curr_direction = interacting_object.position - self.position 
+	var current_position = interacting_object.position - self.position
 	
-	var current_progress = initial_direction.signed_angle_to(curr_direction, axis_of_rotation)
+	var delta_angle = initial_position.signed_angle_to(current_position, axis_of_rotation)
+
+	#if (delta_angle > PI || delta_angle < -PI):
+		#delta_angle = sign(delta_angle)*(abs(delta_angle)-(2*PI))
 	
-	total_progress = past_progress + (current_progress * rate);
-	print(total_progress)
+	# Doesn't detect twisting in the opposite direction if single_direction is true
+	if single_direction:
+		if (twist_direction == CLOCKWISE and not delta_angle < 0) or (twist_direction == COUNTERCLOCKWISE and not delta_angle > 0):
+			return
+	
+	initial_position = current_position
+	
+	var current_progress = rad_to_deg(delta_angle)
+	
+	if twist_direction == CLOCKWISE:
+		current_progress *= -1
+	
+	total_angle += rad_to_deg(delta_angle)
+	
+	total_progress += current_progress * (rate / 360)
+	
+	print("=======================")
+	print("Total angle: " + str(total_angle)) # test value, delete in future
+	print("Total progress: "+str(total_progress))
+	print("=======================\n")
 	super(delta)
