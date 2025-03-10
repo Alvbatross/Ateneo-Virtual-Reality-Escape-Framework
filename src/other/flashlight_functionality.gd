@@ -10,11 +10,11 @@ var testint: float
 var keep_fully_charged_state : bool
 
 
-func _ready():
+func _ready() -> void:
 	white_flash.get_surface_override_material(0).albedo_color.a = 0
 	testint = 0
 	
-func _process(delta):
+func _process(_delta: float) -> void:
 	
 	if testint > 0:
 		testint -= 0.002
@@ -31,6 +31,6 @@ func _process(delta):
 	audio_stream_player_3d.pitch_scale = 1 * new_test + 0.01
 		
 	
-func _on_ois_crank_receiver_action_in_progress(requirement: Variant, total_progress: Variant) -> void:
+func _on_ois_crank_receiver_action_in_progress(_requirement: Variant, _total_progress: Variant) -> void:
 	if testint < 1.5:
 		testint += 0.05
