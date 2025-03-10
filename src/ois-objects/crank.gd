@@ -26,4 +26,5 @@ func _on_ois_crank_receiver_action_ended(_requirement: Variant, _total_progress:
 
 
 func _on_ois_crank_receiver_action_completed(_requirement: Variant, _total_progress: Variant) -> void:
+	
 	audio.play()

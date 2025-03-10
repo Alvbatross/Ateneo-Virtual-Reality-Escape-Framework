@@ -13,8 +13,12 @@ func exit_state() -> void:
 
 func _on_enter_collision(receiver: Variant) -> void:
 	if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor_component().receiver_group):
-		_ois_actor_state_machine.get_actor_component().set_receiver(receiver.get_parent())
-		_ois_actor_state_machine.transition_to("ActiveCollidingState", {})
+		if _ois_actor_state_machine.get_actor_component().get_actor() == receiver.get_parent().get_parent() and not receiver.get_parent().receive_from_self:
+			print("Actor and Receiver is the same")
+			return
+		else:
+			_ois_actor_state_machine.get_actor_component().set_receiver(receiver.get_parent())
+			_ois_actor_state_machine.transition_to("ActiveCollidingState", {})
 	else:
 		print("Incompatible Actor and Receiver")
 

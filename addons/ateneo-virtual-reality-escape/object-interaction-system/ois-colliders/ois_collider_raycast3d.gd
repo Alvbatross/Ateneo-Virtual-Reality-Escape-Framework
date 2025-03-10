@@ -31,7 +31,7 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		raycast_3d = get_node("Raycast3D")
 		raycast_laser = get_node("Laser")
-		
+		raycast_3d.collision_mask = ois_collision_layer
 		raycast_3d.collide_with_areas = true
 		raycast_3d.collide_with_bodies = true
 	

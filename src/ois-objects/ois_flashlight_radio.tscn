@@ -113,7 +113,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0376776, 0.0984734, 0.09265
 
 [node name="GrabPointHandRight" parent="CrankRotationPoint/Hand" index="0" instance=ExtResource("3_418d6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00256604, 0.0281189, -0.0932091)
-visible = true
 
 [node name="Crank" type="Node3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0276712, 0.0997361, 0.106026)

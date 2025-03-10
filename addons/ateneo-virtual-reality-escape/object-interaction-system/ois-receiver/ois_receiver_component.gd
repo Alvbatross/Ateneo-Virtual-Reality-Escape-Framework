@@ -21,11 +21,14 @@ signal action_completed(requirement, total_progress)
 
 @export var reset_progress : bool = false
 
+@export var receive_from_self : bool = false
+
 @export_flags_3d_physics var ois_collision_layer : int = COLLISION_LAYER
 
 var completed : bool = false
 
 var interacting_object
+var interacting_actor : OISActorComponent
 var total_progress : float = 0
 var rate : float = 0
 
@@ -47,6 +50,8 @@ func _ready() -> void:
 		
 	if not Engine.is_editor_hint():
 		area_3d = get_node("Area3D")
+		area_3d.collision_layer = ois_collision_layer
+		area_3d.collision_mask = ois_collision_layer
 		add_to_group(group)
 		area_3d.add_to_group(group)
 		if snap_actor:
@@ -61,8 +66,13 @@ func initialize_action_vars() -> void:
 
 
 func start_action_check(actor : OISActorComponent, rate_mult: float) -> void:
+	if actor.get_actor() == get_parent() and not receive_from_self:
+		print("I Am Receiving Myself")
+		return
+	
 	action_started.emit(requirement, total_progress)
 	interacting_object = actor.get_parent()
+	interacting_actor = actor
 	rate = actor.get_actor_rate() * rate_mult
 	initialize_action_vars()
 

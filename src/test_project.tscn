@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=38 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://dms7o4a7kk3tx" path="res://src/ois-objects/ois_bowstaff.tscn" id="20_76m4q"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_system.gd" id="21_4yaih"]
 [ext_resource type="PackedScene" uid="uid://bq5vkafh6ugil" path="res://src/ois-objects/ois_flashlight_radio.tscn" id="23_ibnp3"]
+[ext_resource type="PackedScene" uid="uid://u3gyg1us25m7" path="res://src/ois-objects/ois_baston.tscn" id="23_s7jea"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
 radius = 0.1
@@ -331,6 +332,15 @@ grab_distance = 0.075
 mesh = SubResource("SphereMesh_7jwho")
 surface_material_override/0 = ExtResource("19_v4is8")
 
+[node name="OISBaston" parent="." instance=ExtResource("23_s7jea")]
+transform = Transform3D(0.934018, -0.357227, 0, 0.357227, 0.934018, 0, 0, 0, 1, 0, 0, -1.2697)
+
+[node name="OISAttachReceiver" parent="OISBaston" index="6"]
+is_primary_attacher = true
+
+[node name="OISBaston2" parent="." instance=ExtResource("23_s7jea")]
+transform = Transform3D(0.72953, -0.683949, 0, 0.683949, 0.72953, 0, 0, 0, 1, 0, 0, -0.966684)
+
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]
 [connection signal="action_in_progress" from="TestReceiver/OISWipeReceiver" to="TestReceiver" method="_on_ois_wipe_receiver_action_in_progress"]
@@ -339,3 +349,4 @@ surface_material_override/0 = ExtResource("19_v4is8")
 [editable path="OISScrew"]
 [editable path="OISScrewDriver"]
 [editable path="OISHammer"]
+[editable path="OISBaston"]

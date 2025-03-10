@@ -3,11 +3,14 @@ class_name OISAttachReceiver
 extends OISReceiverComponent
 
 
-## Buffer set for minimal wipe distance in 1 frame. The lower the buffer the more sensitive each wipe movement is. 
-@export var buffer : float = 0.02
+
+@export var buffer : float = 0.1
+@export var is_primary_attacher : bool = false
+@export var replacement_object : PackedScene = null
 var interacting_initial_pos : Vector3
 
-var attached : bool = false
+var is_attached : bool = false
+var attached_to : Variant = null
 
 
 func initialize_action_vars():
@@ -15,17 +18,28 @@ func initialize_action_vars():
 
 
 func action_ongoing(delta: float) -> void:
-	var interacting_current_pos = interacting_object.position
+	if not is_attached:
+		if self.position.distance_to(interacting_actor.position) < buffer:
+			is_attached = true
+			attached_to = interacting_object 
+			if is_primary_attacher:
+				var new_object = replacement_object.instantiate()
+				get_parent().get_parent().add_child(new_object)
+				interacting_actor.actor_state_machine.controller.get_node("FunctionPickup")._pick_up_object(new_object)
+				get_parent().queue_free()
+				attached_to.queue_free()
+			print("YAY Attached the Objects")
+	#var interacting_current_pos = interacting_object.position
+	#
+	#var delta_dist = interacting_initial_pos.distance_to(interacting_current_pos)
+	#
+	#interacting_initial_pos = interacting_current_pos
+	#
+	#if (delta_dist > buffer):
+		#total_progress += rate * delta
+	#
+	#print("=======================")
+	#print("Total progress: "+str(total_progress))
+	#print("=======================\n")
 	
-	var delta_dist = interacting_initial_pos.distance_to(interacting_current_pos)
-	
-	interacting_initial_pos = interacting_current_pos
-	
-	if (delta_dist > buffer):
-		total_progress += rate * delta
-	
-	print("=======================")
-	print("Total progress: "+str(total_progress))
-	print("=======================\n")
-	
-	super(delta)
+		super(delta)
