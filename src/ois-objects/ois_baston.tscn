@@ -87,7 +87,6 @@ shape = SubResource("SphereShape3D_px36w")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00166848, 0)
 script = ExtResource("7_ne2nh")
 buffer = 0.5
-is_primary_attacher = null
 replacement_object = ExtResource("8_m1yao")
 group = "attach_detach"
 requirement = 1.0

@@ -41,10 +41,11 @@ func update(delta: float) -> void:
 	
 
 func physics_update(delta: float) -> void:
+	print(both_triggers_on)
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()
 	if is_instance_valid(receiver):
 		if _ois_actor_state_machine.get_actor_component().trigger_action:
-			if trigger_on:
+			if both_triggers_on:
 				if receiver.snap_actor:
 					_ois_actor_state_machine.get_actor_component().snap_actor_to_receiver()
 				receiver.action_ongoing(delta)

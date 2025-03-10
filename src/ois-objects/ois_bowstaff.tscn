@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dms7o4a7kk3tx"]
+[gd_scene load_steps=14 format=3 uid="uid://dms7o4a7kk3tx"]
 
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_snkl1"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_8mgv7"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_je2ke"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="5_8dm64"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_two_hand_tool_asm.gd" id="6_gmomm"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_detach_receiver.gd" id="7_pcj84"]
+[ext_resource type="PackedScene" uid="uid://df8ckf7krjyl3" path="res://src/ois-objects/ois_hammer.tscn" id="8_aprct"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vmy2j"]
 size = Vector3(0.03, 2, 0.03)
@@ -16,6 +18,12 @@ bottom_radius = 0.015
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tsn06"]
 radius = 0.02
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kyapw"]
+size = Vector3(0.1, 0.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mnwhj"]
+size = Vector3(0.1, 0.5, 0.1)
 
 [node name="OISBowstaff" instance=ExtResource("1_snkl1")]
 second_hand_grab = 2
@@ -74,3 +82,38 @@ shape = SubResource("CylinderShape3D_tsn06")
 
 [node name="OISTwoHandToolASM" type="Node3D" parent="OISActorComponent" index="1"]
 script = ExtResource("6_gmomm")
+
+[node name="OISActorComponent2" type="Node3D" parent="." index="11"]
+script = ExtResource("4_je2ke")
+receiver_group = "detach"
+trigger_action = true
+
+[node name="OISTwoHandToolASM" type="Node3D" parent="OISActorComponent2" index="0"]
+script = ExtResource("6_gmomm")
+require_two_handed = true
+
+[node name="OISColliderArea3D" type="Node3D" parent="OISActorComponent2" index="1"]
+script = ExtResource("5_8dm64")
+ois_collision_layer = 1073741824
+
+[node name="Area3D" type="Area3D" parent="OISActorComponent2/OISColliderArea3D" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISActorComponent2/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("BoxShape3D_kyapw")
+
+[node name="OISDetachReceiver" type="Node3D" parent="." index="12"]
+script = ExtResource("7_pcj84")
+primary_replacement_object = ExtResource("8_aprct")
+secondary_replacement_object = ExtResource("8_aprct")
+group = "detach"
+requirement = 1.0
+ois_collision_layer = 1073741824
+
+[node name="Area3D" type="Area3D" parent="OISDetachReceiver" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OISDetachReceiver/Area3D" index="0"]
+shape = SubResource("BoxShape3D_mnwhj")
