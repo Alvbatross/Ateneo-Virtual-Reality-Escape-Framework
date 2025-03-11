@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dfhvg7w4ufcj5"]
+[gd_scene load_steps=41 format=3 uid="uid://dfhvg7w4ufcj5"]
 
 [ext_resource type="Script" path="res://src/test_project.gd" id="1_ptu4b"]
 [ext_resource type="PackedScene" uid="uid://bvss2hm3ar0an" path="res://src/xr_player.tscn" id="2_s6le6"]
@@ -23,6 +23,10 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_system.gd" id="21_4yaih"]
 [ext_resource type="PackedScene" uid="uid://bq5vkafh6ugil" path="res://src/ois-objects/ois_flashlight_radio.tscn" id="23_ibnp3"]
 [ext_resource type="PackedScene" uid="uid://u3gyg1us25m7" path="res://src/ois-objects/ois_baston.tscn" id="23_s7jea"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/teleporter_manager.gd" id="24_bpliu"]
+[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/teleporter.gd" id="24_ypn6r"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_2iixv"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rhrux"]
 radius = 0.1
@@ -79,6 +83,12 @@ script = ExtResource("1_ptu4b")
 
 [node name="XRPlayer" parent="." instance=ExtResource("2_s6le6")]
 script = ExtResource("3_xo4ep")
+
+[node name="XROrigin3D" parent="XRPlayer" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46267, 0, -0.891046)
+
+[node name="XRCamera3D" parent="XRPlayer/XROrigin3D" index="0"]
+attributes = SubResource("CameraAttributesPractical_2iixv")
 
 [node name="OISActorComponent" type="Node3D" parent="XRPlayer/XROrigin3D/XRController3DLeft" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.99225, 0.12426, 0, -0.12426, 0.99225, 0.0545714, -0.0501776, 0.0746771)
@@ -340,6 +350,55 @@ is_primary_attacher = true
 
 [node name="OISBaston2" parent="." instance=ExtResource("23_s7jea")]
 transform = Transform3D(0.159244, -0.987239, 0, 0.987239, 0.159244, 0, 0, 0, 1, 0, 0.593144, -1.43856)
+
+[node name="TeleporterManager" type="Node3D" parent="." node_paths=PackedStringArray("current_location", "xr_origin", "xr_camera", "xr_left_function_pointer", "xr_right_function_pointer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0557103, 0)
+script = ExtResource("24_bpliu")
+current_location = NodePath("Kitchen 2")
+xr_origin = NodePath("../XRPlayer/XROrigin3D")
+xr_camera = NodePath("../XRPlayer/XROrigin3D/XRCamera3D")
+xr_left_function_pointer = NodePath("../XRPlayer/XROrigin3D/XRController3DLeft/FunctionPointer")
+xr_right_function_pointer = NodePath("../XRPlayer/XROrigin3D/XRController3DRight/FunctionPointer")
+
+[node name="Living Room" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0.249755, 0.00325179, -1.28622)
+script = ExtResource("24_ypn6r")
+teleporter_name = "Living Room"
+teleporter_position = Vector3(0.249755, 0.00325179, -1.28622)
+teleporter_rotation = Vector3(0, -60, 0)
+connected_teleporters = [NodePath("../Kitchen Entrance")]
+
+[node name="Kitchen 2" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46267, 0, -0.891046)
+script = ExtResource("24_ypn6r")
+teleporter_name = "Kitchen 2"
+teleporter_position = Vector3(2.46267, 0, -0.891046)
+connected_teleporters = [NodePath("../Kitchen 3")]
+
+[node name="Kitchen 3" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.43645, 0.00191832, -1.86276)
+script = ExtResource("24_ypn6r")
+teleporter_name = "Kitchen 3"
+teleporter_enabled = true
+teleporter_position = Vector3(2.43645, 0.00191832, -1.86276)
+teleporter_rotation = Vector3(0, -180, 0)
+connected_teleporters = [NodePath("../Kitchen 2"), NodePath("../Kitchen Entrance")]
+
+[node name="Kitchen 1" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
+transform = Transform3D(-0.997936, 0, -0.0642188, 0, 1, 0, 0.0642188, 0, -0.997936, 2.42889, 0, -3.95277)
+script = ExtResource("24_ypn6r")
+teleporter_name = "Kitchen 1"
+teleporter_position = Vector3(2.42889, 0, -3.95277)
+teleporter_rotation = Vector3(0, -176.318, 0)
+connected_teleporters = [NodePath("../Kitchen Entrance")]
+
+[node name="Kitchen Entrance" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
+transform = Transform3D(-0.0266654, 0, 0.999644, 0, 1, 0, -0.999644, 0, -0.0266654, 2.41005, 0, -2.90802)
+script = ExtResource("24_ypn6r")
+teleporter_name = "Kitchen Entrance"
+teleporter_position = Vector3(2.41005, 0, -2.90802)
+teleporter_rotation = Vector3(0, 91.528, 0)
+connected_teleporters = [NodePath("../Living Room"), NodePath("../Kitchen 3"), NodePath("../Kitchen 1")]
 
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DLeft" to="XRPlayer" method="_on_xr_controller_3d_left_button_pressed"]
 [connection signal="button_pressed" from="XRPlayer/XROrigin3D/XRController3DRight" to="XRPlayer" method="_on_xr_controller_3d_right_button_pressed"]

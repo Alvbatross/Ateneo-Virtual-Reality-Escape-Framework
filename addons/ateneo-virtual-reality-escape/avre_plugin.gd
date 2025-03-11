@@ -27,6 +27,11 @@ var inventory_system_slot := preload("res://addons/ateneo-virtual-reality-escape
 var inventory_system := preload("res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_system.gd")
 var inventory_item := preload("res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_item.gd")
 
+
+## Teleportation System Related
+var teleporter := preload("res://addons/ateneo-virtual-reality-escape/teleportation-system/teleporter.gd")
+var teleporter_manager := preload("res://addons/ateneo-virtual-reality-escape/teleportation-system/teleporter_manager.gd")
+
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
 	add_custom_type("Event", "Node", event, preload("res://icon.svg"))
@@ -52,7 +57,9 @@ func _enter_tree() -> void:
 	add_custom_type("InventorySlot", "Inventory", inventory_system_slot, preload("res://icon.svg"))
 	add_custom_type("InventorySystem", "Inventory", inventory_system, preload("res://icon.svg"))
 	add_custom_type("InventoryItem", "Inventory", inventory_item, preload("res://icon.svg"))
-
+	
+	add_custom_type("Teleporter", "Teleporter", teleporter, preload("res://icon.svg"))
+	add_custom_type("TeleporterManager", "Teleporter", teleporter_manager, preload("res://icon.svg"))
 
 
 func _exit_tree() -> void:
@@ -79,4 +86,7 @@ func _exit_tree() -> void:
 	
 	remove_custom_type("InventorySlot")
 	remove_custom_type("InventorySystem")
+	
+	remove_custom_type("Teleporter")
+	remove_custom_type("TeleporterManager")
 	
