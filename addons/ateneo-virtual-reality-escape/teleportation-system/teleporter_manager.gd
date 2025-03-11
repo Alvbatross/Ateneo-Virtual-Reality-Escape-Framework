@@ -8,6 +8,9 @@ extends Node3D
 			current_location = current_loc
 
 @export_category("XR Settings")
+
+@export var teleporter_trigger_button : String = "trigger_click"
+
 @export var xr_origin: XROrigin3D:
 	set(xr_origin_node):
 		if xr_origin != xr_origin_node:
@@ -19,16 +22,28 @@ extends Node3D
 @export var xr_left_function_pointer: XRToolsFunctionPointer
 @export var xr_right_function_pointer: XRToolsFunctionPointer
 
+@onready var _controller_left_node := XRHelpers.get_left_controller(xr_left_function_pointer)
+@onready var _controller_right_node := XRHelpers.get_right_controller(xr_right_function_pointer)
+
 @export_category("Editor Settings")
 @export var update_connections : bool
 
+@export_category("Debug")
+@export var pointing_at : Teleporter
+@export var active_controller : XRController3D
+
 var teleport_called : bool
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_initialize_xr_components()
-	teleport_called = true
 	
+	teleport_called = true
+	if teleport_called and is_instance_valid(current_location):
+		_teleport_player(current_location)
+		teleport_called = false
+	_connect_controller_buttons()
 				
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -40,12 +55,12 @@ func _process(delta: float) -> void:
 			update_connections = false
 	_set_teleporter_states()
 	
-	if teleport_called and is_instance_valid(current_location):
-		_teleport_player()
+	if teleport_called and is_instance_valid(pointing_at):
+		_teleport_player(pointing_at)
 		teleport_called = false
 	
 	if not Engine.is_editor_hint():
-		_test_method()
+		_runtime_pointer()
 	
 func _set_teleporter_states() -> void:
 	if is_instance_valid(current_location):
@@ -59,14 +74,26 @@ func _set_teleporter_states() -> void:
 			elif teleporters_a == current_location or teleporters_a in current_location.connected_teleporters:
 				teleporters_a.teleporter_enabled = true
 				
-func _teleport_player() -> void:
+func _teleport_player(location : Teleporter) -> void:
 	# Still unsure about this, will have to confirm later, but it works as expected.
-	xr_origin.position = current_location.teleporter_position
-	xr_origin.rotation_degrees = current_location.teleporter_rotation
+	print("[AVRE - TeleportManager] Teleported to "+location.teleporter_name+".")
+	xr_origin.position = location.teleporter_position
+	xr_origin.rotation_degrees = location.teleporter_rotation
+	current_location = location
+
 	
-func _test_method() -> void:
-	if is_instance_valid(xr_left_function_pointer):
-		print(xr_left_function_pointer.get_node("RayCast").get_collider())
+func _runtime_pointer() -> void:
+	if is_instance_valid(xr_right_function_pointer) and is_instance_valid(xr_left_function_pointer):
+		if is_instance_valid(xr_right_function_pointer.get_node("RayCast").get_collider()):
+			if pointing_at == null:
+				if xr_right_function_pointer.get_node("RayCast").get_collider().get_parent() is Teleporter:
+					pointing_at = xr_right_function_pointer.get_node("RayCast").get_collider().get_parent()
+		elif is_instance_valid(xr_left_function_pointer.get_node("RayCast").get_collider()):
+			if pointing_at == null:
+				if xr_left_function_pointer.get_node("RayCast").get_collider().get_parent() is Teleporter:
+					pointing_at = xr_left_function_pointer.get_node("RayCast").get_collider().get_parent()
+		else:
+			pointing_at = null
 
 
 func _initialize_xr_components() -> void:
@@ -99,6 +126,27 @@ func _initialize_xr_origin_nodes(xr_origin_nodes : XROrigin3D) -> void:
 						if subnodes is XRToolsFunctionPointer:
 							xr_right_function_pointer = subnodes
 							print("[AVRE - TeleportManager] XR Right Controller FunctionPointer found.")
+							
+func _connect_controller_buttons() -> void:
+	if is_instance_valid(_controller_left_node) and is_instance_valid(_controller_right_node):
+		_controller_left_node.button_pressed.connect(_on_teleporter_button_pressed.bind(_controller_left_node))
+		_controller_left_node.button_released.connect(_on_teleporter_button_released.bind(_controller_left_node))
+		_controller_right_node.button_pressed.connect(_on_teleporter_button_pressed.bind(_controller_right_node))
+		_controller_right_node.button_released.connect(_on_teleporter_button_released.bind(_controller_right_node))
+	
+func _on_teleporter_button_pressed(p_button : String, controller : XRController3D) -> void:
+	if p_button == teleporter_trigger_button and is_instance_valid(pointing_at):
+		if controller == active_controller:
+			if pointing_at.teleporter_enabled:
+				teleport_called = true
+		else:
+			active_controller = controller
+
+
+func _on_teleporter_button_released(p_button : String, controller : XRController3D) -> void:
+	if p_button == teleporter_trigger_button:
+		pointing_at = null
+		
 					
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()

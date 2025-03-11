@@ -21,6 +21,7 @@ var default_mesh_shape := CylinderMesh.new()
 var default_teleporter_arrow := MeshInstance3D.new()
 var arrow_mesh := PrismMesh.new()
 
+var default_static_body := StaticBody3D.new()
 var default_collider := CollisionShape3D.new()
 var default_collider_shape := CylinderShape3D.new()
 
@@ -64,13 +65,15 @@ func _set_up_teleporter_mesh() -> void:
 	default_collider.shape = default_collider_shape
 	default_collider_shape.height = 0.05
 	default_collider_shape.radius = 0.2
-	#default_collider.set_collision_layer_value(21,true)
 	
+	# Set collision layer for FunctionPointer.
+	default_static_body.set_collision_layer_value(21,true)
 	
-	add_child(default_collider)
+	add_child(default_static_body)
+	default_static_body.add_child(default_collider)
+	
 	add_child(default_teleporter_mesh)
 	default_teleporter_mesh.add_child(default_teleporter_arrow)
-	#default_teleporter_mesh.owner = get_tree().edited_scene_root
 	
 func _update_teleporter_name() -> void:
 	if teleporter_name != "":

@@ -192,12 +192,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.099)
 [node name="InventoryItem" parent="OISHammer" index="5"]
 object_transform_adjustment = Vector3(0, 0, 0)
 
+[node name="TeleporterManager" parent="OISHammer" index="6"]
+teleporter_trigger_button = null
+
 [node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
 transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
 contact_monitor = true
 
 [node name="OISFlashlightRadio" parent="." instance=ExtResource("23_ibnp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.353268, 0.212872, -0.641418)
+collision_mask = 196615
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, -0.912067, 0, -1.46691)
@@ -222,6 +226,10 @@ skeleton = NodePath("../OmniLight3D")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_energy = 0.5
 omni_range = 660.969
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.065151, 0.265726, -0.187623)
+light_energy = 0.394
 
 [node name="InventorySlot" type="Node3D" parent="."]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, -0.14323, 0.720333, 0.813452)
@@ -354,49 +362,51 @@ transform = Transform3D(0.159244, -0.987239, 0, 0.987239, 0.159244, 0, 0, 0, 1, 
 [node name="TeleporterManager" type="Node3D" parent="." node_paths=PackedStringArray("current_location", "xr_origin", "xr_camera", "xr_left_function_pointer", "xr_right_function_pointer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0557103, 0)
 script = ExtResource("24_bpliu")
-current_location = NodePath("Kitchen 2")
+current_location = NodePath("Living Room")
+teleporter_trigger_button = null
 xr_origin = NodePath("../XRPlayer/XROrigin3D")
 xr_camera = NodePath("../XRPlayer/XROrigin3D/XRCamera3D")
 xr_left_function_pointer = NodePath("../XRPlayer/XROrigin3D/XRController3DLeft/FunctionPointer")
 xr_right_function_pointer = NodePath("../XRPlayer/XROrigin3D/XRController3DRight/FunctionPointer")
 
 [node name="Living Room" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
-transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0.249755, 0.00325179, -1.28622)
+transform = Transform3D(-0.824126, 0, -0.566406, 0, 1, 0, 0.566406, 0, -0.824126, -0.112365, 0.00325179, -0.109216)
 script = ExtResource("24_ypn6r")
 teleporter_name = "Living Room"
-teleporter_position = Vector3(0.249755, 0.00325179, -1.28622)
-teleporter_rotation = Vector3(0, -60, 0)
+teleporter_position = Vector3(-0.112365, 0.00325179, -0.109216)
+teleporter_rotation = Vector3(0, -145.5, 0)
 connected_teleporters = [NodePath("../Kitchen Entrance")]
 
 [node name="Kitchen 2" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46267, 0, -0.891046)
+transform = Transform3D(-0.804894, 0, 0.593419, 0, 1, 0, -0.593419, 0, -0.804894, 2.34852, 0, -3.15615)
 script = ExtResource("24_ypn6r")
 teleporter_name = "Kitchen 2"
-teleporter_position = Vector3(2.46267, 0, -0.891046)
+teleporter_position = Vector3(2.34852, 0, -3.15615)
+teleporter_rotation = Vector3(0, -216.4, 0)
 connected_teleporters = [NodePath("../Kitchen 3")]
 
 [node name="Kitchen 3" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.43645, 0.00191832, -1.86276)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.43645, 0.00191832, 1.83279)
 script = ExtResource("24_ypn6r")
 teleporter_name = "Kitchen 3"
-teleporter_enabled = true
-teleporter_position = Vector3(2.43645, 0.00191832, -1.86276)
+teleporter_position = Vector3(2.43645, 0.00191832, 1.83279)
 teleporter_rotation = Vector3(0, -180, 0)
 connected_teleporters = [NodePath("../Kitchen 2"), NodePath("../Kitchen Entrance")]
 
 [node name="Kitchen 1" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
-transform = Transform3D(-0.997936, 0, -0.0642188, 0, 1, 0, 0.0642188, 0, -0.997936, 2.42889, 0, -3.95277)
+transform = Transform3D(-0.997936, 0, -0.0642188, 0, 1, 0, 0.0642188, 0, -0.997936, 2.42889, 0, -0.765426)
 script = ExtResource("24_ypn6r")
 teleporter_name = "Kitchen 1"
-teleporter_position = Vector3(2.42889, 0, -3.95277)
+teleporter_position = Vector3(2.42889, 0, -0.765426)
 teleporter_rotation = Vector3(0, -176.318, 0)
 connected_teleporters = [NodePath("../Kitchen Entrance")]
 
 [node name="Kitchen Entrance" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
-transform = Transform3D(-0.0266654, 0, 0.999644, 0, 1, 0, -0.999644, 0, -0.0266654, 2.41005, 0, -2.90802)
+transform = Transform3D(-0.0266654, 0, 0.999644, 0, 1, 0, -0.999644, 0, -0.0266654, 2.41005, 0, 0.62592)
 script = ExtResource("24_ypn6r")
 teleporter_name = "Kitchen Entrance"
-teleporter_position = Vector3(2.41005, 0, -2.90802)
+teleporter_enabled = true
+teleporter_position = Vector3(2.41005, 0, 0.62592)
 teleporter_rotation = Vector3(0, 91.528, 0)
 connected_teleporters = [NodePath("../Living Room"), NodePath("../Kitchen 3"), NodePath("../Kitchen 1")]
 
