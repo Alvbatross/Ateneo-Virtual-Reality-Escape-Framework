@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dms7o4a7kk3tx"]
+[gd_scene load_steps=13 format=3 uid="uid://dms7o4a7kk3tx"]
 
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_snkl1"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_8mgv7"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="5_8dm64"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_two_hand_tool_asm.gd" id="6_gmomm"]
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_detach_receiver.gd" id="7_pcj84"]
-[ext_resource type="PackedScene" uid="uid://df8ckf7krjyl3" path="res://src/ois-objects/ois_hammer.tscn" id="8_aprct"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vmy2j"]
 size = Vector3(0.03, 2, 0.03)
@@ -20,7 +19,7 @@ bottom_radius = 0.015
 radius = 0.02
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kyapw"]
-size = Vector3(0.1, 0.5, 0.1)
+size = Vector3(0.075, 0.5, 0.075)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mnwhj"]
 size = Vector3(0.1, 0.5, 0.1)
@@ -105,10 +104,11 @@ shape = SubResource("BoxShape3D_kyapw")
 
 [node name="OISDetachReceiver" type="Node3D" parent="." index="12"]
 script = ExtResource("7_pcj84")
-primary_replacement_object = ExtResource("8_aprct")
-secondary_replacement_object = ExtResource("8_aprct")
+primary_replacement_object_path = "res://src/ois-objects/ois_baston.tscn"
+secondary_replacement_object_path = "res://src/ois-objects/ois_baston.tscn"
 group = "detach"
 requirement = 1.0
+receive_from_self = true
 ois_collision_layer = 1073741824
 
 [node name="Area3D" type="Area3D" parent="OISDetachReceiver" index="0"]

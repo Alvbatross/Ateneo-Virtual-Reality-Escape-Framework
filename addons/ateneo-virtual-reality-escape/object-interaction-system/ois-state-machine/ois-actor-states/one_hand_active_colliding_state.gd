@@ -35,9 +35,6 @@ func _on_exit_collision(receiver: Variant) -> void:
 				_ois_actor_state_machine.transition_to("OneHandActiveState", {})
 
 
-func update(delta: float) -> void:
-	print(_ois_actor_state_machine.get_actor_component().get_receiver())
-
 
 func physics_update(delta: float) -> void:
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()

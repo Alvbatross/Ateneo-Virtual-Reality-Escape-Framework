@@ -85,7 +85,7 @@ script = ExtResource("1_ptu4b")
 script = ExtResource("3_xo4ep")
 
 [node name="XROrigin3D" parent="XRPlayer" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46267, 0, -0.891046)
+transform = Transform3D(-0.824126, 0, -0.566406, 0, 1, 0, 0.566406, 0, -0.824126, -0.112365, 0.00325179, -0.109216)
 
 [node name="XRCamera3D" parent="XRPlayer/XROrigin3D" index="0"]
 attributes = SubResource("CameraAttributesPractical_2iixv")
@@ -191,9 +191,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.099)
 
 [node name="InventoryItem" parent="OISHammer" index="5"]
 object_transform_adjustment = Vector3(0, 0, 0)
-
-[node name="TeleporterManager" parent="OISHammer" index="6"]
-teleporter_trigger_button = null
 
 [node name="OISRag" parent="." instance=ExtResource("10_ero8i")]
 transform = Transform3D(0.999914, 0.00174288, 0.0130259, 0, 0.991167, -0.13262, -0.013142, 0.132608, 0.991081, -0.0111913, 0.363829, -0.529657)
@@ -350,11 +347,16 @@ surface_material_override/0 = ExtResource("19_v4is8")
 [node name="OISBowstaff" parent="." instance=ExtResource("20_76m4q")]
 transform = Transform3D(1, 0, 0, 0, 0.122181, 0.992508, 0, -0.992508, 0.122181, -0.93604, 0.858749, -0.251302)
 
+[node name="OISDetachReceiver" parent="OISBowstaff" index="12"]
+primary_replacement_object_path = null
+secondary_replacement_object_path = null
+
 [node name="OISBaston" parent="." instance=ExtResource("23_s7jea")]
 transform = Transform3D(0.159244, -0.987239, 0, 0.987239, 0.159244, 0, 0, 0, 1, 0, 0.593144, -1.71112)
 
 [node name="OISAttachReceiver" parent="OISBaston" index="6"]
 is_primary_attacher = true
+replacement_object_path = null
 
 [node name="OISBaston2" parent="." instance=ExtResource("23_s7jea")]
 transform = Transform3D(0.159244, -0.987239, 0, 0.987239, 0.159244, 0, 0, 0, 1, 0, 0.593144, -1.43856)
@@ -363,7 +365,6 @@ transform = Transform3D(0.159244, -0.987239, 0, 0.987239, 0.159244, 0, 0, 0, 1, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0557103, 0)
 script = ExtResource("24_bpliu")
 current_location = NodePath("Living Room")
-teleporter_trigger_button = null
 xr_origin = NodePath("../XRPlayer/XROrigin3D")
 xr_camera = NodePath("../XRPlayer/XROrigin3D/XRCamera3D")
 xr_left_function_pointer = NodePath("../XRPlayer/XROrigin3D/XRController3DLeft/FunctionPointer")
@@ -382,7 +383,7 @@ transform = Transform3D(-0.804894, 0, 0.593419, 0, 1, 0, -0.593419, 0, -0.804894
 script = ExtResource("24_ypn6r")
 teleporter_name = "Kitchen 2"
 teleporter_position = Vector3(2.34852, 0, -3.15615)
-teleporter_rotation = Vector3(0, -216.4, 0)
+teleporter_rotation = Vector3(0, 143.6, 0)
 connected_teleporters = [NodePath("../Kitchen 3")]
 
 [node name="Kitchen 3" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
@@ -418,4 +419,5 @@ connected_teleporters = [NodePath("../Living Room"), NodePath("../Kitchen 3"), N
 [editable path="OISScrew"]
 [editable path="OISScrewDriver"]
 [editable path="OISHammer"]
+[editable path="OISBowstaff"]
 [editable path="OISBaston"]

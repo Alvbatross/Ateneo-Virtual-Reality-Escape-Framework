@@ -6,11 +6,12 @@ extends OISReceiverComponent
 
 @export var buffer : float = 0.1
 @export var is_primary_attacher : bool = false
-@export var replacement_object : PackedScene = null
+@export var replacement_object_path : String
 var interacting_initial_pos : Vector3
 
 var is_attached : bool = false
 var attached_to : Variant = null
+
 
 
 func initialize_action_vars():
@@ -23,6 +24,7 @@ func action_ongoing(delta: float) -> void:
 			is_attached = true
 			attached_to = interacting_object 
 			if is_primary_attacher:
+				var replacement_object = load(replacement_object_path)
 				var new_object = replacement_object.instantiate()
 				get_parent().get_parent().add_child(new_object)
 				interacting_actor.actor_state_machine.controller.get_node("FunctionPickup")._pick_up_object(new_object)

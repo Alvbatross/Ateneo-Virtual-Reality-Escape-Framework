@@ -9,6 +9,7 @@ var active_triggers : int = 0
 var both_triggers_on : bool = false
 
 func enter_state(_msg: Dictionary = {}) -> void:
+	active_triggers = 0
 	print("I AM ACTIVE WITH BOTH HANDS")
 	var actor = _ois_actor_state_machine.get_actor_component().get_actor()
 	if actor is XRToolsPickable:
@@ -36,10 +37,6 @@ func _on_exit_collision(receiver: Variant) -> void:
 				_ois_actor_state_machine.transition_to("OneHandActiveState", {})
 
 
-func update(delta: float) -> void:
-	print(_ois_actor_state_machine.get_actor_component().get_receiver())
-	
-
 func physics_update(delta: float) -> void:
 	print(both_triggers_on)
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()
@@ -59,6 +56,7 @@ func physics_update(delta: float) -> void:
 
 func _on_trigger_press() -> void:
 	active_triggers += 1
+	print(active_triggers)
 	if active_triggers == 2:
 		both_triggers_on = true
 

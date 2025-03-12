@@ -4,9 +4,9 @@ extends OISActorState
 
 func enter_state(_msg: Dictionary = {}) -> void:
 	print("I AM BEING HELD BY 2 HANDS")
-	_ois_actor_state_machine.get_actor_component().actor_component_enabled(true)
 	_ois_actor_state_machine.get_actor_component().get_actor().released.connect(_on_actor_released)
 	_ois_actor_state_machine.get_actor_component().set_receiver(null)
+	_ois_actor_state_machine.get_actor_component().actor_component_enabled(true)
 
 func exit_state() -> void:
 	_ois_actor_state_machine.get_actor_component().get_actor().released.disconnect(_on_actor_released)

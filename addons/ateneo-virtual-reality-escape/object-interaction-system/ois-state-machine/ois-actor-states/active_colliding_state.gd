@@ -24,7 +24,6 @@ func _on_actor_released(pickable: Variant, by: Variant) -> void:
 
 
 func _on_exit_collision(receiver: Variant) -> void:
-	print("AM I HAPPENING?")
 	if is_instance_valid(receiver):
 		if receiver.get_parent().is_in_group(_ois_actor_state_machine.get_actor_component().receiver_group):
 			_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
