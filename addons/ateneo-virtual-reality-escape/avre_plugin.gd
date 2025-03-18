@@ -1,6 +1,8 @@
 @tool
 extends EditorPlugin
 
+var event_manager_ui := preload("res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/event_manager_ui.tscn").instantiate()
+
 var event := preload("res://addons/ateneo-virtual-reality-escape/event-management-system/event.gd")
 var ois := preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois.gd")
 var ois_actor_component := preload("res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd")
@@ -34,6 +36,10 @@ var teleporter_manager := preload("res://addons/ateneo-virtual-reality-escape/te
 
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
+	
+	EditorInterface.get_editor_main_screen().add_child(event_manager_ui)
+	_make_visible(false)
+	
 	add_custom_type("Event", "Node", event, preload("res://icon.svg"))
 	add_custom_type("OIS", "Node", ois, preload("res://icon.svg"))
 	add_custom_type("OISActorComponent", "OIS", ois_actor_component, preload("res://icon.svg"))
@@ -64,6 +70,10 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
 	# Clean-up of the plugin goes here.
+	remove_control_from_container(EditorPlugin.CONTAINER_TOOLBAR, event_manager_ui)
+	
+	event_manager_ui.queue_free()
+	
 	remove_custom_type("OISColliderRaycast3D")
 	remove_custom_type("OISColliderArea3D")
 	remove_custom_type("OISCollider")
@@ -90,3 +100,14 @@ func _exit_tree() -> void:
 	remove_custom_type("Teleporter")
 	remove_custom_type("TeleporterManager")
 	
+
+func _has_main_screen() -> bool:
+	return true
+
+func _make_visible(visible):
+	if event_manager_ui:
+		event_manager_ui.visible = visible
+
+
+func _get_plugin_name() -> String:
+	return "Event Editor"
