@@ -20,9 +20,10 @@ extends Node3D
 @export_category("Debug")
 @export var inventory_dictionary : Dictionary
 
+
+# REMOVE THIS SECTION LATER
 @export var test_item : Node3D
 var lolbool : bool
-
 @export var test_dict: Dictionary = { 0: [["adasda", null, "res://src/ois-objects/ois_screw_driver.tscn"], ["adasda", null, "res://src/ois-objects/ois_flashlight_radio.tscn"], ["adasda", null, null]], 1: [["adasda", null, null], ["adasda", null, null], ["adasda", null, null]]}
 
 
@@ -42,10 +43,12 @@ func _ready() -> void:
 	
 	# Make sure signals are connected.
 	for inventory_slot in get_children():
-		print(inventory_slot.name)
 		inventory_slot.current_object_in_slot.connect(update_slot_item)
+		
+		# Ensure the slots in runtime are the ones inside the inventory dictionary EVERY TIME.
 		inventory_dictionary[int(inventory_slot.name.split("_")[1])][int(inventory_slot.name.split("_")[2])][0] = inventory_slot
 	
+	# REMOVE THIS SECTION LATER
 	lolbool = true
 	
 
@@ -59,13 +62,12 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_update_inventory_system()
 	
+	# REMOVE THIS SECTION LATER
 	if not Engine.is_editor_hint():
 		if lolbool:
-			print("LOAD DATA")
+			print("[AVRE - Inventory] [DEBUG] Currently autoloads the test dictionary for testing purposes. REMOVE THIS CODE LATER.")
 			import_save_data(test_dict)
-			print(inventory_dictionary)
 			lolbool = false
-		#print(inventory_dictionary)
 		
 	
 
@@ -125,7 +127,6 @@ func update_slot_item(what, row, col) -> void:
 		print("[AVRE - Inventory] "+inventory_dictionary[row][col][1].name+" path: "+inventory_dictionary[row][col][1].get_scene_file_path())
 	else:
 		print("[AVRE - Inventory] No object in slot row "+str(row)+" column "+str(col)+".")
-	print(inventory_dictionary)
 
 func export_save_data() -> Dictionary:
 	print("[AVRE - Inventory] Saving data..")
@@ -140,17 +141,30 @@ func import_save_data(data : Dictionary) -> void:
 					inventory_dictionary[row_slots][column_slots][2] = data[row_slots][column_slots][2]
 					var loaded_item = load(inventory_dictionary[row_slots][column_slots][2]).instantiate()
 					
-					# If the item is supposed to be unique, find it inside the scene.
-					if loaded_item.get_node("InventoryItem").unique:
-						var loaded_item_name = loaded_item.name
-						if is_instance_valid(get_parent().find_child(loaded_item_name)):
-							inventory_dictionary[row_slots][column_slots][0]._pick_up_object(get_parent().find_child(loaded_item_name))
-							inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
+					# Making sure if the object has the InventoryItem script.
+					if is_instance_valid(loaded_item.get_node("InventoryItem")):
+						# If the item is supposed to be unique, find it inside the scene.
+						
+						if loaded_item.get_node("InventoryItem").unique:
+							print("im unique")
+							var loaded_item_name = loaded_item.name
+							if is_instance_valid(get_parent().find_child(loaded_item_name)):
+								print("the item is unique AND in the scene")
+								inventory_dictionary[row_slots][column_slots][0]._pick_up_object(get_parent().find_child(loaded_item_name))
+								inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
+							else:
+								print("the item is unique but not in the scene")
+								get_parent().add_child(loaded_item)
+								inventory_dictionary[row_slots][column_slots][0]._pick_up_object(loaded_item)
+								inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
 						else:
+							print("not unique and may or may not be in the scene")
 							get_parent().add_child(loaded_item)
 							inventory_dictionary[row_slots][column_slots][0]._pick_up_object(loaded_item)
 							inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
+					# If it doesn't have it, just put the item as is.
 					else:
+						print("no inventory item script in this item")
 						get_parent().add_child(loaded_item)
 						inventory_dictionary[row_slots][column_slots][0]._pick_up_object(loaded_item)
 						inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
