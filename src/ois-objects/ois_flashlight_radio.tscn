@@ -145,6 +145,7 @@ shape = SubResource("SphereShape3D_l2dxu")
 
 [node name="InventoryItem" type="Node3D" parent="." index="8" node_paths=PackedStringArray("defined_mesh", "defined_collision_shape", "additional_mesh")]
 script = ExtResource("15_0bilh")
+unique = true
 defined_mesh = NodePath("../flashlight_with_crank_body")
 defined_collision_shape = NodePath("../CollisionShape3D")
 preferred_scale = 0.6

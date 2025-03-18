@@ -124,7 +124,12 @@ func _body_exited_area(body) -> void:
 		if body.get_node("InventoryItem").is_colliding_with.has(self):
 			body.get_node("InventoryItem").is_colliding_with.erase(self)
 			body.get_node("InventoryItem").body_collision_detected = true
-
+			
+func _pick_up_object(body) -> void:
+	# Ensure the object is picked up properly and scale is adjusted to fit the slot according to the InventoryItem specifications.
+	_body_entered_area(body)
+	snap_zone.pick_up_object(body)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()

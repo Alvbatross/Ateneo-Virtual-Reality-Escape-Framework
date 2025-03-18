@@ -2,6 +2,9 @@
 class_name InventoryItem
 extends Node3D
 
+# Allow setting if the item is unique (only one of this item can exist at any given time).
+@export var unique : bool
+
 # Can set to override these meshes if they pose a problem.
 @export var defined_mesh : Node3D
 @export var defined_collision_shape : CollisionShape3D
