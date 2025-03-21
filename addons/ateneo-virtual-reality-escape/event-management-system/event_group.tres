@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="EventGroup" load_steps=2 format=3 uid="uid://ct34tb8yj6ikl"]
-
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event_group.gd" id="1_l10lk"]
-
-[resource]
-script = ExtResource("1_l10lk")

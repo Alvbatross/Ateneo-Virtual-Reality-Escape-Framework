@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dviv60srcxpb8"]
+[gd_scene load_steps=3 format=3 uid="uid://dviv60srcxpb8"]
 
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/event_manager_ui.gd" id="1_m2s0j"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/new_event_group_db.gd" id="2_vccc1"]
-[ext_resource type="Resource" uid="uid://ct34tb8yj6ikl" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event_group.tres" id="3_2vg7a"]
+[ext_resource type="ButtonGroup" uid="uid://dpfbwctx6hogh" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/editor_button_group.tres" id="3_n1hvk"]
 
 [node name="EventManagerUI" type="Control"]
 layout_mode = 3
@@ -11,86 +10,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 script = ExtResource("1_m2s0j")
 
 [node name="ExportGroupToJSON" type="FileDialog" parent="."]
 initial_position = 2
 size = Vector2i(500, 400)
 
-[node name="NewEventGroupDB" type="ConfirmationDialog" parent="."]
-title = "Create New Event Group"
-initial_position = 2
-size = Vector2i(400, 302)
-script = ExtResource("2_vccc1")
-event_group_resource = ExtResource("3_2vg7a")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="NewEventGroupDB"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 392.0
-offset_bottom = 253.0
-
-[node name="Label" type="Label" parent="NewEventGroupDB/VBoxContainer"]
-layout_mode = 2
-text = "Event Group Name"
-
-[node name="LineEdit" type="LineEdit" parent="NewEventGroupDB/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="NewEventGroupDB/VBoxContainer"]
-layout_mode = 2
-text = "Event Group Parameters 
-"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="NewEventGroupDB/VBoxContainer"]
-clip_contents = false
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="NewEventGroupDB/VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2(350, 100)
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_right = 10
-
-[node name="EventParameterList" type="RichTextLabel" parent="NewEventGroupDB/VBoxContainer/ScrollContainer/MarginContainer"]
-custom_minimum_size = Vector2(350, 0)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="NewEventGroupDB/VBoxContainer"]
-layout_mode = 2
-text = "Add Parameter"
-
-[node name="Label3" type="Label" parent="NewEventGroupDB/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-text = "(You may add additional parameters later)
-"
-
-[node name="AddParameterDB" type="ConfirmationDialog" parent="NewEventGroupDB"]
+[node name="AddParameterDB" type="ConfirmationDialog" parent="."]
 title = "Add Parameter"
 initial_position = 2
 size = Vector2i(200, 177)
 ok_button_text = "Add"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NewEventGroupDB/AddParameterDB"]
+[node name="VBoxContainer" type="VBoxContainer" parent="AddParameterDB"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 192.0
 offset_bottom = 128.0
 
-[node name="Label" type="Label" parent="NewEventGroupDB/AddParameterDB/VBoxContainer"]
+[node name="Label" type="Label" parent="AddParameterDB/VBoxContainer"]
 layout_mode = 2
 text = "Parameter Name"
 
-[node name="LineEdit" type="LineEdit" parent="NewEventGroupDB/AddParameterDB/VBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="AddParameterDB/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="NewEventGroupDB/AddParameterDB/VBoxContainer"]
+[node name="Label2" type="Label" parent="AddParameterDB/VBoxContainer"]
 layout_mode = 2
 text = "Parameter Type"
 
-[node name="OptionButton" type="OptionButton" parent="NewEventGroupDB/AddParameterDB/VBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="AddParameterDB/VBoxContainer"]
 layout_mode = 2
 item_count = 6
 popup/item_0/text = "Integer"
@@ -105,6 +55,92 @@ popup/item_4/id = 3
 popup/item_5/text = "Dictionary"
 popup/item_5/id = 4
 
-[connection signal="text_changed" from="NewEventGroupDB/VBoxContainer/LineEdit" to="NewEventGroupDB" method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="NewEventGroupDB/VBoxContainer/Button" to="NewEventGroupDB" method="_on_button_pressed"]
-[connection signal="confirmed" from="NewEventGroupDB/AddParameterDB" to="NewEventGroupDB" method="_on_add_parameter_db_confirmed"]
+[node name="AddEventDB" type="ConfirmationDialog" parent="."]
+title = "Add Event"
+initial_position = 2
+size = Vector2i(200, 115)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddEventDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 66.0
+
+[node name="Label" type="Label" parent="AddEventDB/VBoxContainer"]
+layout_mode = 2
+text = "Event Name"
+
+[node name="LineEdit" type="LineEdit" parent="AddEventDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="EventEditor" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("3_n1hvk")
+text = "Event Editor"
+
+[node name="QuestEditor" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("3_n1hvk")
+text = "Quest Editor"
+
+[node name="EventEditor" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/EventEditor"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EventEditor/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddEvent" type="Button" parent="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Add Event"
+
+[node name="AddEventParameter" type="Button" parent="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Add Event Parameter"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/EventEditor/VBoxContainer"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/EventEditor/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="Parameters" type="HBoxContainer" parent="VBoxContainer/EventEditor/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuestEditor" type="MarginContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+
+[connection signal="confirmed" from="AddParameterDB" to="." method="_on_add_parameter_db_confirmed"]
+[connection signal="confirmed" from="AddEventDB" to="." method="_on_add_event_db_confirmed"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/EventEditor" to="." method="_on_event_editor_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/QuestEditor" to="." method="_on_quest_editor_toggled"]
+[connection signal="pressed" from="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer/AddEvent" to="." method="_on_add_event_pressed"]
+[connection signal="pressed" from="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer/AddEventParameter" to="." method="_on_add_event_parameter_pressed"]

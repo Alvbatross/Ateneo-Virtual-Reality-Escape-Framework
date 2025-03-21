@@ -40,6 +40,8 @@ func _enter_tree() -> void:
 	EditorInterface.get_editor_main_screen().add_child(event_manager_ui)
 	_make_visible(false)
 	
+	add_autoload_singleton("EventManager", "res://addons/ateneo-virtual-reality-escape/event-management-system/event_manager.gd")
+	
 	add_custom_type("Event", "Node", event, preload("res://icon.svg"))
 	add_custom_type("OIS", "Node", ois, preload("res://icon.svg"))
 	add_custom_type("OISActorComponent", "OIS", ois_actor_component, preload("res://icon.svg"))
@@ -73,6 +75,8 @@ func _exit_tree() -> void:
 	remove_control_from_container(EditorPlugin.CONTAINER_TOOLBAR, event_manager_ui)
 	
 	event_manager_ui.queue_free()
+	
+	remove_autoload_singleton("EventManager")
 	
 	remove_custom_type("OISColliderRaycast3D")
 	remove_custom_type("OISColliderArea3D")
