@@ -1,7 +1,15 @@
 {
-	"EventName": "",
-	"EventCategory": "",
-	"EventPrerequisiteFlags": [],
-	"EventCompletionFlags": [],
-	"Oneshot": false
+	"Parameters": {
+		"EventName": "",
+		"EventCategory": "DIALOGUE",
+		"EventPrerequisiteFlags": [],
+		"EventCompletionFlags": [],
+		"Oneshot": false
+	},
+	"Categories": [
+		"DIALOGUE",
+		"ACTION",
+		"TUTORIAL",
+		"BGM"
+	]
 }

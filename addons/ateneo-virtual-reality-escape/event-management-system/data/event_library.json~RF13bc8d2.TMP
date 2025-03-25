@@ -1,0 +1,20 @@
+{
+	"testing_dude": {
+		"EventCategory": "DIALOGUE",
+		"EventPrerequisiteFlags": [],
+		"EventCompletionFlags": [
+			"testing_dude"
+		],
+		"Oneshot": true
+	},
+	"brand_new_event_dude": {
+		"EventCategory": "DIALOGUE",
+		"EventPrerequisiteFlags": [
+			"testing_dude"
+		],
+		"EventCompletionFlags": [
+			"brand_new_event_dude"
+		],
+		"Oneshot": true
+	}
+}

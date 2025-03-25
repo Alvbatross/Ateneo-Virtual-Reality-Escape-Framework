@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dviv60srcxpb8"]
+[gd_scene load_steps=2 format=3 uid="uid://dviv60srcxpb8"]
 
 [ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/event_manager_ui.gd" id="1_m2s0j"]
-[ext_resource type="ButtonGroup" uid="uid://dpfbwctx6hogh" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/editor_button_group.tres" id="3_n1hvk"]
 
 [node name="EventManagerUI" type="Control"]
 layout_mode = 3
@@ -73,74 +72,206 @@ text = "Event Name"
 [node name="LineEdit" type="LineEdit" parent="AddEventDB/VBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="EventPrerequisiteViewerDB" type="ConfirmationDialog" parent="."]
+title = "Event Prerequisites"
+initial_position = 2
+size = Vector2i(245, 343)
+exclusive = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EventPrerequisiteViewerDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 237.0
+offset_bottom = 294.0
+
+[node name="EventName" type="Label" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Event:"
+
+[node name="Prerequisites" type="Label" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Prerequisites:
+"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="AddEventPrerequisites" type="Label" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Add Event Prerequisites:"
+
+[node name="AddAdditionalPrerequisites" type="OptionButton" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddPrerequisite" type="Button" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Add Prerequisite"
+
+[node name="RemoveEventPrerequisites" type="Label" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Remove Event Prerequisites:"
+
+[node name="PrerequisiteList" type="OptionButton" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="RemovePrerequisite" type="Button" parent="EventPrerequisiteViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Remove Prerequisite"
+
+[node name="EventCompletionViewerDB" type="ConfirmationDialog" parent="."]
+title = "Event Completion Flags"
+initial_position = 2
+size = Vector2i(420, 330)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EventCompletionViewerDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 412.0
+offset_bottom = 281.0
+
+[node name="EventName" type="Label" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Event:"
+
+[node name="CompletionFlags" type="Label" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Completion Flags:
+"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EventCompletionViewerDB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="AddCompletionFlags" type="Label" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Add Completion Flags:"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="EventCompletionViewerDB/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="EventCompletionViewerDB/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddExisting" type="Button" parent="EventCompletionViewerDB/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Add Existing"
+
+[node name="AddCustom" type="Button" parent="EventCompletionViewerDB/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Add Custom"
+
+[node name="RemoveCompletionFlags" type="Label" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Remove Completion Flags:"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="EventCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="EventCompletionViewerDB/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="RemoveCompletion" type="Button" parent="EventCompletionViewerDB/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Remove Flag"
+
+[node name="AddEventCategoryDB" type="ConfirmationDialog" parent="."]
+auto_translate_mode = 1
+title = "Add Event Category"
+initial_position = 2
+size = Vector2i(200, 115)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddEventCategoryDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 66.0
+
+[node name="Label" type="Label" parent="AddEventCategoryDB/VBoxContainer"]
+layout_mode = 2
+text = "Category Name"
+
+[node name="LineEdit" type="LineEdit" parent="AddEventCategoryDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+current_tab = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="EventEditor" type="Button" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("3_n1hvk")
-text = "Event Editor"
-
-[node name="QuestEditor" type="Button" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("3_n1hvk")
-text = "Quest Editor"
-
-[node name="EventEditor" type="MarginContainer" parent="VBoxContainer"]
+[node name="EventEditor" type="MarginContainer" parent="TabContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 10
+metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/EventEditor"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/EventEditor"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/EventEditor/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EventEditor/VBoxContainer"]
-layout_mode = 2
-
-[node name="AddEvent" type="Button" parent="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer"]
+[node name="AddEvent" type="Button" parent="TabContainer/EventEditor/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Add Event"
 
-[node name="AddEventParameter" type="Button" parent="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer"]
+[node name="AddEventCategory" type="Button" parent="TabContainer/EventEditor/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "Add Event Category"
+
+[node name="AddEventParameter" type="Button" parent="TabContainer/EventEditor/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Add Event Parameter"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/EventEditor/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/EventEditor/VBoxContainer"]
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/EventEditor/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/EventEditor/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
-[node name="Parameters" type="HBoxContainer" parent="VBoxContainer/EventEditor/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Parameters" type="HBoxContainer" parent="TabContainer/EventEditor/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="QuestEditor" type="MarginContainer" parent="VBoxContainer"]
+[node name="QuestEditor" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 10
+metadata/_tab_index = 1
 
 [connection signal="confirmed" from="AddParameterDB" to="." method="_on_add_parameter_db_confirmed"]
 [connection signal="confirmed" from="AddEventDB" to="." method="_on_add_event_db_confirmed"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/EventEditor" to="." method="_on_event_editor_toggled"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/QuestEditor" to="." method="_on_quest_editor_toggled"]
-[connection signal="pressed" from="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer/AddEvent" to="." method="_on_add_event_pressed"]
-[connection signal="pressed" from="VBoxContainer/EventEditor/VBoxContainer/HBoxContainer/AddEventParameter" to="." method="_on_add_event_parameter_pressed"]
+[connection signal="close_requested" from="EventPrerequisiteViewerDB" to="." method="_on_event_prerequisite_viewer_db_close_requested"]
+[connection signal="confirmed" from="EventPrerequisiteViewerDB" to="." method="_on_event_prerequisite_viewer_db_confirmed"]
+[connection signal="close_requested" from="EventCompletionViewerDB" to="." method="_on_event_completion_viewer_db_close_requested"]
+[connection signal="confirmed" from="EventCompletionViewerDB" to="." method="_on_event_completion_viewer_db_confirmed"]
+[connection signal="confirmed" from="AddEventCategoryDB" to="." method="_on_add_event_db_confirmed"]
+[connection signal="pressed" from="TabContainer/EventEditor/VBoxContainer/HBoxContainer/AddEvent" to="." method="_on_add_event_pressed"]
+[connection signal="pressed" from="TabContainer/EventEditor/VBoxContainer/HBoxContainer/AddEventCategory" to="." method="_on_add_event_category_pressed"]
+[connection signal="pressed" from="TabContainer/EventEditor/VBoxContainer/HBoxContainer/AddEventParameter" to="." method="_on_add_event_parameter_pressed"]
