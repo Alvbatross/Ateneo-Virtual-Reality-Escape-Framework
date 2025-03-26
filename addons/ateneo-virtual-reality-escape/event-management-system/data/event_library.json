@@ -1,0 +1,20 @@
+{
+	"NewEventasdads": {
+		"EventCategory": "DIALOGUE",
+		"EventPrerequisiteFlags": [],
+		"EventCompletionFlags": [
+			"NewEventasdads_Done"
+		],
+		"Oneshot": false
+	},
+	"NewEvent2edsfsf": {
+		"EventCategory": "ACTION",
+		"EventPrerequisiteFlags": [
+			"NewEventasdads_Done"
+		],
+		"EventCompletionFlags": [
+			"NewEvent2edsfsf_Done"
+		],
+		"Oneshot": false
+	}
+}

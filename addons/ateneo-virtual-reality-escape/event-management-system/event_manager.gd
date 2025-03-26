@@ -11,6 +11,7 @@ const QUEST_LIBRARY_PATH := "res://addons/ateneo-virtual-reality-escape/event-ma
 
 var all_possible_flags : Array = []
 
+var event_manager_defaults : Dictionary = {}
 var event_manager_settings : Dictionary = {}
 
 var event_library : Dictionary = {}
@@ -146,5 +147,11 @@ func load_event_settings() -> void:
 	
 	event_manager_settings = data
 	print(event_manager_settings)
+	
+	load_path = EVENT_MANAGER_DEFAULTS_PATH
+	load_file = FileAccess.get_file_as_string(load_path)
+	
+	event_manager_defaults = JSON.parse_string(load_file)
+	print(event_manager_defaults)
 	
 	
