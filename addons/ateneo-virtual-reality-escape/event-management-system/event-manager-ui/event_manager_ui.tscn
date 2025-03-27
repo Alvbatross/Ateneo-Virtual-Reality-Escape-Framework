@@ -211,7 +211,6 @@ text = "Remove Flag"
 title = "Quest Description"
 initial_position = 2
 size = Vector2i(216, 246)
-visible = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="QuestDescriptionViewerDB"]
 offset_left = 8.0
@@ -235,6 +234,111 @@ custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 wrap_mode = 1
 
+[node name="QuestTrackerViewerDB" type="ConfirmationDialog" parent="."]
+title = "Quest Completion Tracker"
+initial_position = 2
+size = Vector2i(600, 296)
+content_scale_aspect = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuestTrackerViewerDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 592.0
+offset_bottom = 247.0
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Requirement" type="Label" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "Requirement:"
+
+[node name="RequirementList" type="OptionButton" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EditRequirement" type="Label" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "Edit Requirement:"
+
+[node name="EditRequirementText" type="LineEdit" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddNewRequirement" type="Label" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "Add New Requirement:"
+
+[node name="NewRequirementText" type="LineEdit" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+
+[node name="AddRequirement" type="Button" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+text = "Add Requirement"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="RequiredEvents" type="Label" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "Required Event/s:"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(200, 105)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Add/Remove Required Event/s:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="EventList" type="OptionButton" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+fit_to_longest_item = false
+
+[node name="RequiredEventList" type="OptionButton" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+fit_to_longest_item = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="AddRequiredEvent" type="Button" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+text = "Add Event"
+
+[node name="RemoveRequiredEvent" type="Button" parent="QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(180, 30)
+layout_mode = 2
+text = "Remove Event"
+
 [node name="AddEventCategoryDB" type="ConfirmationDialog" parent="."]
 auto_translate_mode = 1
 title = "Add Event Category"
@@ -253,6 +357,75 @@ text = "Category Name"
 
 [node name="LineEdit" type="LineEdit" parent="AddEventCategoryDB/VBoxContainer"]
 layout_mode = 2
+
+[node name="QuestCompletionViewerDB" type="ConfirmationDialog" parent="."]
+title = "Quest Completion Flags"
+initial_position = 2
+size = Vector2i(420, 330)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestCompletionViewerDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 412.0
+offset_bottom = 281.0
+
+[node name="QuestName" type="Label" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Quest Name"
+
+[node name="CompletionFlags" type="Label" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Completion Flags:
+"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="QuestCompletionViewerDB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="AddCompletionFlags" type="Label" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Add Completion Flags:"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="QuestCompletionViewerDB/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="QuestCompletionViewerDB/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddExisting" type="Button" parent="QuestCompletionViewerDB/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Add Existing"
+
+[node name="AddCustom" type="Button" parent="QuestCompletionViewerDB/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Add Custom"
+
+[node name="RemoveCompletionFlags" type="Label" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Remove Completion Flags:"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="QuestCompletionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="QuestCompletionViewerDB/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="RemoveCompletion" type="Button" parent="QuestCompletionViewerDB/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Remove Flag"
 
 [node name="CustomArrayDictionaryViewerDB" type="ConfirmationDialog" parent="."]
 initial_position = 2
@@ -409,6 +582,11 @@ layout_mode = 2
 [connection signal="close_requested" from="EventCompletionViewerDB" to="." method="_on_event_completion_viewer_db_close_requested"]
 [connection signal="confirmed" from="EventCompletionViewerDB" to="." method="_on_event_completion_viewer_db_confirmed"]
 [connection signal="confirmed" from="QuestDescriptionViewerDB" to="." method="_on_quest_description_viewer_db_confirmed"]
+[connection signal="item_selected" from="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer/RequirementList" to="." method="_on_requirement_list_item_selected"]
+[connection signal="focus_entered" from="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer2/EditRequirementText" to="." method="_on_edit_requirement_text_focus_entered"]
+[connection signal="focus_exited" from="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer2/EditRequirementText" to="." method="_on_edit_requirement_text_focus_exited"]
+[connection signal="text_changed" from="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer2/EditRequirementText" to="." method="_on_edit_requirement_text_text_changed"]
+[connection signal="pressed" from="QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer3/AddRequirement" to="." method="_on_add_requirement_pressed"]
 [connection signal="confirmed" from="AddEventCategoryDB" to="." method="_on_add_event_category_db_confirmed"]
 [connection signal="close_requested" from="CustomArrayDictionaryViewerDB" to="." method="_on_custom_array_dictionary_viewer_db_close_requested"]
 [connection signal="confirmed" from="CustomArrayDictionaryViewerDB" to="." method="_on_custom_array_dictionary_viewer_db_confirmed"]

@@ -47,6 +47,27 @@ extends Control
 @onready var quest_description_viewer_name := $QuestDescriptionViewerDB/VBoxContainer/QuestNameEdit
 @onready var quest_description_viewer_desc := $QuestDescriptionViewerDB/VBoxContainer/TextEdit
 
+@onready var quest_tracker_viewer_db := $QuestTrackerViewerDB
+@onready var quest_tracker_viewer_option := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer/RequirementList
+@onready var quest_tracker_edit_req_text := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer2/EditRequirementText
+@onready var quest_tracker_new_req_text := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer3/NewRequirementText
+@onready var quest_tracker_new_req_button := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer/VBoxContainer3/AddRequirement
+@onready var quest_tracker_req_events_text := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/RichTextLabel
+@onready var quest_tracker_req_events_option := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer/EventList
+@onready var quest_tracker_add_req_events_button := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer2/AddRequiredEvent
+@onready var quest_tracker_remove_events_option := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer/RequiredEventList
+@onready var quest_tracker_remove_events_button := $QuestTrackerViewerDB/HBoxContainer/VBoxContainer2/HBoxContainer2/RemoveRequiredEvent
+
+@onready var quest_completion_viewer_db := $QuestCompletionViewerDB
+@onready var quest_completion_name := $QuestCompletionViewerDB/VBoxContainer/QuestName
+@onready var quest_completion_flags_text := $QuestCompletionViewerDB/VBoxContainer/RichTextLabel
+@onready var quest_completion_add_existing_flags_option := $QuestCompletionViewerDB/VBoxContainer/HBoxContainer2/OptionButton
+@onready var quest_completion_add_custom_flags_line := $QuestCompletionViewerDB/VBoxContainer/HBoxContainer2/LineEdit
+@onready var quest_completion_add_existing_flags_button := $QuestCompletionViewerDB/VBoxContainer/HBoxContainer/AddExisting
+@onready var quest_completion_add_custom_flags_button := $QuestCompletionViewerDB/VBoxContainer/HBoxContainer/AddCustom
+@onready var quest_completion_remove_flags_option := $QuestCompletionViewerDB/VBoxContainer/HBoxContainer3/OptionButton
+@onready var quest_completion_remove_flags_button := $QuestCompletionViewerDB/VBoxContainer/HBoxContainer3/RemoveCompletion
+
 @onready var parameters := $TabContainer/EventEditor/VBoxContainer/ScrollContainer/VBoxContainer/Parameters
 
 @onready var quest_parameters := $TabContainer/QuestEditor/VBoxContainer/ScrollContainer/VBoxContainer/QuestParameters
@@ -60,6 +81,10 @@ var currently_removing_category : String = ""
 var currently_editing_line : String = ""
 
 var currently_editing_quest_description : String = ""
+
+var currently_editing_quest_requirement_idx : int = 0
+var currently_editing_quest_requirement : String = ""
+var new_quest_requirement_text : String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -179,19 +204,31 @@ func refresh_quests() -> void:
 				var line_edit = LineEdit.new()
 				line_edit.text = q
 				param.add_child(line_edit)
+				line_edit.focus_entered.connect(_on_quest_name_edit_focus_entered.bind(line_edit.text, line_edit.get_index()))
+				line_edit.focus_exited.connect(_on_quest_name_edit_focus_exited)
+				line_edit.text_changed.connect(_on_quest_name_text_changed)
+				line_edit.custom_minimum_size.x = line_edit.size.x * 3
+				line_edit.custom_minimum_size.y = 30
 			elif param.get_child(0).text == "QuestDescription":
 				var button = Button.new()
 				button.text = "View " + param.get_child(0).text
 				param.add_child(button)
 				button.pressed.connect(_on_quest_description_button_pressed.bind(button.get_index()))
+				button.custom_minimum_size.y = 30
 			elif param.get_child(0).text == "QuestCompletionTracker":
 				var button = Button.new()
 				button.text = "View " + param.get_child(0).text
 				param.add_child(button)
+				button.pressed.connect(_on_quest_tracker_viewer_button_pressed.bind(button.get_index()))
+				button.custom_minimum_size.y = 30
 			elif param.get_child(0).text == "QuestCompletionFlags":
 				var button = Button.new()
 				button.text = "View " + param.get_child(0).text
 				param.add_child(button)
+				button.pressed.connect(_on_view_quest_completion_pressed.bind(button.get_index()))
+				button.custom_minimum_size.y = 30
+
+
 #---------------------------------------------------------------------------
 #     ADD/REMOVE BUTTON FUNCTIONS
 #---------------------------------------------------------------------------
@@ -397,7 +434,7 @@ func _on_view_completion_pressed(index: int) -> void:
 		if not flag in EventManager.event_library[parameters.get_child(0).get_child(index).text]["EventCompletionFlags"]:
 			if flag.find("_Done") < 0:
 				add_existing_option.add_item(flag)
-			elif not flag.erase(flag.find("_Done"), 5) in EventManager.event_library:
+			elif not flag.erase(flag.find("_Done"), 5) in EventManager.event_library and not flag.erase(flag.find("_Done"), 5) in EventManager.quest_library:
 				add_existing_option.add_item(flag)
 	
 	add_custom_option.clear()
@@ -613,6 +650,11 @@ func _on_custom_line_edit_text_changed(new_text : String) -> void:
 	currently_editing_line = new_text
 
 
+
+#---------------------------------------------------------------------------
+#     Quest Description Functions
+#---------------------------------------------------------------------------
+
 func _on_quest_description_button_pressed(index : int) -> void:
 	currently_editing_quest_description = quest_parameters.get_child(0).get_child(index).text
 	quest_description_viewer_name.text = EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestDescription"]["Name"]
@@ -625,3 +667,283 @@ func _on_quest_description_viewer_db_confirmed() -> void:
 	EventManager.quest_library[currently_editing_quest_description]["QuestDescription"]["Description"] = quest_description_viewer_desc.text
 	EventManager.save_quest_library()
 	call_deferred("refresh_quests")
+
+
+#---------------------------------------------------------------------------
+#     Quest Completion Tracker Functions
+#---------------------------------------------------------------------------
+
+func _on_quest_tracker_viewer_button_pressed(index : int) -> void:
+	quest_tracker_viewer_option.clear()
+	quest_tracker_req_events_option.clear()
+	quest_tracker_remove_events_option.clear()
+	
+	currently_editing_quest_requirement_idx = index
+	for req in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionTracker"]:
+		quest_tracker_viewer_option.add_item(req)
+	
+	quest_tracker_edit_req_text.text = quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)
+	quest_tracker_new_req_text.text = ""
+	quest_tracker_req_events_text.text = ""
+	
+	for req_event in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(0)]:
+		quest_tracker_req_events_text.append_text(req_event + "\n")
+	
+	for flag in EventManager.all_possible_flags:
+		if not flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(0)]:
+			if flag.find("_Done") < 0:
+				quest_tracker_req_events_option.add_item(flag)
+			elif not flag.erase(flag.find("_Done"), 5) == quest_parameters.get_child(0).get_child(index).text:
+				quest_tracker_req_events_option.add_item(flag)
+		
+	for event in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(0)]:
+		quest_tracker_remove_events_option.add_item(event)
+	
+	if quest_tracker_add_req_events_button.pressed.is_connected(_on_add_required_event_pressed):
+		quest_tracker_add_req_events_button.pressed.disconnect(_on_add_required_event_pressed)
+	
+	if quest_tracker_remove_events_button.pressed.is_connected(_on_remove_required_event_pressed):
+		quest_tracker_remove_events_button.pressed.disconnect(_on_remove_required_event_pressed)
+	
+	quest_tracker_add_req_events_button.pressed.connect(_on_add_required_event_pressed.bind(index))
+	quest_tracker_remove_events_button.pressed.connect(_on_remove_required_event_pressed.bind(index))
+	
+	quest_tracker_viewer_db.visible = true
+
+
+func _on_add_required_event_pressed(index : int) -> void:
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionTracker"][quest_tracker_edit_req_text.text].append(quest_tracker_req_events_option.get_item_text(quest_tracker_req_events_option.selected))
+	EventManager.save_quest_library()
+	
+	quest_tracker_req_events_option.clear()
+	quest_tracker_remove_events_option.clear()
+	
+	quest_tracker_req_events_text.text = ""
+	
+	for req_event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_req_events_text.append_text(req_event + "\n")
+	
+	for flag in EventManager.all_possible_flags:
+		if not flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+			if flag.find("_Done") < 0:
+				quest_tracker_req_events_option.add_item(flag)
+			elif not flag.erase(flag.find("_Done"), 5) == quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text:
+				quest_tracker_req_events_option.add_item(flag)
+	
+	for event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_remove_events_option.add_item(event)
+
+
+func _on_remove_required_event_pressed(index : int) -> void:
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionTracker"][quest_tracker_edit_req_text.text].erase(quest_tracker_remove_events_option.get_item_text(quest_tracker_remove_events_option.selected))
+	EventManager.save_quest_library()
+	
+	quest_tracker_req_events_option.clear()
+	quest_tracker_remove_events_option.clear()
+	
+	quest_tracker_req_events_text.text = ""
+	
+	for req_event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_req_events_text.append_text(req_event + "\n")
+	
+	for flag in EventManager.all_possible_flags:
+		if not flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+			if flag.find("_Done") < 0:
+				quest_tracker_req_events_option.add_item(flag)
+			elif not flag.erase(flag.find("_Done"), 5) == quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text:
+				quest_tracker_req_events_option.add_item(flag)
+	
+	for event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_remove_events_option.add_item(event)
+
+
+func _on_edit_requirement_text_text_changed(new_text: String) -> void:
+	new_quest_requirement_text = new_text
+
+
+func _on_edit_requirement_text_focus_entered() -> void:
+	currently_editing_quest_requirement = quest_tracker_edit_req_text.text
+	new_quest_requirement_text = quest_tracker_edit_req_text.text
+
+
+func _on_edit_requirement_text_focus_exited() -> void:
+	var new_quest_requirement_dictionary = {}
+	
+	for req in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"]:
+		if req == currently_editing_quest_requirement:
+			new_quest_requirement_dictionary[new_quest_requirement_text] = EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][currently_editing_quest_requirement]
+		else:
+			new_quest_requirement_dictionary[req] = EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][currently_editing_quest_requirement]
+	
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"].clear()
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"] = new_quest_requirement_dictionary.duplicate(true)
+	EventManager.save_quest_library()
+	_on_quest_tracker_viewer_button_pressed(currently_editing_quest_requirement_idx)
+
+
+func _on_add_requirement_pressed() -> void:
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_new_req_text.text] = []
+	EventManager.save_quest_library()
+	
+	quest_tracker_viewer_option.clear()
+	quest_tracker_req_events_option.clear()
+	quest_tracker_remove_events_option.clear()
+	
+	for req in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"]:
+		quest_tracker_viewer_option.add_item(req)
+	
+	quest_tracker_viewer_option.select(quest_tracker_viewer_option.get_selectable_item(true))
+	
+	quest_tracker_edit_req_text.text = quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)
+	quest_tracker_new_req_text.text = ""
+	quest_tracker_req_events_text.text = ""
+	
+	for req_event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_req_events_text.append_text(req_event + "\n")
+	
+	for flag in EventManager.all_possible_flags:
+		if not flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+			if flag.find("_Done") < 0:
+				quest_tracker_req_events_option.add_item(flag)
+			elif not flag.erase(flag.find("_Done"), 5) == quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text:
+				quest_tracker_req_events_option.add_item(flag)
+	
+	for event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_remove_events_option.add_item(event)
+
+
+func _on_requirement_list_item_selected(index: int) -> void:
+	quest_tracker_req_events_option.clear()
+	quest_tracker_remove_events_option.clear()
+	quest_tracker_viewer_option.selected = index
+	
+	quest_tracker_edit_req_text.text = quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)
+	quest_tracker_new_req_text.text = ""
+	quest_tracker_req_events_text.text = ""
+	
+	for req_event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_req_events_text.append_text(req_event + "\n")
+	
+	for flag in EventManager.all_possible_flags:
+		if not flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+			if flag.find("_Done") < 0:
+				quest_tracker_req_events_option.add_item(flag)
+			elif not flag.erase(flag.find("_Done"), 5) == quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text:
+				quest_tracker_req_events_option.add_item(flag)
+	
+	for event in EventManager.quest_library[quest_parameters.get_child(0).get_child(currently_editing_quest_requirement_idx).text]["QuestCompletionTracker"][quest_tracker_viewer_option.get_item_text(quest_tracker_viewer_option.selected)]:
+		quest_tracker_remove_events_option.add_item(event)
+
+
+#---------------------------------------------------------------------------
+#     Quest Completion Flags Functions
+#---------------------------------------------------------------------------
+
+func _on_view_quest_completion_pressed(index : int) -> void:
+	quest_completion_flags_text.clear()
+	
+	if quest_completion_add_existing_flags_button.pressed.is_connected(_on_add_existing_completion_flags_pressed):
+		quest_completion_add_existing_flags_button.pressed.disconnect(_on_add_existing_completion_flags_pressed)
+	if quest_completion_add_custom_flags_button.pressed.is_connected(_on_add_custom_completion_flags_pressed):
+		quest_completion_add_custom_flags_button.pressed.disconnect(_on_add_custom_completion_flags_pressed)
+	if quest_completion_remove_flags_button.pressed.is_connected(_on_remove_completion_flags_pressed):
+		quest_completion_remove_flags_button.pressed.disconnect(_on_remove_completion_flags_pressed)
+	
+	quest_completion_add_existing_flags_button.pressed.connect(_on_add_existing_completion_flags_pressed.bind(index))
+	quest_completion_add_custom_flags_button.pressed.connect(_on_add_custom_completion_flags_pressed.bind(index))
+	quest_completion_remove_flags_button.pressed.connect(_on_remove_completion_flags_pressed.bind(index))
+	
+	quest_completion_name.text = "Quest: " + quest_parameters.get_child(0).get_child(index).text
+	
+	for flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionFlags"]:
+		quest_completion_flags_text.append_text(flag + "\n")
+	
+	quest_completion_add_existing_flags_option.clear()
+	for flag in EventManager.all_possible_flags:
+		if not flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionFlags"]:
+			if flag.find("_Done") < 0:
+				quest_completion_add_existing_flags_option.add_item(flag)
+			elif not flag.erase(flag.find("_Done"), 5) in EventManager.quest_library and not flag.erase(flag.find("_Done"), 5) in EventManager.event_library:
+				quest_completion_add_existing_flags_option.add_item(flag)
+	
+	quest_completion_add_custom_flags_line.clear()
+	
+	quest_completion_remove_flags_option.clear()
+	for flag in EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionFlags"]:
+		if flag.find("_Done") < 0:
+			quest_completion_remove_flags_option.add_item(flag)
+		elif not flag.erase(flag.find("_Done"), 5) == quest_parameters.get_child(0).get_child(index).text:
+			quest_completion_remove_flags_option.add_item(flag)
+	
+	quest_completion_viewer_db.visible = true
+
+
+func _on_add_existing_completion_flags_pressed(index : int) -> void:
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionFlags"].append(quest_completion_add_existing_flags_option.get_item_text(quest_completion_add_existing_flags_option.selected))
+	_on_view_quest_completion_pressed(index)
+	EventManager.save_quest_library()
+
+func _on_add_custom_completion_flags_pressed(index : int) -> void:
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionFlags"].append(quest_completion_add_custom_flags_line.text)
+	EventManager.update_all_flags()
+	_on_view_quest_completion_pressed(index)
+	EventManager.save_quest_library()
+
+
+func _on_remove_completion_flags_pressed(index : int) -> void:
+	EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestCompletionFlags"].erase(quest_completion_remove_flags_option.get_item_text(quest_completion_remove_flags_option.selected))
+	_on_view_quest_completion_pressed(index)
+	EventManager.save_quest_library()
+
+
+#---------------------------------------------------------------------------
+#     Quest Edit Name Functions
+#---------------------------------------------------------------------------
+
+func _on_quest_name_edit_focus_entered(quest_name : String, index : int) -> void:
+	new_event_name = quest_name
+	currently_editing_event_name = quest_name
+	currently_editing_event_index = index
+	
+
+
+func _on_quest_name_edit_focus_exited() -> void:
+	var new_quest_dictionary : Dictionary = {}
+	
+	for quest in EventManager.quest_library:
+		if quest == currently_editing_event_name:
+			new_quest_dictionary[new_event_name] = EventManager.quest_library[quest]
+		else:
+			new_quest_dictionary[quest] = EventManager.quest_library[quest]
+	
+	for quest in new_quest_dictionary:
+		for flag in new_quest_dictionary[quest]["QuestCompletionFlags"]:
+			if flag.find("_Done") < 0:
+				pass
+			elif currently_editing_event_name == flag.erase(flag.find("_Done"), 5):
+				new_quest_dictionary[quest]["QuestCompletionFlags"][new_quest_dictionary[quest]["QuestCompletionFlags"].find(flag)] = new_event_name + "_Done"
+	
+	for event in EventManager.event_library:
+		for prereq in EventManager.event_library[event]["EventPrerequisiteFlags"]:
+			if prereq.find("_Done") < 0:
+				pass
+			elif currently_editing_event_name == prereq.erase(prereq.find("_Done"), 5):
+				EventManager.event_library[event]["EventPrerequisiteFlags"][EventManager.event_library[event]["EventPrerequisiteFlags"].find(prereq)] = new_event_name + "_Done"
+		for flag in EventManager.event_library[event]["EventCompletionFlags"]:
+			if flag.find("_Done") < 0:
+				pass
+			elif currently_editing_event_name == flag.erase(flag.find("_Done"), 5):
+				EventManager.event_library[event]["EventCompletionFlags"][EventManager.event_library[event]["EventCompletionFlags"].find(flag)] = new_event_name + "_Done"
+	
+	
+	EventManager.quest_library.clear()
+	EventManager.quest_library = new_quest_dictionary.duplicate(true)
+	EventManager.update_all_flags()
+	call_deferred("refresh_quests")
+	call_deferred("refresh_events")
+	EventManager.save_quest_library()
+	EventManager.save_event_library()
+
+
+func _on_quest_name_text_changed(new_text : String) -> void:
+	new_event_name = new_text
