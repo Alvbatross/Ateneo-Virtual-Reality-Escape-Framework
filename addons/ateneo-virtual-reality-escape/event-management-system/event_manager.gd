@@ -24,6 +24,7 @@ var completed_events : Array = []
 func _ready() -> void:
 	load_event_settings()
 	load_event_library()
+	load_quest_library()
 
 
 func _on_event_ended() -> void:
@@ -55,6 +56,20 @@ func add_new_event(event_name : String) -> void:
 				event_library[event_name][param].append(event_name + "_Done")
 				
 	save_event_library()
+
+
+func add_new_quest(quest_name : String) -> void:
+	quest_library[quest_name] = {}
+	
+	var ems = event_manager_settings.duplicate(true)
+	
+	for param in event_manager_settings["QuestParameters"]:
+		if !param == "QuestName":
+			quest_library[quest_name][param] = ems["QuestParameters"][param]
+			if param == "QuestCompletionFlags":
+				quest_library[quest_name][param].append(quest_name + "_Done")
+	
+	save_quest_library()
 
 
 func save_event_library() -> void:
@@ -105,14 +120,49 @@ func update_all_flags() -> void:
 		for flag in event_library[event]["EventCompletionFlags"]:
 			if !flag in all_possible_flags:
 				all_possible_flags.append(flag)
-
+	for quest in quest_library:
+		if !quest + "_Done" in all_possible_flags:
+			all_possible_flags.append(quest + "_Done")
+		for flag in quest_library[quest]["QuestCompletionFlags"]:
+			if !flag in all_possible_flags:
+				all_possible_flags.append(flag)
 
 func save_quest_library() -> void:
-	pass
+	var save_path := QUEST_LIBRARY_PATH
+	
+	var data := quest_library
+	
+	var data_string = JSON.stringify(data, "\t", false)
+	var save_file = FileAccess.open(save_path, FileAccess.WRITE)
+	save_file = FileAccess.open(save_path, FileAccess.WRITE)
+	save_file.store_line(data_string)
+	save_file.flush()
+	save_file.close()
+	
+	update_all_flags()
 
 
 func load_quest_library() -> void:
-	pass
+	var load_path := QUEST_LIBRARY_PATH
+	var data : Dictionary 
+	var load_file
+	
+	if FileAccess.file_exists(load_path):
+		load_file = FileAccess.get_file_as_string(load_path)
+		
+		print("--EVENT SYSTEM-- LOADED QUEST LIBRARY")
+		
+		data = JSON.parse_string(load_file)
+	else:
+		print("--EVENT SYSTEM-- NO QUEST LIBRARY FOUND")
+		return
+	
+	quest_library = data
+	
+	print(quest_library)
+	
+	update_all_flags()
+
 
 func save_event_settings() -> void:
 	var save_path := EVENT_MANAGER_SETTINGS_PATH

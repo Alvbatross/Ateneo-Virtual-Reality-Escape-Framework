@@ -6,6 +6,17 @@
 		"EventCompletionFlags": [],
 		"Oneshot": false
 	},
+	"QuestParameters": {
+		"QuestName": "",
+		"QuestDescription": {
+			"Name": "",
+			"Description": ""
+		},
+		"QuestCompletionTracker": {
+
+		},
+		"QuestCompletionFlags": []
+	},
 	"Categories": [
 		"DIALOGUE",
 		"ACTION",

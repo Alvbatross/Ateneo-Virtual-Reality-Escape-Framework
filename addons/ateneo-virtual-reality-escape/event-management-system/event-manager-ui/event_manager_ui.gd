@@ -11,6 +11,9 @@ extends Control
 @onready var add_event_db := $AddEventDB
 @onready var add_event_name := $AddEventDB/VBoxContainer/LineEdit
 
+@onready var add_quest_db := $AddQuestDB
+@onready var add_quest_name := $AddQuestDB/VBoxContainer/LineEdit
+
 @onready var add_event_category_db := $AddEventCategoryDB
 @onready var add_event_category_name := $AddEventCategoryDB/VBoxContainer/LineEdit
 
@@ -40,7 +43,13 @@ extends Control
 @onready var custom_array_dictionary_text := $CustomArrayDictionaryViewerDB/VBoxContainer/CodeEdit
 @onready var custom_array_dictionary_save_button := $CustomArrayDictionaryViewerDB/VBoxContainer/SaveEdits
 
+@onready var quest_description_viewer_db := $QuestDescriptionViewerDB
+@onready var quest_description_viewer_name := $QuestDescriptionViewerDB/VBoxContainer/QuestNameEdit
+@onready var quest_description_viewer_desc := $QuestDescriptionViewerDB/VBoxContainer/TextEdit
+
 @onready var parameters := $TabContainer/EventEditor/VBoxContainer/ScrollContainer/VBoxContainer/Parameters
+
+@onready var quest_parameters := $TabContainer/QuestEditor/VBoxContainer/ScrollContainer/VBoxContainer/QuestParameters
 
 var currently_editing_event_name : String = ""
 var currently_editing_event_index : int = 0
@@ -48,22 +57,30 @@ var new_event_name : String = ""
 
 var currently_removing_category : String = ""
 
+var currently_editing_line : String = ""
+
+var currently_editing_quest_description : String = ""
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	parameters.add_spacer(false)
+	refresh_quest_parameters()
 	refresh_event_parameters()
 	refresh_events()
+	refresh_quests()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if parameters.get_child_count() == 0:
 		refresh_event_parameters()
 		refresh_events()
+	if quest_parameters.get_child_count() == 0:
+		refresh_quest_parameters()
+		refresh_quests()
 
 
 func refresh_event_parameters() -> void:
 	for child in parameters.get_children():
-		print(child)
 		child.free()
 	var i = 0
 	for p in EventManager.event_manager_settings["Parameters"]:
@@ -106,6 +123,9 @@ func refresh_events() -> void:
 					var line_edit = LineEdit.new()
 					line_edit.text = str(EventManager.event_library[e][param.get_child(0).text])
 					param.add_child(line_edit)
+					line_edit.focus_entered.connect(_on_custom_line_edit_focus_entered.bind(line_edit.text, param.get_child(0).text, line_edit.get_index()))
+					line_edit.focus_exited.connect(_on_custom_line_edit_focus_exited.bind(param.get_child(0).text, line_edit.get_index()))
+					line_edit.text_changed.connect(_on_custom_line_edit_text_changed)
 					line_edit.custom_minimum_size.y = 30
 				elif typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_BOOL:
 					var check_box = CheckBox.new()
@@ -132,6 +152,46 @@ func refresh_events() -> void:
 					view_button.custom_minimum_size.y = 30
 
 
+func refresh_quest_parameters() -> void:
+	for child in quest_parameters.get_children():
+		child.free()
+	var i = 0
+	for p in EventManager.event_manager_settings["QuestParameters"]:
+		var vbox = VBoxContainer.new()
+		vbox.ALIGNMENT_CENTER
+		quest_parameters.add_child(vbox)
+		var label = Label.new()
+		label.text = p
+		quest_parameters.get_child(i).add_child(label)
+		label.custom_minimum_size.x = label.size.x + 40
+		i += 1
+
+
+func refresh_quests() -> void:
+	for child in quest_parameters.get_children():
+		for c in child.get_children():
+			if !c.get_index() == 0:
+				c.free()
+	
+	for q in EventManager.quest_library:
+		for param in quest_parameters.get_children():
+			if param.get_child(0).text == "QuestName":
+				var line_edit = LineEdit.new()
+				line_edit.text = q
+				param.add_child(line_edit)
+			elif param.get_child(0).text == "QuestDescription":
+				var button = Button.new()
+				button.text = "View " + param.get_child(0).text
+				param.add_child(button)
+				button.pressed.connect(_on_quest_description_button_pressed.bind(button.get_index()))
+			elif param.get_child(0).text == "QuestCompletionTracker":
+				var button = Button.new()
+				button.text = "View " + param.get_child(0).text
+				param.add_child(button)
+			elif param.get_child(0).text == "QuestCompletionFlags":
+				var button = Button.new()
+				button.text = "View " + param.get_child(0).text
+				param.add_child(button)
 #---------------------------------------------------------------------------
 #     ADD/REMOVE BUTTON FUNCTIONS
 #---------------------------------------------------------------------------
@@ -239,6 +299,20 @@ func _on_remove_db_confirmed() -> void:
 	EventManager.save_event_settings()
 	refresh_event_parameters()
 	refresh_events()
+
+
+func _on_add_quest_pressed() -> void:
+	add_quest_name.text = ""
+	add_quest_db.visible = true
+
+
+func _on_remove_quest_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_add_quest_db_confirmed() -> void:
+	EventManager.add_new_quest(add_quest_name.text)
+	refresh_quests()
 
 
 #---------------------------------------------------------------------------
@@ -500,3 +574,54 @@ func _on_custom_array_dictionary_viewer_db_confirmed() -> void:
 func _on_custom_array_dictionary_viewer_db_close_requested() -> void:
 	if custom_array_dictionary_save_button.pressed.is_connected(_on_save_edits_pressed):
 		custom_array_dictionary_save_button.pressed.disconnect(_on_save_edits_pressed)
+
+
+func _on_custom_line_edit_focus_entered(line : String, parameter : String, index : int) -> void:
+	currently_editing_line = line
+	print(parameter)
+	print(index)
+	
+	print(parameters.get_child(0).get_child(index).text)
+	print(parameters.get_child(0).get_child(index))
+
+func _on_custom_line_edit_focus_exited(parameter : String, index : int) -> void:
+	print(parameter)
+	print(index)
+	print(parameters.get_child(0).get_child(index).text)
+	print(parameters.get_child(0).get_child(index))
+	var editing_parameter = EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter]
+	
+	if typeof(editing_parameter) == TYPE_INT:
+		if currently_editing_line.is_valid_int():
+			EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter] = currently_editing_line.to_int()
+		else:
+			currently_editing_line = str(EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter])
+	elif typeof(editing_parameter) == TYPE_FLOAT:
+		if currently_editing_line.is_valid_float():
+			EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter] = currently_editing_line.to_float()
+		else:
+			currently_editing_line = str(EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter])
+	else:
+		EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter] = str(currently_editing_line)
+	
+	
+	EventManager.update_all_flags()
+	call_deferred("refresh_events")
+	EventManager.save_event_library()
+
+func _on_custom_line_edit_text_changed(new_text : String) -> void:
+	currently_editing_line = new_text
+
+
+func _on_quest_description_button_pressed(index : int) -> void:
+	currently_editing_quest_description = quest_parameters.get_child(0).get_child(index).text
+	quest_description_viewer_name.text = EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestDescription"]["Name"]
+	quest_description_viewer_desc.text = EventManager.quest_library[quest_parameters.get_child(0).get_child(index).text]["QuestDescription"]["Description"]
+	quest_description_viewer_db.visible = true
+
+
+func _on_quest_description_viewer_db_confirmed() -> void:
+	EventManager.quest_library[currently_editing_quest_description]["QuestDescription"]["Name"] = quest_description_viewer_name.text
+	EventManager.quest_library[currently_editing_quest_description]["QuestDescription"]["Description"] = quest_description_viewer_desc.text
+	EventManager.save_quest_library()
+	call_deferred("refresh_quests")

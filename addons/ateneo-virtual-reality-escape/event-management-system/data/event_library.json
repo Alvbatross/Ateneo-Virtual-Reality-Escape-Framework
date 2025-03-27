@@ -1,19 +1,18 @@
 {
-	"NewEventasdads": {
+	"NewEvent2edsfsf": {
+		"EventCategory": "ACTION",
+		"EventPrerequisiteFlags": [],
+		"EventCompletionFlags": [
+			"NewEvent2edsfsf_Done"
+		],
+		"Oneshot": false,
+		"ffa": 0
+	},
+	"sdfasfasfasf": {
 		"EventCategory": "DIALOGUE",
 		"EventPrerequisiteFlags": [],
 		"EventCompletionFlags": [
-			"NewEventasdads_Done"
-		],
-		"Oneshot": false
-	},
-	"NewEvent2edsfsf": {
-		"EventCategory": "ACTION",
-		"EventPrerequisiteFlags": [
-			"NewEventasdads_Done"
-		],
-		"EventCompletionFlags": [
-			"NewEvent2edsfsf_Done"
+			"sdfasfasfasf_Done"
 		],
 		"Oneshot": false
 	}

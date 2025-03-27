@@ -72,6 +72,24 @@ text = "Event Name"
 [node name="LineEdit" type="LineEdit" parent="AddEventDB/VBoxContainer"]
 layout_mode = 2
 
+[node name="AddQuestDB" type="ConfirmationDialog" parent="."]
+title = "Add Quest"
+initial_position = 2
+size = Vector2i(200, 115)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddQuestDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 66.0
+
+[node name="Label" type="Label" parent="AddQuestDB/VBoxContainer"]
+layout_mode = 2
+text = "Quest Name"
+
+[node name="LineEdit" type="LineEdit" parent="AddQuestDB/VBoxContainer"]
+layout_mode = 2
+
 [node name="EventPrerequisiteViewerDB" type="ConfirmationDialog" parent="."]
 title = "Event Prerequisites"
 initial_position = 2
@@ -189,6 +207,34 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Remove Flag"
 
+[node name="QuestDescriptionViewerDB" type="ConfirmationDialog" parent="."]
+title = "Quest Description"
+initial_position = 2
+size = Vector2i(216, 246)
+visible = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestDescriptionViewerDB"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 208.0
+offset_bottom = 197.0
+
+[node name="QuestName" type="Label" parent="QuestDescriptionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Quest Name:"
+
+[node name="QuestNameEdit" type="LineEdit" parent="QuestDescriptionViewerDB/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuestDescription" type="Label" parent="QuestDescriptionViewerDB/VBoxContainer"]
+layout_mode = 2
+text = "Quest Description:"
+
+[node name="TextEdit" type="TextEdit" parent="QuestDescriptionViewerDB/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+wrap_mode = 1
+
 [node name="AddEventCategoryDB" type="ConfirmationDialog" parent="."]
 auto_translate_mode = 1
 title = "Add Event Category"
@@ -252,9 +298,10 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 618.0
 grow_horizontal = 2
-current_tab = 0
+current_tab = 1
 
 [node name="EventEditor" type="MarginContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 0
@@ -317,7 +364,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="QuestEditor" type="MarginContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
@@ -335,8 +381,14 @@ theme_override_constants/separation = 5
 layout_mode = 2
 
 [node name="AddQuest" type="Button" parent="TabContainer/QuestEditor/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Add Quest"
+
+[node name="RemoveQuest" type="Button" parent="TabContainer/QuestEditor/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Remove Quest"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/QuestEditor/VBoxContainer"]
 custom_minimum_size = Vector2(0, 500)
@@ -346,12 +398,17 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/QuestEditor/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
+[node name="QuestParameters" type="HBoxContainer" parent="TabContainer/QuestEditor/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
 [connection signal="confirmed" from="AddParameterDB" to="." method="_on_add_parameter_db_confirmed"]
 [connection signal="confirmed" from="AddEventDB" to="." method="_on_add_event_db_confirmed"]
+[connection signal="confirmed" from="AddQuestDB" to="." method="_on_add_quest_db_confirmed"]
 [connection signal="close_requested" from="EventPrerequisiteViewerDB" to="." method="_on_event_prerequisite_viewer_db_close_requested"]
 [connection signal="confirmed" from="EventPrerequisiteViewerDB" to="." method="_on_event_prerequisite_viewer_db_confirmed"]
 [connection signal="close_requested" from="EventCompletionViewerDB" to="." method="_on_event_completion_viewer_db_close_requested"]
 [connection signal="confirmed" from="EventCompletionViewerDB" to="." method="_on_event_completion_viewer_db_confirmed"]
+[connection signal="confirmed" from="QuestDescriptionViewerDB" to="." method="_on_quest_description_viewer_db_confirmed"]
 [connection signal="confirmed" from="AddEventCategoryDB" to="." method="_on_add_event_category_db_confirmed"]
 [connection signal="close_requested" from="CustomArrayDictionaryViewerDB" to="." method="_on_custom_array_dictionary_viewer_db_close_requested"]
 [connection signal="confirmed" from="CustomArrayDictionaryViewerDB" to="." method="_on_custom_array_dictionary_viewer_db_confirmed"]
@@ -362,3 +419,5 @@ layout_mode = 2
 [connection signal="pressed" from="TabContainer/EventEditor/VBoxContainer/VBoxContainer/HBoxContainer2/RemoveEvent" to="." method="_on_remove_event_pressed"]
 [connection signal="pressed" from="TabContainer/EventEditor/VBoxContainer/VBoxContainer/HBoxContainer2/RemoveEventCategory" to="." method="_on_remove_event_category_pressed"]
 [connection signal="pressed" from="TabContainer/EventEditor/VBoxContainer/VBoxContainer/HBoxContainer2/RemoveEventParameter" to="." method="_on_remove_event_parameter_pressed"]
+[connection signal="pressed" from="TabContainer/QuestEditor/VBoxContainer/VBoxContainer/HBoxContainer/AddQuest" to="." method="_on_add_quest_pressed"]
+[connection signal="pressed" from="TabContainer/QuestEditor/VBoxContainer/VBoxContainer/HBoxContainer/RemoveQuest" to="." method="_on_remove_quest_pressed"]
