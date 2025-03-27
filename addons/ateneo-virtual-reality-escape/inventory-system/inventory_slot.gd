@@ -24,6 +24,7 @@ var snap_zone : XRToolsSnapZone
 var current_object : Node3D
 var is_parented : bool
 var body_in_slot : bool
+var deferred_in_slot_check : bool
 
 func _ready() -> void:
 	if Engine.is_editor_hint() and not has_node("SnapZone"):
@@ -84,6 +85,17 @@ func _physics_process(delta: float) -> void:
 		if self.rotation_degrees.y > 360:
 			self.rotation_degrees.y = 0
 		self.rotation_degrees.y += 1
+	
+	if is_parented:
+		if !self.get_parent().visible:
+			if is_instance_valid(current_object):
+				current_object.visible = false
+				snap_zone.enabled = false
+		else:
+			if is_instance_valid(current_object):
+				current_object.visible = true
+				snap_zone.enabled = true
+
 		
 func _set_current_slot_object(what) -> void:
 	current_object = what
@@ -115,15 +127,23 @@ func _drop_current_slot_object() -> void:
 
 func _body_entered_area(body) -> void:
 	if current_object == null:
-		if is_instance_valid(body.get_node("InventoryItem")):
-			body.get_node("InventoryItem").body_collision_detected = true
-			body.get_node("InventoryItem").is_colliding_with.append(self)
-	
+		if is_parented:
+			if self.get_parent().visible:
+				if is_instance_valid(body.get_node("InventoryItem")):
+					body.get_node("InventoryItem").body_collision_detected = true
+					body.get_node("InventoryItem").is_colliding_with.append(self)
+		else:
+			if self.visible:
+				if is_instance_valid(body.get_node("InventoryItem")):
+					body.get_node("InventoryItem").body_collision_detected = true
+					body.get_node("InventoryItem").is_colliding_with.append(self)
+			
 func _body_exited_area(body) -> void:
 	if is_instance_valid(body.get_node("InventoryItem")):
-		if body.get_node("InventoryItem").is_colliding_with.has(self):
-			body.get_node("InventoryItem").is_colliding_with.erase(self)
-			body.get_node("InventoryItem").body_collision_detected = true
+			if !snap_zone.has_snapped_object():
+				if body.get_node("InventoryItem").is_colliding_with.has(self):
+					body.get_node("InventoryItem").is_colliding_with.erase(self)
+					body.get_node("InventoryItem").body_collision_detected = true
 			
 func _pick_up_object(body) -> void:
 	# Ensure the object is picked up properly and scale is adjusted to fit the slot according to the InventoryItem specifications.

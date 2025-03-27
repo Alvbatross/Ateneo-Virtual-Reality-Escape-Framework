@@ -17,15 +17,22 @@ extends Node3D
 @export var update_slot_radius: bool
 @export_range(0,2) var slot_size : float = 0.1
 
+@export_category("Player Options")
+@export var xr_anchor_to_object: Node3D
+@export var xr_camera_anchor: Node3D
+@export var inventory_toggler_hand : XRController3D
+@export var inventory_toggler_button : String
+
+@export var local_transform_adjustment : Vector3
+@export var slots_distance_to_player : float = 0.75
+@export var height_adjustment : float = 1.4
+
 @export_category("Debug")
 @export var inventory_dictionary : Dictionary
 
-
-# REMOVE THIS SECTION LATER
-@export var test_item : Node3D
-var lolbool : bool
-@export var test_dict: Dictionary = { 0: [["adasda", null, "res://src/ois-objects/ois_screw_driver.tscn"], ["adasda", null, "res://src/ois-objects/ois_flashlight_radio.tscn"], ["adasda", null, null]], 1: [["adasda", null, null], ["adasda", null, null], ["adasda", null, null]]}
-
+signal inventory_toggled_on
+signal inventory_toggled_off
+var inventory_toggled : bool
 
 var space_count_row = 0
 var space_count_column = 0
@@ -44,14 +51,19 @@ func _ready() -> void:
 	# Make sure signals are connected.
 	for inventory_slot in get_children():
 		inventory_slot.current_object_in_slot.connect(update_slot_item)
+		inventory_slot.position += local_transform_adjustment
 		
 		# Ensure the slots in runtime are the ones inside the inventory dictionary EVERY TIME.
 		inventory_dictionary[int(inventory_slot.name.split("_")[1])][int(inventory_slot.name.split("_")[2])][0] = inventory_slot
 	
-	# REMOVE THIS SECTION LATER
-	lolbool = true
-	
+	inventory_toggler_hand.button_pressed.connect(_toggle_inventory)
 
+func _toggle_inventory(button) -> void:
+	if button == inventory_toggler_button:
+		inventory_toggled = !inventory_toggled
+		self.visible = inventory_toggled
+	
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -62,13 +74,8 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_update_inventory_system()
 	
-	# REMOVE THIS SECTION LATER
-	if not Engine.is_editor_hint():
-		if lolbool:
-			print("[AVRE - Inventory] [DEBUG] Currently autoloads the test dictionary for testing purposes. REMOVE THIS CODE LATER.")
-			import_save_data(test_dict)
-			lolbool = false
-		
+	reposition_inventory()
+
 	
 
 
@@ -79,6 +86,8 @@ func initialize_inv() -> void:
 	inventory_dictionary.clear()
 	space_count_row = row_count
 	space_count_column = column_count
+	
+	self.position = local_transform_adjustment
 		
 	for x in range(space_count_row):
 		var row_array = []
@@ -127,7 +136,17 @@ func update_slot_item(what, row, col) -> void:
 		print("[AVRE - Inventory] "+inventory_dictionary[row][col][1].name+" path: "+inventory_dictionary[row][col][1].get_scene_file_path())
 	else:
 		print("[AVRE - Inventory] No object in slot row "+str(row)+" column "+str(col)+".")
-
+		
+func reposition_inventory() -> void:
+	var position_offset : Vector3
+	
+	if is_instance_valid(xr_camera_anchor) and is_instance_valid(xr_anchor_to_object):
+		var position_x_rotate = slots_distance_to_player * cos(xr_camera_anchor.global_rotation.y - self.get_parent().global_rotation.y) + local_transform_adjustment.z * cos(xr_camera_anchor.global_rotation.y - self.get_parent().global_rotation.y)
+		var position_z_rotate = slots_distance_to_player * sin(xr_camera_anchor.global_rotation.y - self.get_parent().global_rotation.y) + local_transform_adjustment.z * sin(xr_camera_anchor.global_rotation.y - self.get_parent().global_rotation.y)
+		self.rotation.y = xr_camera_anchor.global_rotation.y - self.get_parent().global_rotation.y
+		position_offset = Vector3(-position_z_rotate,height_adjustment/2,-position_x_rotate)
+		self.global_position = xr_anchor_to_object.position + xr_camera_anchor.position + position_offset
+		
 func export_save_data() -> Dictionary:
 	print("[AVRE - Inventory] Saving data..")
 	return inventory_dictionary
@@ -146,25 +165,20 @@ func import_save_data(data : Dictionary) -> void:
 						# If the item is supposed to be unique, find it inside the scene.
 						
 						if loaded_item.get_node("InventoryItem").unique:
-							print("im unique")
 							var loaded_item_name = loaded_item.name
 							if is_instance_valid(get_parent().find_child(loaded_item_name)):
-								print("the item is unique AND in the scene")
 								inventory_dictionary[row_slots][column_slots][0]._pick_up_object(get_parent().find_child(loaded_item_name))
 								inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
 							else:
-								print("the item is unique but not in the scene")
 								get_parent().add_child(loaded_item)
 								inventory_dictionary[row_slots][column_slots][0]._pick_up_object(loaded_item)
 								inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
 						else:
-							print("not unique and may or may not be in the scene")
 							get_parent().add_child(loaded_item)
 							inventory_dictionary[row_slots][column_slots][0]._pick_up_object(loaded_item)
 							inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object
 					# If it doesn't have it, just put the item as is.
 					else:
-						print("no inventory item script in this item")
 						get_parent().add_child(loaded_item)
 						inventory_dictionary[row_slots][column_slots][0]._pick_up_object(loaded_item)
 						inventory_dictionary[row_slots][column_slots][1] = inventory_dictionary[row_slots][column_slots][0].current_object

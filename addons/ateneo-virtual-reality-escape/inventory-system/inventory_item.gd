@@ -23,6 +23,7 @@ var preserved_collider_rotation : Vector3
 @export var object_rotation_adjustment : Vector3
 
 @export var additional_mesh : Node3D
+@export var exclude_additional_mesh_transform: bool
 var addt_preserved_mesh_scale : Vector3
 var addt_preserved_mesh_transform : Vector3
 var addt_preserved_mesh_rotation : Vector3
@@ -80,7 +81,7 @@ func _resize_mesh(scalex):
 		tween.tween_property(defined_collision_shape, "scale", preserved_collider_scale, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		if is_instance_valid(additional_mesh):
 			tween.tween_property(additional_mesh, "scale", addt_preserved_mesh_scale, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-			#tween.tween_property(additional_mesh, "position", addt_preserved_mesh_transform, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+			tween.tween_property(additional_mesh, "position", addt_preserved_mesh_transform, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		is_resized = false
 		await tween.finished
 	elif is_colliding_with.size() >= 1:
@@ -90,7 +91,7 @@ func _resize_mesh(scalex):
 		tween.tween_property(defined_collision_shape, "scale", scalex*preserved_collider_scale, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		if is_instance_valid(additional_mesh):
 			tween.tween_property(additional_mesh, "scale", scalex*addt_preserved_mesh_scale, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-			#tween.tween_property(additional_mesh, "position", scalex*addt_preserved_mesh_transform, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+			tween.tween_property(additional_mesh, "position", scalex*addt_preserved_mesh_transform, 0.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		is_resized = true
 		await tween.finished
 
@@ -101,7 +102,7 @@ func _on_out_slot_transform():
 	defined_collision_shape.position = preserved_collider_transform
 	defined_collision_shape.rotation_degrees = preserved_collider_rotation
 	
-	if is_instance_valid(additional_mesh):
+	if is_instance_valid(additional_mesh) and !exclude_additional_mesh_transform:
 		additional_mesh.position = addt_preserved_mesh_transform
 		additional_mesh.rotation_degrees = preserved_mesh_rotation
 	
@@ -113,7 +114,7 @@ func _on_in_slot_transform():
 	defined_collision_shape.position = object_transform_adjustment
 	defined_collision_shape.rotation_degrees = object_rotation_adjustment
 	
-	if is_instance_valid(additional_mesh):
+	if is_instance_valid(additional_mesh) and !exclude_additional_mesh_transform:
 		additional_mesh.rotation_degrees = object_rotation_adjustment
 		additional_mesh.position += object_transform_adjustment
 

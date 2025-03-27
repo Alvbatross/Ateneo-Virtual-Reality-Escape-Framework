@@ -28,6 +28,7 @@ var default_collider_shape := CylinderShape3D.new()
 var teleporter_material_override = StandardMaterial3D.new()
 
 var current_teleporter : bool
+var aimed_at : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -82,10 +83,16 @@ func _update_teleporter_name() -> void:
 		self.name = "Teleporter"
 		
 func _update_teleporter_state() -> void:
+	default_teleporter_mesh.get_surface_override_material(0).shading_mode = 0
+	default_teleporter_arrow.get_surface_override_material(0).shading_mode = 0
+	
 	if !teleporter_enabled and not current_teleporter:
 		default_teleporter_mesh.get_surface_override_material(0).albedo_color = Color(0.125,0.125,0.125)
 		default_teleporter_arrow.get_surface_override_material(0).albedo_color = Color(0.125,0.125,0.125)
-	elif teleporter_enabled and not current_teleporter:
+	elif teleporter_enabled and not current_teleporter and aimed_at: 
+		default_teleporter_mesh.get_surface_override_material(0).albedo_color = Color(1,0.5,1)
+		default_teleporter_arrow.get_surface_override_material(0).albedo_color = Color(1,0.5,1)
+	elif teleporter_enabled and not current_teleporter and not aimed_at:
 		default_teleporter_mesh.get_surface_override_material(0).albedo_color = Color(1,1,1)
 		default_teleporter_arrow.get_surface_override_material(0).albedo_color = Color(1,1,1)
 	elif current_teleporter:

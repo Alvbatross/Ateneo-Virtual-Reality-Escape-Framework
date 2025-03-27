@@ -25,6 +25,10 @@ extends Node3D
 @onready var _controller_left_node := XRHelpers.get_left_controller(xr_left_function_pointer)
 @onready var _controller_right_node := XRHelpers.get_right_controller(xr_right_function_pointer)
 
+@export_category("Transition Options")
+# Makes use of WorldEnvironment parameters to fade-in/fade-out.
+@export var world_environment : WorldEnvironment
+
 @export_category("Editor Settings")
 @export var update_connections : bool
 
@@ -33,6 +37,7 @@ extends Node3D
 @export var active_controller : XRController3D
 
 var teleport_called : bool
+var initial_teleport : bool
 
 
 # Called when the node enters the scene tree for the first time.
@@ -41,8 +46,10 @@ func _ready() -> void:
 	
 	teleport_called = true
 	if teleport_called and is_instance_valid(current_location):
+		initial_teleport = true
 		_teleport_player(current_location)
 		teleport_called = false
+		initial_teleport = false
 	_connect_controller_buttons()
 				
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -77,22 +84,33 @@ func _set_teleporter_states() -> void:
 func _teleport_player(location : Teleporter) -> void:
 	# Still unsure about this, will have to confirm later, but it works as expected.
 	print("[AVRE - TeleportManager] Teleported to "+location.teleporter_name+".")
+	if !initial_teleport:
+		_fade_out()
+	if is_instance_valid(world_environment):
+		await get_tree().create_timer(1).timeout
 	xr_origin.position = location.teleporter_position
-	xr_origin.rotation_degrees = location.teleporter_rotation
+	xr_camera.rotation.y = deg_to_rad(location.teleporter_rotation.y)
+	xr_camera.rotation.z = deg_to_rad(location.teleporter_rotation.z)
+	xr_camera.rotation.x = deg_to_rad(location.teleporter_rotation.x)
 	current_location = location
+	_fade_in()
 
 	
-func _runtime_pointer() -> void:
+func _runtime_pointer() -> void:	
 	if is_instance_valid(xr_right_function_pointer) and is_instance_valid(xr_left_function_pointer):
 		if is_instance_valid(xr_right_function_pointer.get_node("RayCast").get_collider()):
 			if pointing_at == null:
 				if xr_right_function_pointer.get_node("RayCast").get_collider().get_parent() is Teleporter:
 					pointing_at = xr_right_function_pointer.get_node("RayCast").get_collider().get_parent()
+					pointing_at.aimed_at = true
 		elif is_instance_valid(xr_left_function_pointer.get_node("RayCast").get_collider()):
 			if pointing_at == null:
 				if xr_left_function_pointer.get_node("RayCast").get_collider().get_parent() is Teleporter:
 					pointing_at = xr_left_function_pointer.get_node("RayCast").get_collider().get_parent()
+					pointing_at.aimed_at = true
 		else:
+			if pointing_at is Teleporter:
+				pointing_at.aimed_at = false
 			pointing_at = null
 
 
@@ -146,6 +164,22 @@ func _on_teleporter_button_pressed(p_button : String, controller : XRController3
 func _on_teleporter_button_released(p_button : String, controller : XRController3D) -> void:
 	if p_button == teleporter_trigger_button:
 		pointing_at = null
+
+func _fade_out():
+	if is_instance_valid(world_environment):
+		var tween = get_tree().create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(world_environment.get_environment(), "adjustment_brightness", 0, 1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(world_environment.get_camera_attributes(), "frustum_focus_distance", 0.3, 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		await tween.finished
+
+func _fade_in():
+	if is_instance_valid(world_environment):
+		var tween = get_tree().create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(world_environment.get_environment(), "adjustment_brightness", 1, 1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(world_environment.get_camera_attributes(), "frustum_focus_distance", 10, 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		await tween.finished
 		
 					
 func _get_configuration_warnings() -> PackedStringArray:
