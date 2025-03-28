@@ -261,6 +261,10 @@ func _on_remove_event_parameter_pressed() -> void:
 	open_remove_db("Parameter")
 
 
+func _on_remove_quest_pressed() -> void:
+	open_remove_db("Quest")
+	
+
 func open_remove_db(remove_cat : String) -> void:
 	remove_option.clear()
 	currently_removing_category = remove_cat
@@ -282,6 +286,11 @@ func open_remove_db(remove_cat : String) -> void:
 			for param in EventManager.event_manager_settings["Parameters"]:
 					if not param in EventManager.event_manager_defaults["Parameters"]:
 						remove_option.add_item(param)
+		"Quest" :
+			remove_db.title = "Remove Quest"
+			remove_label.text = "Quest:"
+			for quest in EventManager.quest_library:
+				remove_option.add_item(quest)
 	
 	remove_db.visible = true
 
@@ -323,19 +332,31 @@ func _on_remove_db_confirmed() -> void:
 			for event in EventManager.event_library:
 				EventManager.event_library[event]["EventPrerequisiteFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
 				EventManager.event_library[event]["EventCompletionFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
+			for quest in EventManager.quest_library:
+				EventManager.quest_library[quest]["QuestCompletionFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
 		"Category":
 			EventManager.event_manager_settings["Categories"].erase(remove_option.get_item_text(remove_option.selected))
 		"Parameter":
 			EventManager.event_manager_settings["Parameters"].erase(remove_option.get_item_text(remove_option.selected))
 			for event in EventManager.event_library:
 				EventManager.event_library[event].erase(remove_option.get_item_text(remove_option.selected))
+		"Quest":
+			EventManager.quest_library.erase(remove_option.get_item_text(remove_option.selected))
+			for event in EventManager.event_library:
+				EventManager.event_library[event]["EventPrerequisiteFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
+				EventManager.event_library[event]["EventCompletionFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
+			for quest in EventManager.quest_library:
+				EventManager.quest_library[quest]["QuestCompletionFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
 	
 	print(EventManager.event_manager_settings)
 	print(EventManager.event_library)
 	EventManager.save_event_library()
+	EventManager.save_quest_library()
 	EventManager.save_event_settings()
 	refresh_event_parameters()
 	refresh_events()
+	refresh_quest_parameters()
+	refresh_quests()
 
 
 func _on_add_quest_pressed() -> void:
@@ -343,8 +364,7 @@ func _on_add_quest_pressed() -> void:
 	add_quest_db.visible = true
 
 
-func _on_remove_quest_pressed() -> void:
-	pass # Replace with function body.
+
 
 
 func _on_add_quest_db_confirmed() -> void:
