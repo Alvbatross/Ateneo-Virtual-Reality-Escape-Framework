@@ -54,7 +54,9 @@ func _on_trigger_release() -> void:
 
 
 func exit_state() -> void:
-	_ois_actor_state_machine.get_actor_component().get_actor().released.disconnect(_on_actor_released)
+	var actor = _ois_actor_state_machine.get_actor_component().get_actor()
+	if actor is XRToolsPickable:
+		_ois_actor_state_machine.get_actor_component().get_actor().released.disconnect(_on_actor_released)
 	_ois_actor_state_machine.controller.button_pressed.disconnect(trigger_press)
 	_ois_actor_state_machine.controller.button_released.disconnect(trigger_release)
 	

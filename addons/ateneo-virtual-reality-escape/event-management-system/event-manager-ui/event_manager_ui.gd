@@ -134,7 +134,7 @@ func refresh_events() -> void:
 				line_edit.focus_exited.connect(_on_event_name_edit_focus_exited)
 				line_edit.text_changed.connect(_on_event_name_edit_text_changed)
 				line_edit.custom_minimum_size.x = line_edit.size.x * 3
-				line_edit.custom_minimum_size.y = 30
+				line_edit.custom_minimum_size.y = 31
 			elif param.get_child(0).text == "EventCategory":
 				var option_button = OptionButton.new()
 				for cat in EventManager.event_manager_settings["Categories"]:
@@ -142,7 +142,7 @@ func refresh_events() -> void:
 				option_button.select(EventManager.event_manager_settings["Categories"].find(EventManager.event_library[e]["EventCategory"]))
 				param.add_child(option_button)
 				option_button.item_selected.connect(_on_event_category_item_selected.bind(option_button.get_index(), option_button))
-				option_button.custom_minimum_size.y = 30
+				option_button.custom_minimum_size.y = 31
 			else:
 				if typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_STRING or typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_FLOAT or typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_INT:
 					var line_edit = LineEdit.new()
@@ -151,19 +151,19 @@ func refresh_events() -> void:
 					line_edit.focus_entered.connect(_on_custom_line_edit_focus_entered.bind(line_edit.text, param.get_child(0).text, line_edit.get_index()))
 					line_edit.focus_exited.connect(_on_custom_line_edit_focus_exited.bind(param.get_child(0).text, line_edit.get_index()))
 					line_edit.text_changed.connect(_on_custom_line_edit_text_changed)
-					line_edit.custom_minimum_size.y = 30
+					line_edit.custom_minimum_size.y = 31
 				elif typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_BOOL:
 					var check_box = CheckBox.new()
 					check_box.button_pressed = EventManager.event_library[e][param.get_child(0).text]
 					param.add_child(check_box)
 					check_box.toggled.connect(_on_event_checkbox_toggled.bind(param.get_child(0).text, check_box.get_index()))
-					check_box.custom_minimum_size.y = 30
+					check_box.custom_minimum_size.y = 31
 				elif typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_DICTIONARY:
 					var view_button = Button.new()
 					view_button.text = "View " + param.get_child(0).text
 					param.add_child(view_button)
 					view_button.pressed.connect(_on_custom_array_dictionary_param_pressed.bind(param.get_child(0).text, "Dictionary", view_button.get_index()))
-					view_button.custom_minimum_size.y = 30
+					view_button.custom_minimum_size.y = 31
 				elif typeof(EventManager.event_library[e][param.get_child(0).text]) == TYPE_ARRAY:
 					var view_button = Button.new()
 					view_button.text = "View " + param.get_child(0).text
@@ -174,7 +174,7 @@ func refresh_events() -> void:
 						view_button.pressed.connect(_on_view_completion_pressed.bind(view_button.get_index()))
 					else:
 						view_button.pressed.connect(_on_custom_array_dictionary_param_pressed.bind(param.get_child(0).text, "Array", view_button.get_index()))
-					view_button.custom_minimum_size.y = 30
+					view_button.custom_minimum_size.y = 31
 
 
 func refresh_quest_parameters() -> void:
@@ -348,8 +348,8 @@ func _on_remove_db_confirmed() -> void:
 			for quest in EventManager.quest_library:
 				EventManager.quest_library[quest]["QuestCompletionFlags"].erase(remove_option.get_item_text(remove_option.selected) + "_Done")
 	
-	print(EventManager.event_manager_settings)
-	print(EventManager.event_library)
+	#print(EventManager.event_manager_settings)
+	#print(EventManager.event_library)
 	EventManager.save_event_library()
 	EventManager.save_quest_library()
 	EventManager.save_event_settings()
@@ -388,7 +388,7 @@ func _on_view_prerequisites_pressed(index: int) -> void:
 		event_prerequisite_text.append_text(prereqs + "\n")
 	
 	event_prerequisite_option.clear()
-	print(EventManager.all_possible_flags)
+	#print(EventManager.all_possible_flags)
 	for prereq in EventManager.all_possible_flags:
 		if not prereq in EventManager.event_library[parameters.get_child(0).get_child(index).text]["EventPrerequisiteFlags"] and not prereq == parameters.get_child(0).get_child(index).text + "_Done":
 			event_prerequisite_option.add_item(prereq)
@@ -483,7 +483,7 @@ func _on_add_existing_pressed(index: int) -> void:
 func _on_add_custom_pressed(index : int) -> void:
 	EventManager.event_library[parameters.get_child(0).get_child(index).text]["EventCompletionFlags"].append(add_custom_option.text)
 	EventManager.update_all_flags()
-	print(EventManager.all_possible_flags)
+	#print(EventManager.all_possible_flags)
 	if add_existing_option_button.pressed.is_connected(_on_add_existing_pressed):
 		add_existing_option_button.pressed.disconnect(_on_add_existing_pressed)
 	if add_custom_option_button.pressed.is_connected(_on_add_custom_pressed):
@@ -532,8 +532,8 @@ func _on_event_name_edit_focus_entered(event_name : String, index : int) -> void
 	new_event_name = event_name
 	currently_editing_event_name = event_name
 	currently_editing_event_index = index
-	print(currently_editing_event_name)
-	print(currently_editing_event_index)
+	#print(currently_editing_event_name)
+	#print(currently_editing_event_index)
 
 
 func _on_event_name_edit_focus_exited() -> void:
@@ -575,7 +575,7 @@ func _on_event_name_edit_text_changed(new_text : String) -> void:
 
 func _on_event_category_item_selected(item_index : int, event_index : int, option_button : OptionButton) -> void:
 	EventManager.event_library[parameters.get_child(0).get_child(event_index).text]["EventCategory"] = option_button.get_item_text(item_index)
-	print(EventManager.event_library)
+	#print(EventManager.event_library)
 	call_deferred("refresh_events")
 	EventManager.save_event_library()
 
@@ -585,7 +585,7 @@ func _on_event_category_item_selected(item_index : int, event_index : int, optio
 
 func _on_event_checkbox_toggled(toggled : bool, parameter : String, index : int) -> void:
 	EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter] = toggled
-	print(EventManager.event_library)
+	#print(EventManager.event_library)
 	call_deferred("refresh_events")
 	EventManager.save_event_library()
 
@@ -635,17 +635,17 @@ func _on_custom_array_dictionary_viewer_db_close_requested() -> void:
 
 func _on_custom_line_edit_focus_entered(line : String, parameter : String, index : int) -> void:
 	currently_editing_line = line
-	print(parameter)
-	print(index)
-	
-	print(parameters.get_child(0).get_child(index).text)
-	print(parameters.get_child(0).get_child(index))
+	#print(parameter)
+	#print(index)
+	#
+	#print(parameters.get_child(0).get_child(index).text)
+	#print(parameters.get_child(0).get_child(index))
 
 func _on_custom_line_edit_focus_exited(parameter : String, index : int) -> void:
-	print(parameter)
-	print(index)
-	print(parameters.get_child(0).get_child(index).text)
-	print(parameters.get_child(0).get_child(index))
+	#print(parameter)
+	#print(index)
+	#print(parameters.get_child(0).get_child(index).text)
+	#print(parameters.get_child(0).get_child(index))
 	var editing_parameter = EventManager.event_library[parameters.get_child(0).get_child(index).text][parameter]
 	
 	if typeof(editing_parameter) == TYPE_INT:

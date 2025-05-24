@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bpgkrwkbbrau6"]
 
-[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_vq8dm"]
+[ext_resource type="Script" uid="uid://b8by30bxf3c6d" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_vq8dm"]
 [ext_resource type="PackedScene" uid="uid://casl26sty2gd6" path="res://src/assets/nutribun.glb" id="2_pqvlx"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="3_d18sn"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="4_e7yy3"]

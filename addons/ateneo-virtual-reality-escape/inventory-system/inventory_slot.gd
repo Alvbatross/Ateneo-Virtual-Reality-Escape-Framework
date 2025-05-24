@@ -5,14 +5,17 @@ extends Node3D
 signal current_object_in_slot(object, row, col)
 signal adjust_in_slot_transform
 signal adjust_out_slot_transform
+signal slot_picked_up
+signal slot_dropped
 
 @export var update_slot_settings : bool = false
 
 @export var slot_enabled : bool = true
 @export var snap_zone_radius : float = 0.2
-@export var default_object : NodePath
+@export var default_object : XRToolsPickable
 @export var group_required : String
 @export var funny_effect : bool
+@export var ignore_inventory_item_scale : bool
 
 @export var slot_material_override = preload("res://addons/ateneo-virtual-reality-escape/inventory-system/misc-resources/inventory_slot_shader_a.tres")
 
@@ -65,7 +68,12 @@ func _ready() -> void:
 		snap_zone.has_picked_up.connect(_set_current_slot_object)
 		snap_zone.has_dropped.connect(_drop_current_slot_object)
 		
-		snap_zone.initial_object = default_object
+		#snap_zone.initial_object = default_object
+		
+		var reference_obj = default_object
+		if is_instance_valid(reference_obj):
+			call_deferred("_pick_up_object_init",reference_obj)
+		
 		snap_zone.snap_require = group_required
 		#if funny_effect:
 			#self.rotation_degrees.x += 90
@@ -86,15 +94,18 @@ func _physics_process(delta: float) -> void:
 			self.rotation_degrees.y = 0
 		self.rotation_degrees.y += 1
 	
-	if is_parented:
-		if !self.get_parent().visible:
-			if is_instance_valid(current_object):
-				current_object.visible = false
+	if not Engine.is_editor_hint():
+		if is_parented:
+			if !self.get_parent().visible:
 				snap_zone.enabled = false
-		else:
-			if is_instance_valid(current_object):
-				current_object.visible = true
+				if is_instance_valid(current_object):
+					current_object.visible = false
+					
+			else:
 				snap_zone.enabled = true
+				if is_instance_valid(current_object):
+					current_object.visible = true
+				
 
 		
 func _set_current_slot_object(what) -> void:
@@ -102,8 +113,10 @@ func _set_current_slot_object(what) -> void:
 	if is_parented:
 		var row_col_get = self.name.split("_")
 		current_object_in_slot.emit(current_object, int(row_col_get[1]), int(row_col_get[2]))
+		slot_picked_up.emit()
 	else:
 		current_object_in_slot.emit(current_object,0,0)
+		slot_picked_up.emit()
 	
 	if is_instance_valid(current_object.get_node("InventoryItem")):
 		current_object.get_node("InventoryItem").slot_interaction_detected = true
@@ -120,20 +133,22 @@ func _drop_current_slot_object() -> void:
 	if is_parented:
 		var row_col_get = self.name.split("_")
 		current_object_in_slot.emit(current_object, int(row_col_get[1]), int(row_col_get[2]))
+		slot_dropped.emit()
 	else:
 		current_object_in_slot.emit(current_object,0,0)
+		slot_dropped.emit()
 	
 	print("[AVRE - Inventory] Slot "+self.name+" has dropped an object.")
 
 func _body_entered_area(body) -> void:
 	if current_object == null:
 		if is_parented:
-			if self.get_parent().visible:
+			if self.get_parent().visible and not ignore_inventory_item_scale:
 				if is_instance_valid(body.get_node("InventoryItem")):
 					body.get_node("InventoryItem").body_collision_detected = true
 					body.get_node("InventoryItem").is_colliding_with.append(self)
 		else:
-			if self.visible:
+			if self.visible and not ignore_inventory_item_scale:
 				if is_instance_valid(body.get_node("InventoryItem")):
 					body.get_node("InventoryItem").body_collision_detected = true
 					body.get_node("InventoryItem").is_colliding_with.append(self)
@@ -147,8 +162,17 @@ func _body_exited_area(body) -> void:
 			
 func _pick_up_object(body) -> void:
 	# Ensure the object is picked up properly and scale is adjusted to fit the slot according to the InventoryItem specifications.
+	snap_zone.pick_up_object(body)
+	_body_entered_area(body)
+	
+func _pick_up_object_init(body) -> void:
+	# Ensure the object is picked up properly and scale is adjusted to fit the slot according to the InventoryItem specifications.
+	if is_instance_valid(body.get_node("InventoryItem")) and not ignore_inventory_item_scale:
+		body.get_node("InventoryItem").call_deferred("_force_shrink_item")
 	_body_entered_area(body)
 	snap_zone.pick_up_object(body)
+	
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_configuration_warnings() -> PackedStringArray:

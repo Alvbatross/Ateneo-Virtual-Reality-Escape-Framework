@@ -2,10 +2,14 @@
 class_name TeleporterManager
 extends Node3D
 
+signal location_changed(location_name)
+
 @export var current_location : Teleporter:
 	set(current_loc):
 		if current_location != current_loc:
 			current_location = current_loc
+
+@export var enabled : bool = false
 
 @export_category("XR Settings")
 
@@ -15,7 +19,7 @@ extends Node3D
 	set(xr_origin_node):
 		if xr_origin != xr_origin_node:
 			xr_origin = xr_origin_node
-		_initialize_xr_origin_nodes(xr_origin_node)
+		#_initialize_xr_origin_nodes(xr_origin_node)
 		
 @export var xr_camera: XRCamera3D
 
@@ -26,8 +30,11 @@ extends Node3D
 @onready var _controller_right_node := XRHelpers.get_right_controller(xr_right_function_pointer)
 
 @export_category("Transition Options")
-# Makes use of WorldEnvironment parameters to fade-in/fade-out.
-@export var world_environment : WorldEnvironment
+@export var audio_node : AudioStreamPlayer3D
+@export var fade_mesh : Node3D
+
+@export_category("(Optional) Spectator Camera")
+@export var spectator_camera : Camera3D
 
 @export_category("Editor Settings")
 @export var update_connections : bool
@@ -44,13 +51,14 @@ var initial_teleport : bool
 func _ready() -> void:
 	_initialize_xr_components()
 	
-	teleport_called = true
-	if teleport_called and is_instance_valid(current_location):
-		initial_teleport = true
-		_teleport_player(current_location)
-		teleport_called = false
-		initial_teleport = false
-	_connect_controller_buttons()
+	if not Engine.is_editor_hint():
+		teleport_called = true
+		if teleport_called and is_instance_valid(current_location):
+			initial_teleport = true
+			_teleport_player(current_location)
+			teleport_called = false
+			initial_teleport = false
+		_connect_controller_buttons()
 				
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -70,31 +78,55 @@ func _process(delta: float) -> void:
 		_runtime_pointer()
 	
 func _set_teleporter_states() -> void:
-	if is_instance_valid(current_location):
-		for teleporters_a in self.get_children():
-			if teleporters_a == current_location:
-				teleporters_a.current_teleporter = true
-			else:
-				teleporters_a.current_teleporter = false
-			if teleporters_a not in current_location.connected_teleporters:
-				teleporters_a.teleporter_enabled = false
-			elif teleporters_a == current_location or teleporters_a in current_location.connected_teleporters:
-				teleporters_a.teleporter_enabled = true
-				
+	if enabled:
+		if is_instance_valid(current_location):
+			for teleporters_a in self.get_children():
+				if teleporters_a == current_location:
+					teleporters_a.current_teleporter = true
+				else:
+					teleporters_a.current_teleporter = false
+				if teleporters_a not in current_location.connected_teleporters:
+					teleporters_a.teleporter_enabled = false
+				elif teleporters_a == current_location or teleporters_a in current_location.connected_teleporters:
+					teleporters_a.teleporter_enabled = true
+	else:
+		for teleporters in self.get_children():
+			teleporters.teleporter_enabled = false
+
 func _teleport_player(location : Teleporter) -> void:
 	# Still unsure about this, will have to confirm later, but it works as expected.
 	print("[AVRE - TeleportManager] Teleported to "+location.teleporter_name+".")
 	if !initial_teleport:
 		_fade_out()
-	if is_instance_valid(world_environment):
+	if is_instance_valid(audio_node):
+		audio_node.playing = true
+	if is_instance_valid(fade_mesh):
 		await get_tree().create_timer(1).timeout
-	xr_origin.position = location.teleporter_position
+	#xr_origin.position = location.teleporter_position
+	
+	# Separate y position from position of x and z axes to preserve height.
+	xr_origin.position.x = location.teleporter_position.x
+	xr_origin.position.y = xr_origin.position.y + location.teleporter_position.y
+	xr_origin.position.z = location.teleporter_position.z
+	
 	xr_camera.rotation.y = deg_to_rad(location.teleporter_rotation.y)
 	xr_camera.rotation.z = deg_to_rad(location.teleporter_rotation.z)
 	xr_camera.rotation.x = deg_to_rad(location.teleporter_rotation.x)
+	audio_node.position = xr_origin.position
+	
+	if is_instance_valid(spectator_camera):
+		_teleport_spectator_camera(location)
+	
 	current_location = location
 	_fade_in()
+	emit_signal("location_changed", location.teleporter_name)
 
+func _teleport_spectator_camera(teleporter : Teleporter) -> void:
+	spectator_camera.rotation.y = teleporter.spectator_camera_rotation.y
+	spectator_camera.rotation.x = teleporter.spectator_camera_rotation.x
+	spectator_camera.rotation.z = teleporter.spectator_camera_rotation.z
+	spectator_camera.position = teleporter.spectator_camera_position
+	
 	
 func _runtime_pointer() -> void:	
 	if is_instance_valid(xr_right_function_pointer) and is_instance_valid(xr_left_function_pointer):
@@ -166,19 +198,19 @@ func _on_teleporter_button_released(p_button : String, controller : XRController
 		pointing_at = null
 
 func _fade_out():
-	if is_instance_valid(world_environment):
+	if is_instance_valid(fade_mesh):
 		var tween = get_tree().create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		tween.set_parallel(true)
-		tween.tween_property(world_environment.get_environment(), "adjustment_brightness", 0, 1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tween.tween_property(world_environment.get_camera_attributes(), "frustum_focus_distance", 0.3, 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(fade_mesh.get_surface_override_material(0), "shader_parameter/albedo", Color(0,0,0,1), 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		await tween.finished
 
 func _fade_in():
-	if is_instance_valid(world_environment):
+	if is_instance_valid(fade_mesh):
 		var tween = get_tree().create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		tween.set_parallel(true)
-		tween.tween_property(world_environment.get_environment(), "adjustment_brightness", 1, 1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tween.tween_property(world_environment.get_camera_attributes(), "frustum_focus_distance", 10, 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(fade_mesh.get_surface_override_material(0), "shader_parameter/albedo", Color(0,0,0,0), 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		await tween.finished
 		
 					
@@ -193,6 +225,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("The left controller does not have a FunctionPointer node. Please add a FunctionPointer.")
 	if xr_right_function_pointer == null:
 		warnings.append("The right controller does not have a FunctionPointer node. Please add a FunctionPointer.")
-
+	if fade_mesh == null:
+		warnings.append("No fademesh set for teleportation transition.")
 	# Return warnings
 	return warnings
+	
+
+	

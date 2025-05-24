@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_snkl1"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_8mgv7"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_gnf5y"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_je2ke"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="5_8dm64"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_two_hand_tool_asm.gd" id="6_gmomm"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_detach_receiver.gd" id="7_pcj84"]
+[ext_resource type="Script" uid="uid://cg1lorgur84yy" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_je2ke"]
+[ext_resource type="Script" uid="uid://b4ao0gdf7khuq" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="5_8dm64"]
+[ext_resource type="Script" uid="uid://fmvxmwggv8ji" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_two_hand_tool_asm.gd" id="6_gmomm"]
+[ext_resource type="Script" uid="uid://dk87jglam1c5g" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_detach_receiver.gd" id="7_pcj84"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vmy2j"]
 size = Vector3(0.03, 2, 0.03)

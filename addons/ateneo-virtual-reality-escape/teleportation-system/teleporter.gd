@@ -13,6 +13,11 @@ extends Node3D
 @export var teleporter_rotation : Vector3
 @export var connected_teleporters : Array[Teleporter]
 
+
+# Not relative to the teleporter's position! This is global!
+@export var spectator_camera_position : Vector3
+@export var spectator_camera_rotation : Vector3
+
 # Plans to allow users to add their own custom scene for teleporters soon.
 
 var default_teleporter_mesh := MeshInstance3D.new()
@@ -51,8 +56,8 @@ func _process(delta: float) -> void:
 
 # Set parameters for the default teleporter mesh here.
 func _set_up_teleporter_mesh() -> void:
-	default_mesh_shape.bottom_radius = 0.2
-	default_mesh_shape.top_radius = 0.2
+	default_mesh_shape.bottom_radius = 0.4
+	default_mesh_shape.top_radius = 0.4
 	default_mesh_shape.height = 0.05
 	default_teleporter_mesh.mesh = default_mesh_shape
 	default_teleporter_mesh.set_surface_override_material(0,teleporter_material_override)
@@ -65,7 +70,7 @@ func _set_up_teleporter_mesh() -> void:
 	
 	default_collider.shape = default_collider_shape
 	default_collider_shape.height = 0.05
-	default_collider_shape.radius = 0.2
+	default_collider_shape.radius = 0.4
 	
 	# Set collision layer for FunctionPointer.
 	default_static_body.set_collision_layer_value(21,true)

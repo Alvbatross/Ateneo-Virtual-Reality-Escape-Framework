@@ -5,8 +5,6 @@ extends OISReceiverComponent
 @export var primary_replacement_object_path : String
 @export var secondary_replacement_object_path : String
 
-
-
 var primary_hand
 var secondary_hand
 

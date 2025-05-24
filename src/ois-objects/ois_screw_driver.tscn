@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://c33vwgtj34j8j" path="res://src/assets/ScrewDriver.glb" id="2_5dmqm"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="3_w5yo5"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="4_j5nl0"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="5_fju8u"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="6_7n5tt"]
+[ext_resource type="Script" uid="uid://cg1lorgur84yy" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="5_fju8u"]
+[ext_resource type="Script" uid="uid://cgettxdui2mmi" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="6_7n5tt"]
 [ext_resource type="BoxMesh" uid="uid://dho0uqpnmuhn6" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/misc-resources/collider_raycast_mesh.tres" id="7_8dsmh"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_raycast3d.gd" id="7_jkfq1"]
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_item.gd" id="9_pnh2e"]
+[ext_resource type="Script" uid="uid://eavrntks32yb" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_raycast3d.gd" id="7_jkfq1"]
+[ext_resource type="Script" uid="uid://dq86gvhe6d20d" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_item.gd" id="9_pnh2e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6r0l6"]
 size = Vector3(0.05, 0.221387, 0.05)

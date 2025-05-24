@@ -21,6 +21,8 @@ signal action_completed(requirement, total_progress)
 
 @export var reset_progress : bool = false
 
+@export var oneshot : bool = true
+
 @export var receive_from_self : bool = false
 
 @export_flags_3d_physics var ois_collision_layer : int = COLLISION_LAYER
@@ -80,7 +82,11 @@ func start_action_check(actor : OISActorComponent, rate_mult: float) -> void:
 func end_action() -> void:
 	action_ended.emit(requirement, total_progress)
 	if reset_progress:
+		print("Resetting Progress")
 		total_progress = 0
+	if not oneshot:
+		print("Resetting Receiver Completion")
+		completed = false
 
 
 func action_ongoing(delta: float) -> void:

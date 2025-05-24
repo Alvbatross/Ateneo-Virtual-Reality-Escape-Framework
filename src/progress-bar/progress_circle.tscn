@@ -198,9 +198,9 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gmle7"]
 _data = {
-"idle": SubResource("Animation_6ruhh"),
-"progress_complete": SubResource("Animation_aky6y"),
-"progress_complete_checkmark_only": SubResource("Animation_p6awc")
+&"idle": SubResource("Animation_6ruhh"),
+&"progress_complete": SubResource("Animation_aky6y"),
+&"progress_complete_checkmark_only": SubResource("Animation_p6awc")
 }
 
 [node name="Progress Circle" type="Control"]

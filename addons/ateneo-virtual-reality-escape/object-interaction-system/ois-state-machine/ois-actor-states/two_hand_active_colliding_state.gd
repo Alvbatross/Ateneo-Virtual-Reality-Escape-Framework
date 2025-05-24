@@ -21,6 +21,7 @@ func enter_state(_msg: Dictionary = {}) -> void:
 
 
 func _on_actor_released(pickable: Variant, by: Variant) -> void:
+	print("I Exit Through Actor Released Collision")
 	trigger_on = false
 	_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
 	_ois_actor_state_machine.get_actor_component().set_receiver(null)
@@ -34,12 +35,13 @@ func _on_exit_collision(receiver: Variant) -> void:
 			_ois_actor_state_machine.get_actor_component().get_receiver().end_action()
 			var actor = _ois_actor_state_machine.get_actor_component().get_actor()
 			if actor is XRToolsPickable:
-				_ois_actor_state_machine.transition_to("OneHandActiveState", {})
+				_ois_actor_state_machine.transition_to("TwoHandActiveState", {})
 
 
 func physics_update(delta: float) -> void:
 	print(both_triggers_on)
 	var receiver = _ois_actor_state_machine.get_actor_component().get_receiver()
+	print(receiver)
 	if is_instance_valid(receiver):
 		if _ois_actor_state_machine.get_actor_component().trigger_action:
 			if both_triggers_on:

@@ -27,9 +27,18 @@ func _ready() -> void:
 	load_quest_library()
 
 
+
 func _on_event_ended() -> void:
+	print("-----------------------------")
+	print(" STARTING ALL EVENTS")
+	print("-----------------------------")
 	await get_tree().create_timer(0.1).timeout
 	emit_signal("start_events")
+
+
+func update_active_quests() -> void:
+	pass
+
 
 
 func add_new_parameter(parameter_name : String, parameter_type : Variant) -> void:
@@ -203,5 +212,3 @@ func load_event_settings() -> void:
 	
 	event_manager_defaults = JSON.parse_string(load_file)
 	print(event_manager_defaults)
-	
-	

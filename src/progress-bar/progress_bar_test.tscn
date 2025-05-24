@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://chqn1m2fy1uxr"]
 
-[ext_resource type="Script" path="res://src/progress-bar/progress_bar_cameramanip.gd" id="1_iq2on"]
+[ext_resource type="Script" uid="uid://bg010ofdqvhxd" path="res://src/progress-bar/progress_bar_cameramanip.gd" id="1_iq2on"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="2_pgytf"]
 [ext_resource type="PackedScene" uid="uid://dht7roi7nvhvl" path="res://src/progress-bar/progress_circle.tscn" id="3_g7sxe"]
 
@@ -8,14 +8,14 @@
 resource_local_to_scene = true
 size = Vector2(200, 200)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_njjaf"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_hesdw"]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wxsmj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8y5vh"]
 transparency = 1
 cull_mode = 2
 shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_njjaf")
+albedo_texture = SubResource("ViewportTexture_hesdw")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p435t"]
@@ -41,7 +41,7 @@ render_target_update_mode = 4
 
 [node name="Screen" parent="Viewport2Din3D" index="1"]
 mesh = SubResource("QuadMesh_oigqy")
-surface_material_override/0 = SubResource("StandardMaterial3D_wxsmj")
+surface_material_override/0 = SubResource("StandardMaterial3D_8y5vh")
 
 [node name="StaticBody3D" parent="Viewport2Din3D" index="2"]
 screen_size = Vector2(200, 200)

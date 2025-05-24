@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dviv60srcxpb8"]
 
-[ext_resource type="Script" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/event_manager_ui.gd" id="1_m2s0j"]
+[ext_resource type="Script" uid="uid://w6r21172dt1i" path="res://addons/ateneo-virtual-reality-escape/event-management-system/event-manager-ui/event_manager_ui.gd" id="1_m2s0j"]
 
 [node name="EventManagerUI" type="Control"]
 layout_mode = 3
@@ -43,6 +43,7 @@ text = "Parameter Type"
 layout_mode = 2
 item_count = 6
 popup/item_0/text = "Integer"
+popup/item_0/id = 0
 popup/item_1/text = "Float"
 popup/item_1/id = 1
 popup/item_2/text = "Boolean"
@@ -93,14 +94,14 @@ layout_mode = 2
 [node name="EventPrerequisiteViewerDB" type="ConfirmationDialog" parent="."]
 title = "Event Prerequisites"
 initial_position = 2
-size = Vector2i(245, 343)
+size = Vector2i(245, 369)
 exclusive = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EventPrerequisiteViewerDB"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 237.0
-offset_bottom = 294.0
+offset_bottom = 320.0
 
 [node name="EventName" type="Label" parent="EventPrerequisiteViewerDB/VBoxContainer"]
 layout_mode = 2
@@ -141,13 +142,13 @@ text = "Remove Prerequisite"
 [node name="EventCompletionViewerDB" type="ConfirmationDialog" parent="."]
 title = "Event Completion Flags"
 initial_position = 2
-size = Vector2i(420, 330)
+size = Vector2i(420, 356)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EventCompletionViewerDB"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 412.0
-offset_bottom = 281.0
+offset_bottom = 307.0
 
 [node name="EventName" type="Label" parent="EventCompletionViewerDB/VBoxContainer"]
 layout_mode = 2
@@ -361,13 +362,13 @@ layout_mode = 2
 [node name="QuestCompletionViewerDB" type="ConfirmationDialog" parent="."]
 title = "Quest Completion Flags"
 initial_position = 2
-size = Vector2i(420, 330)
+size = Vector2i(420, 356)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="QuestCompletionViewerDB"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 412.0
-offset_bottom = 281.0
+offset_bottom = 307.0
 
 [node name="QuestName" type="Label" parent="QuestCompletionViewerDB/VBoxContainer"]
 layout_mode = 2

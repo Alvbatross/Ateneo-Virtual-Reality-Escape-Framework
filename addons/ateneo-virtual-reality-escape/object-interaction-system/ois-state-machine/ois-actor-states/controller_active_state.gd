@@ -24,6 +24,7 @@ func _on_enter_collision(receiver: Variant) -> void:
 
 
 func _on_controller_pick_up(_actor: XRToolsPickable) -> void:
+	print("Controller is IDLE")
 	_ois_actor_state_machine.transition_to("IdleState")
 
 #
