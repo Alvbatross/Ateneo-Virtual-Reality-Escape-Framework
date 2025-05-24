@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvss2hm3ar0an"]
+[gd_scene load_steps=10 format=3 uid="uid://bvss2hm3ar0an"]
 
 [ext_resource type="PackedScene" uid="uid://njx823gyk04n" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_hand.tscn" id="1_rig4t"]
 [ext_resource type="PackedScene" uid="uid://raeeicvvindd" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_hand.tscn" id="2_38k50"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="2_nmqkh"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="3_efubp"]
+[ext_resource type="Script" uid="uid://cg1lorgur84yy" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="4_pih5y"]
+[ext_resource type="Script" uid="uid://cji1tdhhvihrj" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_single_controller_asm.gd" id="5_nk0ng"]
+[ext_resource type="Script" uid="uid://b4ao0gdf7khuq" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="6_qrt52"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_83mua"]
+radius = 0.0949829
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5u5fi"]
+radius = 0.0949829
 
 [node name="XRPlayer" type="Node3D"]
 
@@ -14,7 +25,57 @@ tracker = &"left_hand"
 
 [node name="LeftHand" parent="XROrigin3D/XRController3DLeft" instance=ExtResource("1_rig4t")]
 
+[node name="FunctionPickup" parent="XROrigin3D/XRController3DLeft" instance=ExtResource("2_nmqkh")]
+
+[node name="FunctionPointer" parent="XROrigin3D/XRController3DLeft" instance=ExtResource("3_efubp")]
+
+[node name="OISActorComponent" type="Node3D" parent="XROrigin3D/XRController3DLeft"]
+script = ExtResource("4_pih5y")
+receiver_group = "hand"
+metadata/_custom_type_script = "uid://cg1lorgur84yy"
+
+[node name="OISSingleControllerASM" type="Node3D" parent="XROrigin3D/XRController3DLeft/OISActorComponent"]
+script = ExtResource("5_nk0ng")
+metadata/_custom_type_script = "uid://cji1tdhhvihrj"
+
+[node name="OISColliderArea3D" type="Node3D" parent="XROrigin3D/XRController3DLeft/OISActorComponent"]
+script = ExtResource("6_qrt52")
+metadata/_custom_type_script = "uid://b4ao0gdf7khuq"
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/XRController3DLeft/OISActorComponent/OISColliderArea3D"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRController3DLeft/OISActorComponent/OISColliderArea3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0, 0.1)
+shape = SubResource("SphereShape3D_83mua")
+
 [node name="XRController3DRight" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
 
 [node name="RightHand" parent="XROrigin3D/XRController3DRight" instance=ExtResource("2_38k50")]
+
+[node name="FunctionPointer" parent="XROrigin3D/XRController3DRight" instance=ExtResource("3_efubp")]
+
+[node name="FunctionPickup" parent="XROrigin3D/XRController3DRight" instance=ExtResource("2_nmqkh")]
+
+[node name="OISActorComponent" type="Node3D" parent="XROrigin3D/XRController3DRight"]
+script = ExtResource("4_pih5y")
+receiver_group = "hand"
+metadata/_custom_type_script = "uid://cg1lorgur84yy"
+
+[node name="OISSingleControllerASM" type="Node3D" parent="XROrigin3D/XRController3DRight/OISActorComponent"]
+script = ExtResource("5_nk0ng")
+metadata/_custom_type_script = "uid://cji1tdhhvihrj"
+
+[node name="OISColliderArea3D" type="Node3D" parent="XROrigin3D/XRController3DRight/OISActorComponent"]
+script = ExtResource("6_qrt52")
+metadata/_custom_type_script = "uid://b4ao0gdf7khuq"
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRController3DRight/OISActorComponent/OISColliderArea3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 0.1)
+shape = SubResource("SphereShape3D_5u5fi")

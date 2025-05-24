@@ -1,0 +1,687 @@
+[gd_scene load_steps=33 format=3 uid="uid://43js2irdvt88"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_s61as"]
+[ext_resource type="Script" uid="uid://dq86gvhe6d20d" path="res://addons/ateneo-virtual-reality-escape/inventory-system/inventory_item.gd" id="2_jjnre"]
+[ext_resource type="Script" uid="uid://b0y7fmmmowfcp" path="res://src/ois-objects/journal_control.gd" id="3_yumrb"]
+[ext_resource type="PackedScene" uid="uid://jedvgl5s2nx8" path="res://src/assets/quest_log2 (added shapekeys).glb" id="4_bi3xt"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="5_rqfmc"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="6_vprp5"]
+[ext_resource type="Texture2D" uid="uid://de0n52hqt8cbi" path="res://src/assets/page albedo texture.png" id="8_7w77n"]
+[ext_resource type="Animation" uid="uid://m5x2m8x3tcel" path="res://addons/godot-xr-tools/hands/animations/left/Pinch Tight.res" id="10_q8wmv"]
+[ext_resource type="Script" uid="uid://dxqkceyvsklhh" path="res://addons/godot-xr-tools/hands/poses/hand_pose_settings.gd" id="11_7w77n"]
+[ext_resource type="Script" uid="uid://bb8kuvwsdnh4c" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-receiver/ois_directional_swipe_receiver.gd" id="11_yumrb"]
+[ext_resource type="Animation" uid="uid://ca21ej1p3g2yt" path="res://addons/godot-xr-tools/hands/animations/right/Pinch Tight.res" id="12_o16bi"]
+[ext_resource type="PackedScene" uid="uid://bddj5m7ull6g0" path="res://addons/godot-xr-tools/interactables/interactable_handle.tscn" id="15_bq28y"]
+[ext_resource type="PackedScene" uid="uid://ca3daqmpo0tua" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_redirect.tscn" id="16_pb7lm"]
+[ext_resource type="Script" uid="uid://cg1lorgur84yy" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-actor/ois_actor_component.gd" id="17_riyf5"]
+[ext_resource type="Script" uid="uid://cgettxdui2mmi" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_one_hand_tool_asm.gd" id="18_ckfxg"]
+[ext_resource type="Script" uid="uid://b4ao0gdf7khuq" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="19_hfx27"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bq28y"]
+size = Vector3(0.05, 0.2, 0.2)
+
+[sub_resource type="Animation" id="Animation_vmq4b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.0754391, 0.0293245, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D:transparency")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MeshInstance3D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MeshInstance3D2:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.075, 0.029, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MeshInstance3D2:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -3.14159)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("MeshInstance3D2:transparency")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("MeshInstance3D2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_habx3"]
+resource_name = "book_closed"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_g7c6q"]
+resource_name = "book_closing"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_5jt3y"]
+resource_name = "book_opened"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_vqij7"]
+resource_name = "book_opening"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_mre5c"]
+resource_name = "flip_page_left"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.075, 0.029, 0), Vector3(-0.005, 0.072, 0), Vector3(-0.075, 0.029, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D2:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.23, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -3.14159), Vector3(0, 0, -1.46608), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D2:transparency")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.23, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MeshInstance3D2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_wc5vl"]
+resource_name = "flip_page_right"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("quest_log2 (added shapekeys)/Book cover:blend_shapes/Key 1")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("quest_log2 (added shapekeys)/Pages:blend_shapes/Key 1")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -1.46608), Vector3(0, 0, -3.14159)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.0754391, 0.0293245, 0), Vector3(-0.005, 0.072, 0), Vector3(0.075, 0.029, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D:transparency")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MeshInstance3D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uktx0"]
+_data = {
+&"RESET": SubResource("Animation_vmq4b"),
+&"book_closed": SubResource("Animation_habx3"),
+&"book_closing": SubResource("Animation_g7c6q"),
+&"book_opened": SubResource("Animation_5jt3y"),
+&"book_opening": SubResource("Animation_vqij7"),
+&"flip_page_left": SubResource("Animation_mre5c"),
+&"flip_page_right": SubResource("Animation_wc5vl")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lkfbl"]
+size = Vector2(0.15, 0.225)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_byhj5"]
+transparency = 1
+cull_mode = 2
+shading_mode = 2
+albedo_color = Color(1, 0.968627, 0.913725, 1)
+albedo_texture = ExtResource("8_7w77n")
+
+[sub_resource type="Resource" id="Resource_ckfxg"]
+script = ExtResource("11_7w77n")
+open_pose = ExtResource("10_q8wmv")
+closed_pose = ExtResource("10_q8wmv")
+metadata/_custom_type_script = "uid://bmclcwctwu3gd"
+
+[sub_resource type="Resource" id="Resource_hfx27"]
+script = ExtResource("11_7w77n")
+open_pose = ExtResource("12_o16bi")
+closed_pose = ExtResource("12_o16bi")
+metadata/_custom_type_script = "uid://bmclcwctwu3gd"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqfmc"]
+size = Vector3(0.1, 0.05, 0.2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dmuyw"]
+radius = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lkfbl"]
+radius = 0.1
+
+[node name="OISJournal" instance=ExtResource("1_s61as")]
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0997871, 0)
+shape = SubResource("BoxShape3D_bq28y")
+
+[node name="InventoryItem" type="Node3D" parent="." index="1" node_paths=PackedStringArray("defined_mesh", "defined_collision_shape", "additional_mesh")]
+script = ExtResource("2_jjnre")
+unique = true
+defined_mesh = NodePath("../quest_log2 (added shapekeys)")
+defined_collision_shape = NodePath("../CollisionShape3D")
+object_transform_adjustment = Vector3(0, -0.03, 0)
+object_rotation_adjustment = Vector3(0, 90, 0)
+additional_mesh = NodePath("")
+exclude_additional_mesh_transform = true
+metadata/_custom_type_script = "uid://dq86gvhe6d20d"
+
+[node name="JournalControl" type="Node" parent="." index="2"]
+script = ExtResource("3_yumrb")
+
+[node name="quest_log2 (added shapekeys)" parent="." index="3" instance=ExtResource("4_bi3xt")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="GrabPointHandLeft" parent="." index="4" instance=ExtResource("5_rqfmc")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.05, -0.0152011, -0.076)
+visible = true
+
+[node name="GrabPointHandRight" parent="." index="5" instance=ExtResource("6_vprp5")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.05, -0.0152011, -0.076)
+visible = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0963247, 0)
+light_energy = 0.1
+omni_range = 0.25
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
+libraries = {
+&"": SubResource("AnimationLibrary_uktx0")
+}
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0754391, 0.0293245, 0)
+transparency = 1.0
+mesh = SubResource("PlaneMesh_lkfbl")
+surface_material_override/0 = SubResource("StandardMaterial3D_byhj5")
+
+[node name="GrabPointHandLeft" parent="MeshInstance3D" index="0" instance=ExtResource("5_rqfmc")]
+transform = Transform3D(1, 0, 0, 0, 0.715351, 0.698765, 0, -0.698765, 0.715351, -0.1167, -0.0286927, -0.0668889)
+visible = true
+hand_pose = SubResource("Resource_ckfxg")
+
+[node name="GrabPointHandRight" parent="MeshInstance3D" index="1" instance=ExtResource("6_vprp5")]
+transform = Transform3D(-0.953153, -0.29969, 0.0410501, 0.225986, -0.795711, -0.561938, 0.201071, -0.526336, 0.82616, -0.118718, 0.0302884, -0.0890219)
+visible = true
+hand_pose = SubResource("Resource_hfx27")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="9"]
+transform = Transform3D(-1, 2.53518e-06, 0, -2.53518e-06, -1, 0, 0, 0, 1, 0.075, 0.029, 0)
+transparency = 1.0
+mesh = SubResource("PlaneMesh_lkfbl")
+skeleton = NodePath("../MeshInstance3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_byhj5")
+
+[node name="GrabPointHandLeft" parent="MeshInstance3D2" index="0" instance=ExtResource("5_rqfmc")]
+transform = Transform3D(1, 0, 0, 0, 0.715351, 0.698765, 0, -0.698765, 0.715351, -0.1167, -0.0286927, -0.0668889)
+visible = true
+hand_pose = SubResource("Resource_ckfxg")
+
+[node name="GrabPointHandRight" parent="MeshInstance3D2" index="1" instance=ExtResource("6_vprp5")]
+transform = Transform3D(-0.953153, -0.29969, 0.0410501, 0.225986, -0.795711, -0.561938, 0.201071, -0.526336, 0.82616, -0.118718, 0.0302884, -0.0890219)
+visible = true
+hand_pose = SubResource("Resource_hfx27")
+
+[node name="ActionPickUpJournal" type="Node" parent="." index="10"]
+
+[node name="PageTurnLeft" type="Node3D" parent="." index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0725678, 0.0326256, 0)
+script = ExtResource("11_yumrb")
+buffer = 0.01
+swipe_direction = Vector3(-1, 0, 0)
+group = "leftpageturner"
+requirement = 0.05
+reset_progress = true
+oneshot = false
+metadata/_custom_type_script = "uid://bb8kuvwsdnh4c"
+
+[node name="Area3D" type="Area3D" parent="PageTurnLeft" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PageTurnLeft/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0520591, 0)
+shape = SubResource("BoxShape3D_rqfmc")
+
+[node name="PageTurnRight" type="Node3D" parent="." index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0701216, 0.0326256, 0)
+script = ExtResource("11_yumrb")
+buffer = 0.01
+swipe_direction = Vector3(1, 0, 0)
+group = "rightpageturner"
+requirement = 0.05
+reset_progress = true
+oneshot = false
+metadata/_custom_type_script = "uid://bb8kuvwsdnh4c"
+
+[node name="Area3D" type="Area3D" parent="PageTurnRight" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PageTurnRight/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0520591, 0)
+shape = SubResource("BoxShape3D_rqfmc")
+
+[node name="PageTurnerRight" type="Node3D" parent="." index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.166338, 0, 0)
+
+[node name="InteractableHandle" parent="PageTurnerRight" index="0" instance=ExtResource("15_bq28y")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PageTurnerRight/InteractableHandle" index="0"]
+shape = SubResource("SphereShape3D_dmuyw")
+
+[node name="GrabPointRedirectLeft" parent="PageTurnerRight/InteractableHandle" index="1" node_paths=PackedStringArray("target") instance=ExtResource("16_pb7lm")]
+target = NodePath("../../../MeshInstance3D/GrabPointHandLeft")
+
+[node name="GrabPointRedirectRight" parent="PageTurnerRight/InteractableHandle" index="2" node_paths=PackedStringArray("target") instance=ExtResource("16_pb7lm")]
+target = NodePath("../../../MeshInstance3D/GrabPointHandRight")
+
+[node name="OISActorComponent" type="Node3D" parent="PageTurnerRight/InteractableHandle" index="3"]
+script = ExtResource("17_riyf5")
+receiver_group = "rightpageturner"
+metadata/_custom_type_script = "uid://cg1lorgur84yy"
+
+[node name="OISOneHandToolASM" type="Node3D" parent="PageTurnerRight/InteractableHandle/OISActorComponent" index="0"]
+script = ExtResource("18_ckfxg")
+metadata/_custom_type_script = "uid://cgettxdui2mmi"
+
+[node name="OISColliderArea3D" type="Node3D" parent="PageTurnerRight/InteractableHandle/OISActorComponent" index="1"]
+script = ExtResource("19_hfx27")
+metadata/_custom_type_script = "uid://b4ao0gdf7khuq"
+
+[node name="Area3D" type="Area3D" parent="PageTurnerRight/InteractableHandle/OISActorComponent/OISColliderArea3D" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PageTurnerRight/InteractableHandle/OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("SphereShape3D_lkfbl")
+
+[node name="PageTurnerLeft" type="Node3D" parent="." index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.166, 0, 0)
+
+[node name="InteractableHandle" parent="PageTurnerLeft" index="0" instance=ExtResource("15_bq28y")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PageTurnerLeft/InteractableHandle" index="0"]
+shape = SubResource("SphereShape3D_dmuyw")
+
+[node name="GrabPointRedirectLeft" parent="PageTurnerLeft/InteractableHandle" index="1" node_paths=PackedStringArray("target") instance=ExtResource("16_pb7lm")]
+target = NodePath("../../../MeshInstance3D2/GrabPointHandLeft")
+
+[node name="GrabPointRedirectRight" parent="PageTurnerLeft/InteractableHandle" index="2" node_paths=PackedStringArray("target") instance=ExtResource("16_pb7lm")]
+target = NodePath("../../../MeshInstance3D2/GrabPointHandRight")
+
+[node name="OISActorComponent" type="Node3D" parent="PageTurnerLeft/InteractableHandle" index="3"]
+script = ExtResource("17_riyf5")
+receiver_group = "leftpageturner"
+metadata/_custom_type_script = "uid://cg1lorgur84yy"
+
+[node name="OISOneHandToolASM" type="Node3D" parent="PageTurnerLeft/InteractableHandle/OISActorComponent" index="0"]
+script = ExtResource("18_ckfxg")
+metadata/_custom_type_script = "uid://cgettxdui2mmi"
+
+[node name="OISColliderArea3D" type="Node3D" parent="PageTurnerLeft/InteractableHandle/OISActorComponent" index="1"]
+script = ExtResource("19_hfx27")
+metadata/_custom_type_script = "uid://b4ao0gdf7khuq"
+
+[node name="Area3D" type="Area3D" parent="PageTurnerLeft/InteractableHandle/OISActorComponent/OISColliderArea3D" index="0"]
+collision_layer = 536870912
+collision_mask = 536870912
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PageTurnerLeft/InteractableHandle/OISActorComponent/OISColliderArea3D/Area3D" index="0"]
+shape = SubResource("SphereShape3D_lkfbl")
+
+[connection signal="grabbed" from="." to="JournalControl" method="_on_ois_journal_grabbed"]
+[connection signal="released" from="." to="JournalControl" method="_on_ois_journal_released"]
+[connection signal="action_completed" from="PageTurnLeft" to="JournalControl" method="_on_page_turn_left_action_completed"]
+[connection signal="action_completed" from="PageTurnRight" to="JournalControl" method="_on_page_turn_right_action_completed"]
+
+[editable path="quest_log2 (added shapekeys)"]

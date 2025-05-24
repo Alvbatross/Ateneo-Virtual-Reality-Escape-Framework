@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://pxocqu4thojn"]
+
+[ext_resource type="Shader" uid="uid://dcsox4ht66eeo" path="res://src/assets/fademesh.gdshader" id="1_tamwk"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_puna6"]
+custom_aabb = AABB(-5000, -5000, -5000, 10000, 10000, 10000)
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_siwc0"]
+render_priority = 0
+shader = ExtResource("1_tamwk")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+
+[node name="FadeMesh" type="MeshInstance3D"]
+mesh = SubResource("QuadMesh_puna6")
+surface_material_override/0 = SubResource("ShaderMaterial_siwc0")
