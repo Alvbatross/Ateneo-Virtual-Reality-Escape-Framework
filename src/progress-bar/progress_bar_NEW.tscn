@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmydq144busec"]
+
+[ext_resource type="Script" path="res://src/progress-bar/progress_bar_cameramanip_NEW.gd" id="1_lp6yw"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="2_tfkf0"]
+[ext_resource type="PackedScene" path="res://src/progress-bar/progress_circle_NEW.tscn" id="3_lp6yw"]
+
+[node name="Progress View" type="Node3D"]
+script = ExtResource("1_lp6yw")
+
+[node name="Progress Bar Viewport" parent="." instance=ExtResource("2_tfkf0")]
+transform = Transform3D(0.000999997, -1.87797e-06, 1.34561e-06, 1.87904e-06, 0.000999998, -7.94387e-07, -1.34411e-06, 7.96909e-07, 0.000999999, 0, 0, 0)
+screen_size = Vector2(200, 200)
+collision_layer = 5242880
+scene = ExtResource("3_lp6yw")
+viewport_size = Vector2(500, 500)
+unshaded = true
+scene_properties_keys = PackedStringArray("progress_circle.gd")

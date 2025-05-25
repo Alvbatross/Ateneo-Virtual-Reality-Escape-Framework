@@ -1,16 +1,47 @@
-[gd_scene load_steps=9 format=3 uid="uid://dht7roi7nvhvl"]
+[gd_scene load_steps=17 format=3 uid="uid://cbr4dgc464ngi"]
 
-[ext_resource type="Texture2D" uid="uid://byepu0w5mpaso" path="res://src/progress-bar/ring_normal.png" id="1_c62mq"]
-[ext_resource type="Texture2D" uid="uid://3l7neqv7cy04" path="res://src/progress-bar/ring_over.png" id="2_rpswd"]
-[ext_resource type="Texture2D" uid="uid://bdu0yjxqap2xw" path="res://src/progress-bar/ring_progress.png" id="3_awr25"]
-[ext_resource type="Texture2D" uid="uid://b620tpshs5hv0" path="res://src/progress-bar/ring_complete.png" id="4_vqefj"]
+[ext_resource type="Script" uid="uid://cw6a5tu0c5f6i" path="res://src/Assets/progress-bar/progress_circle.gd" id="1_daplc"]
+[ext_resource type="Texture2D" uid="uid://byepu0w5mpaso" path="res://src/Assets/progress-bar/ring_normal.png" id="1_xl54l"]
+[ext_resource type="Texture2D" uid="uid://3l7neqv7cy04" path="res://src/Assets/progress-bar/ring_over.png" id="2_daplc"]
+[ext_resource type="Texture2D" uid="uid://c2nxcw1tnht53" path="res://src/Assets/progress-bar/ring_progress_new.png" id="4_daplc"]
+[ext_resource type="Texture2D" uid="uid://b620tpshs5hv0" path="res://src/Assets/progress-bar/ring_complete.png" id="4_mqq61"]
+[ext_resource type="AudioStream" uid="uid://cvy80ukemogmf" path="res://src/Assets/audio/sfx/AMLML_sfx_ui_pstv_02.ogg" id="6_sj6ki"]
+[ext_resource type="AudioStream" uid="uid://cw8ni6plt6o0g" path="res://src/Assets/audio/sfx/AMLML_sfx_ui_pstv_03.ogg" id="7_1auhb"]
+[ext_resource type="AudioStream" uid="uid://ra1wvkmtd8j1" path="res://src/Assets/audio/sfx/AMLML_sfx_ui_pstv_04.ogg" id="8_tfdq6"]
+[ext_resource type="AudioStream" uid="uid://dvv74hknac1w7" path="res://src/Assets/audio/sfx/AMLML_sfx_ui_pstv_05.ogg" id="9_fbclj"]
+[ext_resource type="AudioStream" uid="uid://c5233s3pq76hb" path="res://src/Assets/audio/sfx/AMLML_sfx_ui_pstv_06.ogg" id="10_lgc4i"]
 
-[sub_resource type="Animation" id="Animation_6ruhh"]
-resource_name = "idle"
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1wdsw"]
+streams_count = 6
+stream_0/stream = ExtResource("6_sj6ki")
+stream_1/stream = ExtResource("7_1auhb")
+stream_2/stream = ExtResource("7_1auhb")
+stream_3/stream = ExtResource("8_tfdq6")
+stream_4/stream = ExtResource("9_fbclj")
+stream_5/stream = ExtResource("10_lgc4i")
+
+[sub_resource type="Animation" id="Animation_sb6cf"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ProgressCircleComponent:scale")
+tracks/0/path = NodePath("Control/AudioStreamPlayer3D:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_6ruhh"]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/ProgressCircleComponent:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,7 +53,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("ProgressCircleComponent:value")
+tracks/1/path = NodePath("Control/ProgressCircleComponent:value")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -34,7 +65,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ProgressCircleComponent:rotation")
+tracks/2/path = NodePath("Control/ProgressCircleComponent:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -50,7 +81,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ProgressCircleComponent:scale")
+tracks/0/path = NodePath("Control/ProgressCircleComponent:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -62,7 +93,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CheckMarkComplete:scale")
+tracks/1/path = NodePath("Control/CheckMarkComplete:scale")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -74,7 +105,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ProgressCircleComponent:value")
+tracks/2/path = NodePath("Control/ProgressCircleComponent:value")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -86,7 +117,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ProgressCircleComponent:rotation")
+tracks/3/path = NodePath("Control/ProgressCircleComponent:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -98,7 +129,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CheckMarkComplete:rotation")
+tracks/4/path = NodePath("Control/CheckMarkComplete:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -110,14 +141,14 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CheckMarkComplete:visible")
+tracks/5/path = NodePath("Control/AudioStreamPlayer3D:playing")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": []
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_p6awc"]
@@ -126,7 +157,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ProgressCircleComponent:scale")
+tracks/0/path = NodePath("Control/ProgressCircleComponent:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -138,7 +169,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CheckMarkComplete:scale")
+tracks/1/path = NodePath("Control/CheckMarkComplete:scale")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -150,7 +181,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CheckMarkComplete:rotation")
+tracks/2/path = NodePath("Control/CheckMarkComplete:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -162,58 +193,46 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CheckMarkComplete:visible")
+tracks/3/path = NodePath("Control/ProgressCircleComponent:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 1,
-"values": []
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = false
-tracks/4/path = NodePath("ProgressCircleComponent:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 1,
-"values": []
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("ProgressCircleComponent:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Control/AudioStreamPlayer3D:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gmle7"]
 _data = {
-"idle": SubResource("Animation_6ruhh"),
-"progress_complete": SubResource("Animation_aky6y"),
-"progress_complete_checkmark_only": SubResource("Animation_p6awc")
+&"RESET": SubResource("Animation_sb6cf"),
+&"idle": SubResource("Animation_6ruhh"),
+&"progress_complete": SubResource("Animation_aky6y"),
+&"progress_complete_checkmark_only": SubResource("Animation_p6awc")
 }
 
-[node name="Progress Circle" type="Control"]
+[node name="Progress Circle" type="CanvasLayer"]
+script = ExtResource("1_daplc")
+
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 500.0
 
-[node name="ProgressCircleComponent" type="TextureProgressBar" parent="."]
+[node name="ProgressCircleComponent" type="TextureProgressBar" parent="Control"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -226,32 +245,39 @@ offset_right = 250.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(250, 250)
-rounded = true
-fill_mode = 4
-texture_under = ExtResource("1_c62mq")
-texture_over = ExtResource("2_rpswd")
-texture_progress = ExtResource("3_awr25")
-
-[node name="CheckMarkComplete" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -250.0
-offset_right = 250.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.898845
 scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(250, 250)
-texture = ExtResource("4_vqefj")
+value = 100.0
+rounded = true
+fill_mode = 4
+texture_under = ExtResource("1_xl54l")
+texture_over = ExtResource("2_daplc")
+texture_progress = ExtResource("4_daplc")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="CheckMarkComplete" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(250, 250)
+texture = ExtResource("4_mqq61")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Control"]
+stream = SubResource("AudioStreamRandomizer_1wdsw")
+volume_db = 9.464
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
+root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_gmle7")
+&"": SubResource("AnimationLibrary_gmle7")
 }
+autoplay = "idle"
