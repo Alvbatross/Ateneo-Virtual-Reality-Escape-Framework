@@ -112,7 +112,8 @@ func _teleport_player(location : Teleporter) -> void:
 	xr_camera.rotation.y = deg_to_rad(location.teleporter_rotation.y)
 	xr_camera.rotation.z = deg_to_rad(location.teleporter_rotation.z)
 	xr_camera.rotation.x = deg_to_rad(location.teleporter_rotation.x)
-	audio_node.position = xr_origin.position
+	if is_instance_valid(audio_node):
+		audio_node.position = xr_origin.position
 	
 	if is_instance_valid(spectator_camera):
 		_teleport_spectator_camera(location)
