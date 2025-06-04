@@ -28,20 +28,15 @@ extends Node3D
 @export var local_transform_adjustment : Vector3
 @export var slots_distance_to_player : float = 0.75
 @export var height_adjustment : float = 1.4
-@export var camera_window_width : float = 10.0
+@export var camera_window_width : float = 1.0
 
 @export_category("Debug")
 @export var inventory_dictionary : Dictionary
 
-signal inventory_toggled_on
-signal inventory_toggled_off
 var inventory_toggled : bool
 
 var space_count_row = 0
 var space_count_column = 0
-var mesh_shape := SphereMesh.new()
-
-var load_inventory_from_save : bool
 
 var position_offset : Vector3
 

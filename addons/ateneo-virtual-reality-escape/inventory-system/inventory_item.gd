@@ -30,7 +30,6 @@ var preserved_collider_rotation : Vector3
 @export var grab_point_left : Node3D
 
 
-
 var addt_preserved_mesh_scale : Vector3
 var addt_preserved_mesh_transform : Vector3
 var addt_preserved_mesh_rotation : Vector3

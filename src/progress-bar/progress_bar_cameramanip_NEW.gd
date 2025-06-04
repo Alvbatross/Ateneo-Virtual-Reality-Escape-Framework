@@ -4,6 +4,8 @@ var progress_circle_component
 var animation_player
 
 @onready var progress_bar_viewport = $"Progress Bar Viewport"
+
+## This must be changed per program if you want to reuse this progress bar.
 @onready var camera : XRCamera3D = get_tree().get_root().get_node("Main").xr_camera_3d
 
 # Called when the node enters the scene tree for the first time.

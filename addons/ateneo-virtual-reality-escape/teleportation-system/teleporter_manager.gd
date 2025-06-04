@@ -85,9 +85,9 @@ func _set_teleporter_states() -> void:
 					teleporters_a.current_teleporter = true
 				else:
 					teleporters_a.current_teleporter = false
-				if teleporters_a not in current_location.connected_teleporters:
+				if teleporters_a not in current_location.connected_teleporters or not teleporters_a.teleporter_active:
 					teleporters_a.teleporter_enabled = false
-				elif teleporters_a == current_location or teleporters_a in current_location.connected_teleporters:
+				elif teleporters_a == current_location or teleporters_a in current_location.connected_teleporters and teleporters_a.teleporter_active:
 					teleporters_a.teleporter_enabled = true
 	else:
 		for teleporters in self.get_children():

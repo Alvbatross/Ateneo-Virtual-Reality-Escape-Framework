@@ -3,8 +3,6 @@ class_name InventorySlot
 extends Node3D
 
 signal current_object_in_slot(object, row, col)
-signal adjust_in_slot_transform
-signal adjust_out_slot_transform
 signal slot_picked_up
 signal slot_dropped
 
@@ -26,8 +24,6 @@ var snap_zone_scene := preload("res://addons/godot-xr-tools/objects/snap_zone.ts
 var snap_zone : XRToolsSnapZone
 var current_object : Node3D
 var is_parented : bool
-var body_in_slot : bool
-var deferred_in_slot_check : bool
 
 func _ready() -> void:
 	if Engine.is_editor_hint() and not has_node("SnapZone"):

@@ -9,6 +9,7 @@ extends Node3D
 			_update_teleporter_name()
 
 @export var teleporter_enabled : bool
+@export var teleporter_active : bool = true
 @export var teleporter_position : Vector3
 @export var teleporter_rotation : Vector3
 @export var connected_teleporters : Array[Teleporter]

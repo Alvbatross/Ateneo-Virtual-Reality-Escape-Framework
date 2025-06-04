@@ -1,7 +1,5 @@
 [gd_scene load_steps=17 format=3 uid="uid://dh8ppp5rimk8h"]
 
-[ext_resource type="Script" uid="uid://cym4abtyit327" path="res://src/main.gd" id="1_c60bn"]
-[ext_resource type="Script" uid="uid://b1owpla25v6re" path="res://src/xrcamera_desktopview.gd" id="2_nedis"]
 [ext_resource type="PackedScene" uid="uid://njx823gyk04n" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_hand.tscn" id="2_xbli7"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="3_nedis"]
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="4_b8pac"]
@@ -9,10 +7,24 @@
 [ext_resource type="Script" uid="uid://cji1tdhhvihrj" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-state-machine/ois_single_controller_asm.gd" id="6_tf41q"]
 [ext_resource type="Script" uid="uid://b4ao0gdf7khuq" path="res://addons/ateneo-virtual-reality-escape/object-interaction-system/ois-colliders/ois_collider_area3d.gd" id="7_57666"]
 [ext_resource type="PackedScene" uid="uid://raeeicvvindd" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_hand.tscn" id="8_vbr4w"]
-[ext_resource type="Script" uid="uid://bicynwvc1foya" path="res://src/xr_view_control.gd" id="10_nedis"]
 [ext_resource type="Script" uid="uid://cxy8oxoldmaoc" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/teleporter_manager.gd" id="11_tf41q"]
 [ext_resource type="Script" uid="uid://ek4xpaefjlux" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/teleporter.gd" id="12_57666"]
 [ext_resource type="PackedScene" uid="uid://pxocqu4thojn" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/misc-resources/fade_mesh.tscn" id="13_vbr4w"]
+
+[sub_resource type="GDScript" id="GDScript_n12yw"]
+script/source = "extends Node3D
+"
+
+[sub_resource type="GDScript" id="GDScript_o8aet"]
+script/source = "extends Camera3D
+
+@export var xr_origin : XROrigin3D
+@export var xr_camera : XRCamera3D
+
+func _physics_process(delta: float) -> void:
+	self.global_transform = XRServer.get_hmd_transform()
+	self.position = xr_origin.position + xr_camera.position
+"
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83mua"]
 radius = 0.0949829
@@ -20,11 +32,26 @@ radius = 0.0949829
 [sub_resource type="SphereShape3D" id="SphereShape3D_5u5fi"]
 radius = 0.0949829
 
+[sub_resource type="GDScript" id="GDScript_70xg6"]
+script/source = "extends CanvasLayer
+
+@export var texture_rect : TextureRect
+
+var xr_view_visible : bool
+
+func _ready():
+	xr_view_visible = false
+	
+func _toggle_xr_view():
+	xr_view_visible = !xr_view_visible
+	texture_rect.visible = xr_view_visible
+"
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_xbli7"]
 viewport_path = NodePath("XRPlayer/XRViewport/XROrigin3D/XRCamera3D/XRDesktopViewport")
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_c60bn")
+script = SubResource("GDScript_n12yw")
 
 [node name="XRPlayer" type="Node3D" parent="."]
 
@@ -40,7 +67,7 @@ size = Vector2i(0, 0)
 size = Vector2i(1152, 648)
 
 [node name="Camera3D" type="Camera3D" parent="XRPlayer/XRViewport/XROrigin3D/XRCamera3D/XRDesktopViewport" node_paths=PackedStringArray("xr_origin", "xr_camera")]
-script = ExtResource("2_nedis")
+script = SubResource("GDScript_o8aet")
 xr_origin = NodePath("../../..")
 xr_camera = NodePath("../..")
 
@@ -117,7 +144,7 @@ render_target_update_mode = 4
 [node name="SpectatorCamera3D" type="Camera3D" parent="DesktopViewContainer/DesktopViewport"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="DesktopViewContainer/DesktopViewport" node_paths=PackedStringArray("texture_rect")]
-script = ExtResource("10_nedis")
+script = SubResource("GDScript_70xg6")
 texture_rect = NodePath("Control/TextureRect")
 
 [node name="Control" type="Control" parent="DesktopViewContainer/DesktopViewport/CanvasLayer"]
@@ -127,6 +154,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="DesktopViewContainer/DesktopViewport/CanvasLayer/Control"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("ViewportTexture_xbli7")
@@ -151,6 +179,7 @@ metadata/_custom_type_script = "uid://cxy8oxoldmaoc"
 [node name="Start" type="Node3D" parent="TeleporterManager" node_paths=PackedStringArray("connected_teleporters")]
 script = ExtResource("12_57666")
 teleporter_name = "Start"
+teleporter_active = null
 connected_teleporters = [NodePath("../TeleporterSystem"), NodePath("../Inventory"), NodePath("../OIS")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
 
@@ -158,7 +187,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 script = ExtResource("12_57666")
 teleporter_name = "TeleporterSystem"
-teleporter_enabled = true
+teleporter_active = null
 teleporter_position = Vector3(0, 0, -5)
 connected_teleporters = [NodePath("../TPDemo1"), NodePath("../Start")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -167,6 +196,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
 script = ExtResource("12_57666")
 teleporter_name = "TPDemo1"
+teleporter_active = null
 teleporter_position = Vector3(0, 0, -9)
 connected_teleporters = [NodePath("../TeleporterSystem"), NodePath("../TPDemo2")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -175,6 +205,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -12)
 script = ExtResource("12_57666")
 teleporter_name = "TPDemo2"
+teleporter_active = null
 teleporter_position = Vector3(-2.5, 0, -12)
 connected_teleporters = [NodePath("../TPDemo4"), NodePath("../TPDemo1")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -183,6 +214,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -12)
 script = ExtResource("12_57666")
 teleporter_name = "TPDemo3"
+teleporter_active = null
 teleporter_position = Vector3(2.5, 0, -12)
 connected_teleporters = [NodePath("../TPDemo4")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -191,6 +223,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
 script = ExtResource("12_57666")
 teleporter_name = "TPDemo4"
+teleporter_active = null
 teleporter_position = Vector3(0, 0, -15)
 connected_teleporters = [NodePath("../TPDemo3"), NodePath("../TPDemo2")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -199,7 +232,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 script = ExtResource("12_57666")
 teleporter_name = "OIS"
-teleporter_enabled = true
+teleporter_active = null
 teleporter_position = Vector3(5, 0, 0)
 connected_teleporters = [NodePath("../Start"), NodePath("../OIS-1"), NodePath("../OIS-2"), NodePath("../OIS-3"), NodePath("../OIS-4")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -208,6 +241,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -3)
 script = ExtResource("12_57666")
 teleporter_name = "OIS-1"
+teleporter_active = null
 teleporter_position = Vector3(10, 0, -3)
 connected_teleporters = [NodePath("../OIS"), NodePath("../OIS-2"), NodePath("../OIS-3"), NodePath("../OIS-4")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -216,6 +250,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)
 script = ExtResource("12_57666")
 teleporter_name = "OIS-2"
+teleporter_active = null
 teleporter_position = Vector3(10, 0, 3)
 connected_teleporters = [NodePath("../OIS"), NodePath("../OIS-1"), NodePath("../OIS-3"), NodePath("../OIS-4")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -224,6 +259,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -3)
 script = ExtResource("12_57666")
 teleporter_name = "OIS-3"
+teleporter_active = null
 teleporter_position = Vector3(15, 0, -3)
 connected_teleporters = [NodePath("../OIS"), NodePath("../OIS-1"), NodePath("../OIS-2"), NodePath("../OIS-4")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -232,6 +268,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 3)
 script = ExtResource("12_57666")
 teleporter_name = "OIS-4"
+teleporter_active = null
 teleporter_position = Vector3(15, 0, 3)
 connected_teleporters = [NodePath("../OIS"), NodePath("../OIS-1"), NodePath("../OIS-2"), NodePath("../OIS-3")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -240,6 +277,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5672, 0, 0.0326228)
 script = ExtResource("12_57666")
 teleporter_name = "OIS-5"
+teleporter_active = null
 teleporter_position = Vector3(17.5672, 0, 0.0326228)
 connected_teleporters = [NodePath("../OIS"), NodePath("../OIS-1"), NodePath("../OIS-2"), NodePath("../OIS-3")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"
@@ -248,7 +286,7 @@ metadata/_custom_type_script = "uid://ek4xpaefjlux"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
 script = ExtResource("12_57666")
 teleporter_name = "Inventory"
-teleporter_enabled = true
+teleporter_active = null
 teleporter_position = Vector3(-5, 0, 0)
 connected_teleporters = [NodePath("../Start")]
 metadata/_custom_type_script = "uid://ek4xpaefjlux"

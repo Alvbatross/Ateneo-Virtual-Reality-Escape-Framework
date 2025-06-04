@@ -2,7 +2,6 @@ extends Node3D
 
 @onready var wet_painting: MeshInstance3D = $WetPainting
 @onready var progress_view: Node3D = $"Progress View"
-@onready var painting_7: MeshInstance3D = $Painting7
 
 
 func _on_wipe_rag_receiver_action_in_progress(requirement: Variant, total_progress: Variant) -> void:
@@ -17,4 +16,4 @@ func _on_wipe_rag_receiver_action_started(requirement: Variant, total_progress: 
 
 
 func _on_wipe_rag_receiver_action_completed(requirement: Variant, total_progress: Variant) -> void:
-	progress_view.change_progress_value(percentage*100)
+	progress_view.progress_complete_anim()

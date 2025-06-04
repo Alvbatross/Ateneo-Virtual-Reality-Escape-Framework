@@ -503,14 +503,13 @@ radius = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0997871, 0)
 shape = SubResource("BoxShape3D_bq28y")
 
-[node name="InventoryItem" type="Node3D" parent="." index="1" node_paths=PackedStringArray("defined_mesh", "defined_collision_shape", "additional_mesh")]
+[node name="InventoryItem" type="Node3D" parent="." index="1" node_paths=PackedStringArray("defined_mesh", "defined_collision_shape")]
 script = ExtResource("2_jjnre")
 unique = true
 defined_mesh = NodePath("../quest_log2 (added shapekeys)")
 defined_collision_shape = NodePath("../CollisionShape3D")
 object_transform_adjustment = Vector3(0, -0.03, 0)
 object_rotation_adjustment = Vector3(0, 90, 0)
-additional_mesh = NodePath("")
 exclude_additional_mesh_transform = true
 metadata/_custom_type_script = "uid://dq86gvhe6d20d"
 
