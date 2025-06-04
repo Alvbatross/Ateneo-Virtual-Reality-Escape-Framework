@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://chqn1m2fy1uxr"]
 
-[ext_resource type="Script" uid="uid://321if5aeoser" path="res://src/Assets/progress-bar/progress_bar_cameramanip.gd" id="1_iq2on"]
+[ext_resource type="Script" uid="uid://bg010ofdqvhxd" path="res://src/progress-bar/progress_bar_cameramanip.gd" id="1_iq2on"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="2_pgytf"]
-[ext_resource type="PackedScene" uid="uid://dht7roi7nvhvl" path="res://src/Assets/progress-bar/progress_circle.tscn" id="3_g7sxe"]
+[ext_resource type="PackedScene" uid="uid://dht7roi7nvhvl" path="res://src/progress-bar/progress_circle.tscn" id="3_g7sxe"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_oigqy"]
 resource_local_to_scene = true

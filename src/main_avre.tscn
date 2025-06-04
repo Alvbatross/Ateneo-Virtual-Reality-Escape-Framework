@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://clr8xwi6ickp4" path="res://src/ois-objects/ois_rag.tscn" id="8_be46h"]
 [ext_resource type="PackedScene" uid="uid://df8ckf7krjyl3" path="res://src/ois-objects/ois_hammer.tscn" id="9_uf4kj"]
 [ext_resource type="PackedScene" uid="uid://bpgkrwkbbrau6" path="res://src/assets/Nutribun.tscn" id="10_cdv65"]
-[ext_resource type="PackedScene" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/misc-resources/fade_mesh.tscn" id="11_uf4kj"]
+[ext_resource type="PackedScene" uid="uid://pxocqu4thojn" path="res://addons/ateneo-virtual-reality-escape/teleportation-system/misc-resources/fade_mesh.tscn" id="11_uf4kj"]
 [ext_resource type="PackedScene" uid="uid://43js2irdvt88" path="res://src/ois-objects/ois_journal_new.tscn" id="12_8uw05"]
 [ext_resource type="PackedScene" uid="uid://djlmwmbu8ya0x" path="res://src/ois-objects/ois_screw_driver.tscn" id="13_2p3wn"]
 [ext_resource type="PackedScene" uid="uid://b4mr5nojepu4p" path="res://src/ois-objects/ois_screw.tscn" id="14_8owp6"]
